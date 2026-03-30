@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { createPortal } from "react-dom"
+import emailjs from "@emailjs/browser"
 import { Button } from "@/components/ui/button"
 import { X, ArrowRight, Check } from "lucide-react"
 import { Spinner } from "@/components/ui/spinner"
@@ -18,13 +19,14 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
   const [email, setEmail] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [hasError, setHasError] = useState(false)
   const [countdown, setCountdown] = useState({
     days: 0,
     hours: 0,
     minutes: 0,
     seconds: 0
   })
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
 
   // Mount check for portal
   useEffect(() => {
@@ -69,9 +71,24 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    setIsSubmitting(false)
-    setIsSubmitted(true)
+    setHasError(false)
+    const templateId = language === "fr"
+      ? process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_FR!
+      : process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_EN!
+    try {
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        templateId,
+        { user_email: email },
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+      )
+      setIsSubmitted(true)
+    } catch (err) {
+      console.error("EmailJS error:", err)
+      setHasError(true)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   if (!isOpen || !mounted) return null
@@ -164,6 +181,13 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                     </>
                   )}
                 </Button>
+                {hasError && (
+                  <p className="text-sm text-red-400 text-center">
+                    {language === "fr"
+                      ? "Une erreur s'est produite. Veuillez réessayer."
+                      : "Something went wrong. Please try again."}
+                  </p>
+                )}
               </form>
             </>
           )}
