@@ -410,7 +410,7 @@ export function Hero() {
         {/* Bottom scroll indicator with chevron and label */}
         <a 
           href="#value"
-          className={`absolute bottom-24 lg:bottom-28 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 transition-all duration-1000 delay-700 cursor-pointer group z-20 ${
+          className={`absolute bottom-16 lg:bottom-20 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 transition-all duration-1000 delay-700 cursor-pointer group z-20 ${
             isLoaded ? "opacity-40 hover:opacity-70" : "opacity-0"
           }`}
         >
