@@ -17,7 +17,6 @@ const _instrumentSerif = Instrument_Serif({
 export const metadata: Metadata = {
   title: 'Tracer — Research Security Intelligence',
   description: 'Due Diligence, Purpose-Built for Universities. Tracer helps universities screen research partnerships faster, more thoroughly, and reliably.',
-  generator: 'v0.app',
   icons: {
     icon: [
       {
