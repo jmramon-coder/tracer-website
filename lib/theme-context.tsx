@@ -10,14 +10,14 @@ interface ThemeContextType {
 }
 
 const defaultContext: ThemeContextType = {
-  theme: "dark",
+  theme: "light",
   toggleTheme: () => {},
 }
 
 const ThemeContext = createContext<ThemeContextType>(defaultContext)
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark")
+  const [theme, setTheme] = useState<Theme>("light")
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -25,6 +25,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const stored = localStorage.getItem("trace-theme") as Theme | null
     if (stored === "light" || stored === "dark") {
       setTheme(stored)
+    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      setTheme("dark")
     }
   }, [])
 
@@ -40,9 +42,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     setTheme(prev => prev === "dark" ? "light" : "dark")
   }
 
-  const value: ThemeContextType = mounted 
+  const value: ThemeContextType = mounted
     ? { theme, toggleTheme }
-    : { theme: "dark", toggleTheme }
+    : { theme: "light", toggleTheme }
 
   return (
     <ThemeContext.Provider value={value}>
