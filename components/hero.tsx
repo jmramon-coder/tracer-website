@@ -348,11 +348,11 @@ export function Hero() {
           />
         </div>
 
-        <div className="relative z-10 mx-auto max-w-6xl px-6">
+        <div className="relative z-10 mx-auto max-w-6xl px-6 pb-44 sm:pb-48">
           <div className="flex flex-col items-center text-center">
             {/* Main Heading with typewriter word */}
             <h1 
-              className={`text-4xl sm:text-5xl md:text-7xl lg:text-[5.5rem] xl:text-[6.5rem] tracking-tight text-foreground transition-all duration-1000 delay-150 ${
+              className={`text-4xl sm:text-5xl md:text-6xl lg:text-[5rem] xl:text-[6rem] tracking-tight text-foreground transition-all duration-1000 delay-150 ${
                 isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
               }`}
             >
@@ -361,12 +361,12 @@ export function Hero() {
                 <span className="font-sans font-medium">{displayText}</span>
                 <span className="inline-block w-[3px] h-[0.9em] bg-foreground/70 ml-1 animate-pulse" />
               </span>
-              <span className="font-sans font-extralight block mt-1 md:mt-2 text-muted-foreground text-3xl sm:text-4xl md:text-5xl lg:text-6xl">{t.hero.inMinutes}</span>
+              <span className="font-sans font-extralight block mt-1 md:mt-2 text-muted-foreground text-3xl sm:text-4xl md:text-4xl lg:text-5xl">{t.hero.inMinutes}</span>
             </h1>
 
             {/* Subheading */}
             <p 
-              className={`mt-10 max-w-xl text-lg md:text-xl text-muted-foreground font-light leading-relaxed tracking-wide transition-all duration-1000 delay-300 ${
+              className={`mt-6 md:mt-10 max-w-xl text-base md:text-xl text-muted-foreground font-light leading-relaxed tracking-wide transition-all duration-1000 delay-300 ${
                 isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
               }`}
             >
