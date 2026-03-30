@@ -15,7 +15,7 @@ export const translations = {
       screenResearch: "Screen research",
       inMinutes: "in minutes",
       words: ["partnerships", "collaborations", "affiliations", "networks", "risks"],
-      subtitle: "Tracer cross-references 320+ global watchlists and 400M+ records automatically and delivers a",
+      subtitle: "Tracer cross-references 320+ global databases and 400M+ records automatically and delivers a",
       decisionBrief: "decision-ready brief",
       subtitleEnd: "in minutes.",
       tagline: "Clear the Path to Great Science",
@@ -28,7 +28,7 @@ export const translations = {
         label: "Speed",
         headline: "Five minutes.",
         subline: "Not five days.",
-        description: "Tracer cross-references 320+ global watchlists and 400M+ records automatically — sanctions lists, academic networks, corporate structures, adverse OSINT signals.",
+        description: "Tracer cross-references 320+ global databases and 400M+ records automatically — sanctions lists, academic networks, corporate structures, adverse OSINT signals.",
       },
       consistency: {
         label: "Consistency",
