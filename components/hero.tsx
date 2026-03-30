@@ -407,18 +407,6 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Bottom scroll indicator with chevron and label */}
-        <a 
-          href="#value"
-          className={`absolute bottom-16 lg:bottom-20 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 transition-all duration-1000 delay-700 cursor-pointer group z-20 ${
-            isLoaded ? "opacity-40 hover:opacity-70" : "opacity-0"
-          }`}
-        >
-          <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground group-hover:text-foreground transition-colors">
-            {t.hero.viewMore}
-          </span>
-          <ChevronDown className="h-5 w-5 text-muted-foreground group-hover:text-foreground transition-colors animate-bounce" />
-        </a>
 
         {/* Waitlist Modal - rendered inside section but uses fixed positioning */}
         <WaitlistModal isOpen={isWaitlistOpen} onClose={() => setIsWaitlistOpen(false)} />
