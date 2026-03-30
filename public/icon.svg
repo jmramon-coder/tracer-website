@@ -1,13 +1,10 @@
 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
   <style>
-    :root { --stroke: #ffffff; --bg: #000000; }
-    @media (prefers-color-scheme: light) {
-      :root { --stroke: #000000; --bg: #ffffff; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #000000; }
+      .letter { fill: #ffffff; }
     }
-    .bg { fill: var(--bg); }
-    .logo { stroke: var(--stroke); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
   </style>
-  <rect class="bg" width="32" height="32" rx="7" />
-  <path class="logo" d="M24 26 L24 8 Q24 4 20 4 L12 4 Q8 4 8 8 L8 24 Q8 28 12 28 L18 28" />
-  <path class="logo" d="M16 24 L20 28 L16 32" />
+  <rect class="bg" width="32" height="32" rx="7" fill="#ffffff"/>
+  <text class="letter" x="16" y="24" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-weight="700" text-anchor="middle" fill="#000000">T</text>
 </svg>
