@@ -353,7 +353,7 @@ export const translations = {
 
     // Footer
     footer: {
-      tagline: "Renseignement en sécurité de la recherche, conçu pour les universités.",
+      tagline: "Une plateforme de vérification diligente, conçue pour les universités.",
       canadian: "Une entreprise canadienne",
       privacy: "Politique de confidentialité",
       rights: "Tous droits réservés.",
