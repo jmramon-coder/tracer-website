@@ -202,7 +202,7 @@ export const translations = {
       screenResearch: "Évaluez vos",
       inMinutes: "en quelques minutes",
       words: ["partenariats", "collaborations", "affiliations", "réseaux", "risques"],
-      subtitle: "Tracer référence plus de 320 listes mondiales et 400M+ de données automatiquement et génère un",
+      subtitle: "Tracer référence plus de 320 bases de données mondiales et 400M+ de données automatiquement et génère un",
       decisionBrief: "rapport décisionnel",
       subtitleEnd: "en quelques minutes.",
       tagline: "Ouvrez la voie à une science d'excellence",
@@ -215,7 +215,7 @@ export const translations = {
         label: "Rapidité",
         headline: "Cinq minutes.",
         subline: "Pas cinq jours.",
-        description: "Tracer vérifie automatiquement plus de 320 listes mondiales (400M+ de données) — listes de sanctions, réseaux académiques, structures corporatives, signaux OSINT défavorables.",
+        description: "Tracer vérifie automatiquement plus de 320 bases de données mondiales (400M+ de données) — listes de sanctions, réseaux académiques, structures corporatives, signaux OSINT défavorables.",
       },
       consistency: {
         label: "Cohérence",
