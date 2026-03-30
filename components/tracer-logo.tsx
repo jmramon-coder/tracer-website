@@ -61,7 +61,7 @@ export function TracerLogo({ className = "", size = 32, animated = true }: Trace
       style={{ width: size, height: size }}
     >
       <svg
-        viewBox="0 0 32 32"
+        viewBox="0 0 32 34"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className="w-full h-full"
