@@ -1,10 +1,10 @@
 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
   <style>
-    @media (prefers-color-scheme: dark) {
+    @media (prefers-color-scheme: light) {
       .bg { fill: #000000; }
       .letter { fill: #ffffff; }
     }
   </style>
-  <rect class="bg" width="32" height="32" rx="7" fill="#ffffff"/>
-  <text class="letter" x="16" y="24.5" font-family="Georgia, 'Times New Roman', serif" font-size="23" font-weight="700" text-anchor="middle" fill="#000000">T</text>
+  <rect class="bg" width="32" height="32" rx="7" fill="#000000"/>
+  <text class="letter" x="16" y="23.5" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="600" text-anchor="middle" fill="#ffffff">T</text>
 </svg>
