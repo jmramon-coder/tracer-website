@@ -5,42 +5,9 @@
       :root { --stroke: #000000; --bg: #ffffff; }
     }
     .bg { fill: var(--bg); }
-    .trace {
-      stroke: var(--stroke);
-      stroke-width: 2.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      fill: none;
-      stroke-dasharray: 84;
-      stroke-dashoffset: 84;
-      animation: draw 5s linear infinite;
-    }
-    .arrow {
-      stroke: var(--stroke);
-      stroke-width: 2.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      fill: none;
-      opacity: 0;
-      animation: arrow-show 5s linear infinite;
-    }
-    @keyframes draw {
-      0% { stroke-dashoffset: 84; }
-      30% { stroke-dashoffset: 0; }
-      100% { stroke-dashoffset: 0; }
-    }
-    @keyframes arrow-show {
-      0%, 27% { opacity: 0; }
-      30%, 100% { opacity: 1; }
-    }
+    .logo { stroke: var(--stroke); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
   </style>
   <rect class="bg" width="32" height="32" rx="7" />
-  <path
-    class="trace"
-    d="M24 26 L24 8 Q24 4 20 4 L12 4 Q8 4 8 8 L8 24 Q8 28 12 28 L18 28"
-  />
-  <path
-    class="arrow"
-    d="M16 24 L20 28 L16 32"
-  />
+  <path class="logo" d="M24 26 L24 8 Q24 4 20 4 L12 4 Q8 4 8 8 L8 24 Q8 28 12 28 L18 28" />
+  <path class="logo" d="M16 24 L20 28 L16 32" />
 </svg>
