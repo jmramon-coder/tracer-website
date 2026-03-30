@@ -6,5 +6,5 @@
     }
   </style>
   <rect class="bg" width="32" height="32" rx="7" fill="#ffffff"/>
-  <text class="letter" x="16" y="24" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-weight="700" text-anchor="middle" fill="#000000">T</text>
+  <text class="letter" x="16" y="24.5" font-family="Georgia, 'Times New Roman', serif" font-size="23" font-weight="700" text-anchor="middle" fill="#000000">T</text>
 </svg>
