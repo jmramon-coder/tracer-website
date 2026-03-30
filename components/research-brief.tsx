@@ -150,19 +150,19 @@ export function ResearchBrief(): React.JSX.Element {
                     <div className="space-y-1.5">
                       <div className="flex items-center justify-between py-1.5">
                         <span className="text-xs text-foreground/70">{t.brief.sanctionLists}</span>
-                        <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 bg-emerald-600 dark:bg-emerald-500/20 text-white dark:text-emerald-400 border border-emerald-600/30 dark:border-emerald-500/30 rounded font-medium"><CheckCircle2 className="h-2.5 w-2.5" />{t.brief.clear}</span>
+                        <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/25 rounded font-medium"><CheckCircle2 className="h-2.5 w-2.5" />{t.brief.clear}</span>
                       </div>
                       <div className="flex items-center justify-between py-1.5 border-t border-zinc-100 dark:border-white/[0.04]">
                         <span className="text-xs text-foreground/70">{t.brief.corporateStructure}</span>
-                        <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 bg-amber-500 dark:bg-amber-500/20 text-white dark:text-amber-400 border border-amber-500/30 rounded font-medium"><AlertTriangle className="h-2.5 w-2.5" />{t.brief.review}</span>
+                        <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/25 rounded font-medium"><AlertTriangle className="h-2.5 w-2.5" />{t.brief.review}</span>
                       </div>
                       <div className="flex items-center justify-between py-1.5 border-t border-zinc-100 dark:border-white/[0.04]">
                         <span className="text-xs text-foreground/70">{t.brief.adverseMedia}</span>
-                        <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 bg-emerald-600 dark:bg-emerald-500/20 text-white dark:text-emerald-400 border border-emerald-600/30 dark:border-emerald-500/30 rounded font-medium"><CheckCircle2 className="h-2.5 w-2.5" />{t.brief.clear}</span>
+                        <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/25 rounded font-medium"><CheckCircle2 className="h-2.5 w-2.5" />{t.brief.clear}</span>
                       </div>
                       <div className="flex items-center justify-between py-1.5 border-t border-zinc-100 dark:border-white/[0.04]">
                         <span className="text-xs text-foreground/70">{t.brief.academicNetwork}</span>
-                        <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 bg-red-600 dark:bg-red-500/20 text-white dark:text-red-400 border border-red-600/30 dark:border-red-500/30 rounded font-medium"><AlertTriangle className="h-2.5 w-2.5" />7 flags</span>
+                        <span className="flex items-center gap-1 text-[10px] px-2 py-0.5 bg-red-500/10 text-red-700 dark:text-red-400 border border-red-500/25 rounded font-medium"><AlertTriangle className="h-2.5 w-2.5" />7 flags</span>
                       </div>
                     </div>
                   </div>
