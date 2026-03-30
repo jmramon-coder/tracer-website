@@ -81,8 +81,8 @@ function BottomBriefCard({
       textClass: "text-white dark:text-amber-400",
       borderClass: "border-amber-500/30 dark:border-amber-500/30"
     },
-    risk: { 
-      icon: XCircle, 
+    risk: {
+      icon: null,
       label: "Risk", 
       bgClass: "bg-red-500 dark:bg-red-500/20", 
       textClass: "text-white dark:text-red-400",
@@ -91,7 +91,7 @@ function BottomBriefCard({
   }
 
   const config = statusConfig[status]
-  const Icon = config.icon
+  const Icon = config.icon ?? null
 
   return (
     <div 
@@ -115,7 +115,7 @@ function BottomBriefCard({
             <span className="text-[7px] sm:text-[9px] uppercase tracking-wider text-muted-foreground">Brief</span>
           </div>
           <span className={`flex items-center gap-0.5 sm:gap-1 text-[7px] sm:text-[9px] px-1 sm:px-1.5 py-0.5 ${config.bgClass} ${config.textClass} border ${config.borderClass} rounded font-medium`}>
-            <Icon className="h-2 sm:h-2.5 w-2 sm:w-2.5" />
+            {Icon && <Icon className="h-2 sm:h-2.5 w-2 sm:w-2.5" />}
             {config.label}
           </span>
         </div>
