@@ -132,7 +132,7 @@ export function ResearchBrief(): React.JSX.Element {
                       <span className="text-[10px] font-medium tracking-wide text-foreground/80">{t.brief.docTitle}</span>
                       <span className="text-[9px] text-foreground/40">· Tracer</span>
                     </div>
-                    <span className="text-[9px] px-2 py-0.5 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/25 rounded font-medium">{t.brief.complete}</span>
+                    <span className="text-[9px] px-2 py-0.5 bg-emerald-600 dark:bg-emerald-500/20 text-white dark:text-emerald-400 border border-emerald-600/30 dark:border-emerald-500/30 rounded font-medium">{t.brief.complete}</span>
                   </div>
 
                   <div className="px-4 py-3 border-b border-zinc-200/80 dark:border-white/[0.06]">
