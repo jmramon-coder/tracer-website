@@ -28,9 +28,10 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
   })
   const { t, language } = useLanguage()
 
-  // Mount check for portal
+  // Mount check for portal + initialize EmailJS
   useEffect(() => {
     setMounted(true)
+    emailjs.init({ publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY! })
   }, [])
 
   // Calculate countdown to Summer 2026 (June 21, 2026)
