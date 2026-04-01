@@ -20,6 +20,7 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [hasError, setHasError] = useState(false)
+  const [consent, setConsent] = useState(false)
   const [countdown, setCountdown] = useState({
     days: 0,
     hours: 0,
@@ -165,10 +166,25 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                     className="w-full px-6 py-4 bg-muted/30 border border-border rounded-lg text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-foreground/50 transition-colors"
                   />
                 </div>
+                {/* CASL consent checkbox */}
+                <label className="flex items-start gap-3 cursor-pointer text-left">
+                  <input
+                    type="checkbox"
+                    checked={consent}
+                    onChange={(e) => setConsent(e.target.checked)}
+                    className="mt-0.5 h-4 w-4 rounded border-border accent-foreground cursor-pointer shrink-0"
+                  />
+                  <span className="text-xs text-muted-foreground leading-relaxed">
+                    {language === "fr"
+                      ? "J'accepte de recevoir des courriels concernant la liste d'attente, le lancement et les mises à jour produit de Tracer. Je peux me désabonner à tout moment."
+                      : "I agree to receive waitlist, launch, and product update emails from Tracer. I can unsubscribe at any time."}
+                  </span>
+                </label>
+
                 <Button
                   type="submit"
-                  disabled={isSubmitting}
-                  className="group w-full gap-3 py-6 text-sm tracking-wide bg-foreground text-background hover:bg-foreground/90 rounded-lg cursor-pointer"
+                  disabled={isSubmitting || !consent}
+                  className="group w-full gap-3 py-6 text-sm tracking-wide bg-foreground text-background hover:bg-foreground/90 rounded-lg cursor-pointer disabled:opacity-40"
                 >
                   {isSubmitting ? (
                     <>
@@ -182,6 +198,24 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                     </>
                   )}
                 </Button>
+
+                {/* Privacy policy link */}
+                <p className="text-[11px] text-muted-foreground/60 text-center">
+                  {language === "fr" ? (
+                    <>En rejoignant la liste d&apos;attente, vous acceptez notre{" "}
+                      <a href="/privacy" target="_blank" className="underline hover:text-muted-foreground transition-colors">
+                        Politique de confidentialité
+                      </a>.
+                    </>
+                  ) : (
+                    <>By joining the waitlist, you agree to our{" "}
+                      <a href="/privacy" target="_blank" className="underline hover:text-muted-foreground transition-colors">
+                        Privacy Policy
+                      </a>.
+                    </>
+                  )}
+                </p>
+
                 {hasError && (
                   <p className="text-sm text-muted-foreground text-center">
                     {language === "fr"
