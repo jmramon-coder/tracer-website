@@ -185,17 +185,33 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                     )}
                   </Button>
                   {!consent && !isSubmitting && (
-                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 pointer-events-none opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200 z-50">
-                      <div className="relative bg-white border border-zinc-200 rounded-lg px-3 py-2 shadow-md whitespace-nowrap">
-                        <span className="text-[11px] text-zinc-600">
-                          {language === "fr"
-                            ? "Vous devez accepter les communications pour continuer."
-                            : "You must accept communications to join."}
-                        </span>
-                        {/* Tail arrow */}
-                        <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px">
-                          <div className="w-2.5 h-2.5 bg-white border-b border-r border-zinc-200 rotate-45 -translate-y-1.5" />
-                        </div>
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 pointer-events-none opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200 z-50">
+                      <div
+                        className="relative rounded-md px-4 py-2.5 text-xs text-zinc-700 dark:text-zinc-200 whitespace-nowrap"
+                        style={{
+                          background: "white",
+                          border: "1px solid #e4e4e7",
+                          boxShadow: "0 4px 16px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.06)",
+                        }}
+                      >
+                        {language === "fr"
+                          ? "Vous devez accepter les communications pour continuer."
+                          : "You must accept communications to join."}
+                        {/* Tail */}
+                        <span
+                          className="absolute left-1/2 -translate-x-1/2"
+                          style={{
+                            bottom: "-6px",
+                            width: "12px",
+                            height: "12px",
+                            background: "white",
+                            border: "1px solid #e4e4e7",
+                            borderTop: "none",
+                            borderLeft: "none",
+                            transform: "translateX(-50%) rotate(45deg)",
+                            boxShadow: "2px 2px 4px rgba(0,0,0,0.04)",
+                          }}
+                        />
                       </div>
                     </div>
                   )}
