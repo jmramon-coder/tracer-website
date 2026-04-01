@@ -166,23 +166,32 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                     className="w-full px-6 py-4 bg-muted/30 border border-border rounded-lg text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-foreground/50 transition-colors"
                   />
                 </div>
-                <Button
-                  type="submit"
-                  disabled={isSubmitting || !consent}
-                  className="group w-full gap-3 py-6 text-sm tracking-wide bg-foreground text-background hover:bg-foreground/90 rounded-lg cursor-pointer disabled:opacity-40"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <Spinner className="h-4 w-4" />
-                      <span>{t.waitlist.joining}</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>{t.header.joinWaitlist}</span>
-                      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                    </>
+                <div className="relative group/btn">
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting || !consent}
+                    className="group w-full gap-3 py-6 text-sm tracking-wide bg-foreground text-background hover:bg-foreground/90 rounded-lg cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Spinner className="h-4 w-4" />
+                        <span>{t.waitlist.joining}</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>{t.header.joinWaitlist}</span>
+                        <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                      </>
+                    )}
+                  </Button>
+                  {!consent && !isSubmitting && (
+                    <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover/btn:opacity-100 transition-opacity text-[11px] text-muted-foreground/70">
+                      {language === "fr"
+                        ? "Vous devez accepter les communications pour continuer."
+                        : "You must accept communications to join."}
+                    </div>
                   )}
-                </Button>
+                </div>
 
                 {/* CASL consent checkbox */}
                 <label className="flex flex-col items-center gap-2 cursor-pointer text-center">
