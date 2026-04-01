@@ -185,10 +185,18 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                     )}
                   </Button>
                   {!consent && !isSubmitting && (
-                    <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover/btn:opacity-100 transition-opacity text-[11px] text-muted-foreground/70">
-                      {language === "fr"
-                        ? "Vous devez accepter les communications pour continuer."
-                        : "You must accept communications to join."}
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 pointer-events-none opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200 z-50">
+                      <div className="relative bg-white border border-zinc-200 rounded-lg px-3 py-2 shadow-md whitespace-nowrap">
+                        <span className="text-[11px] text-zinc-600">
+                          {language === "fr"
+                            ? "Vous devez accepter les communications pour continuer."
+                            : "You must accept communications to join."}
+                        </span>
+                        {/* Tail arrow */}
+                        <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px">
+                          <div className="w-2.5 h-2.5 bg-white border-b border-r border-zinc-200 rotate-45 -translate-y-1.5" />
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
