@@ -229,7 +229,7 @@ function SearchStep() {
         <div className="space-y-1.5">
           <label className="text-[10px] text-muted-foreground uppercase tracking-wider">Affiliation</label>
           <div className="h-9 border border-border bg-background px-3 flex items-center">
-            <span className="text-xs text-muted-foreground">e.g. Harbin Institute</span>
+            <span className="text-xs text-muted-foreground">e.g. Longhua Institute</span>
           </div>
         </div>
         <div className="space-y-1.5">
@@ -285,7 +285,7 @@ function ResolutionStep() {
               <span className="text-[10px] px-2 py-0.5 bg-muted text-muted-foreground font-mono">97%</span>
             </div>
             <p className="text-[11px] text-muted-foreground">
-              CN · University Harbin, Heilongjiang
+              CN · University Longhua, Jiangsu
             </p>
           </div>
 
@@ -321,7 +321,7 @@ function ResolutionStep() {
           </div>
           
           <div className="space-y-2">
-            {["Harbin Institute of Technology", "John Smith", "Research Partners Ltd"].map((entity, i) => (
+            {["Longhua Institute of Technology", "John Smith", "Research Partners Ltd"].map((entity, i) => (
               <div key={i} className="border border-border/60 p-3 flex items-center justify-between">
                 <span className="text-xs">{entity}</span>
                 <div className={`h-2 w-2 ${i === 0 ? 'bg-foreground/20' : 'bg-transparent border border-border'}`} />
@@ -378,7 +378,7 @@ function CaseStep() {
           <div className="flex flex-wrap items-center gap-3 text-[11px] text-muted-foreground">
             <span>Individual</span>
             <span className="h-1 w-1 bg-border rounded-full" />
-            <span>Harbin Institute of Technology</span>
+            <span>Longhua Institute of Technology</span>
             <span className="h-1 w-1 bg-border rounded-full" />
             <span>China</span>
           </div>
@@ -407,7 +407,7 @@ function CaseStep() {
             <span className="text-xs font-medium">Sanctions</span>
           </div>
           <p className="text-sm">
-            Subject is affiliated with <span className="font-medium">Harbin Institute of Technology</span>
+            Subject is affiliated with <span className="font-medium">Longhua Institute of Technology</span>
           </p>
         </div>
       </div>
@@ -686,7 +686,7 @@ function ExportStep() {
             }`}>
               <h4 className="text-lg font-serif mb-1 text-zinc-900">John Smith</h4>
               <p className="text-[10px] text-zinc-500">
-                Individual · Harbin Institute of Technology · China
+                Individual · Longhua Institute of Technology · China
               </p>
               <div className="flex gap-2 mt-2">
                 <span className="text-[8px] px-2 py-0.5 border border-zinc-300 text-zinc-600">ORCID: 0000-0000-0000-0000</span>

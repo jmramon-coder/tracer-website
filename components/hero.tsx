@@ -286,8 +286,8 @@ export function Hero() {
         {/* Bottom brief cards - boundary row - centered on mobile */}
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-4xl">
           <BottomBriefCard
-            name="Mojtaba Tahani"
-            institution="University of Tehran"
+            name="Reza Kamali"
+            institution="Navid University"
             status="risk"
             checks={[
               { type: "sanctions", passed: true },
@@ -314,8 +314,8 @@ export function Hero() {
           />
 
           <BottomBriefCard
-            name="Qiang Zhang"
-            institution="Harbin Institute of Technology"
+            name="Yun Zhao"
+            institution="Longhua Institute of Technology"
             status="risk"
             checks={[
               { type: "sanctions", passed: true },
@@ -331,8 +331,8 @@ export function Hero() {
           />
 
           <BottomBriefCard
-            name="Lei Chen"
-            institution="Beihang University"
+            name="Jun Li"
+            institution="Mingshan University"
             status="risk"
             checks={[
               { type: "sanctions", passed: true },

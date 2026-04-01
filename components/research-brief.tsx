@@ -47,11 +47,11 @@ export function ResearchBrief(): React.JSX.Element {
   }
 
   const coAuthors = [
-    { name: "Amirhossein Hossein", institution: "Harbin Institute of Technology", list: "NRO", papers: 8, last: 2026 },
-    { name: "Mehdi Mozafari", institution: "Harbin Institute of Technology", list: "NRO", papers: 6, last: 2025 },
-    { name: "Qiang Zhang", institution: "Harbin Institute of Technology", list: "NRO", papers: 4, last: 2024 },
-    { name: "Lei Chen", institution: "Beihang University", list: "BIS", papers: 5, last: 2024 },
-    { name: "Wei Zhang", institution: "Beihang University", list: "BIS", papers: 3, last: 2023 },
+    { name: "Dariush Farhadi", institution: "Longhua Institute of Technology", list: "NRO", papers: 8, last: 2026 },
+    { name: "Saeed Noori", institution: "Longhua Institute of Technology", list: "NRO", papers: 6, last: 2025 },
+    { name: "Yun Zhao", institution: "Longhua Institute of Technology", list: "NRO", papers: 4, last: 2024 },
+    { name: "Jun Li", institution: "Mingshan University", list: "BIS", papers: 5, last: 2024 },
+    { name: "Hao Wang", institution: "Mingshan University", list: "BIS", papers: 3, last: 2023 },
   ]
 
   const timelineData = [
@@ -136,8 +136,8 @@ export function ResearchBrief(): React.JSX.Element {
                   </div>
 
                   <div className="px-4 py-3 border-b border-zinc-200/80 dark:border-white/[0.06]">
-                    <h3 className="text-sm font-medium text-foreground mb-0.5">Mojtaba Tahani</h3>
-                    <p className="text-[10px] text-foreground/50">University of Tehran · Aerospace Engineering · Scholar confirmed</p>
+                    <h3 className="text-sm font-medium text-foreground mb-0.5">Reza Kamali</h3>
+                    <p className="text-[10px] text-foreground/50">Navid University · Aerospace Engineering · Scholar confirmed</p>
                     <div className="flex flex-wrap gap-1.5 mt-2">
                       <span className="text-[8px] px-1.5 py-0.5 bg-zinc-100 dark:bg-white/[0.05] text-foreground/50 rounded">89 publications</span>
                       <span className="text-[8px] px-1.5 py-0.5 bg-zinc-100 dark:bg-white/[0.05] text-foreground/50 rounded">h-index 24</span>
