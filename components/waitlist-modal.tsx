@@ -183,10 +183,10 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                   )}
                 </Button>
                 {hasError && (
-                  <p className="text-sm text-red-400 text-center">
+                  <p className="text-sm text-muted-foreground text-center">
                     {language === "fr"
-                      ? "Une erreur s'est produite. Veuillez réessayer."
-                      : "Something went wrong. Please try again."}
+                      ? "Nous éprouvons un problème temporaire. Veuillez réessayer sous peu."
+                      : "We're experiencing a temporary issue. Please try again shortly."}
                   </p>
                 )}
               </form>
