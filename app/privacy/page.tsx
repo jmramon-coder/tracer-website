@@ -35,7 +35,7 @@ const content = {
         subsections: [
           {
             subheading: "Website visitors",
-            body: "We collect standard server logs including IP addresses, browser type, pages visited, and timestamps. We do not use advertising trackers or third-party analytics that share your data with advertisers.",
+            body: "We collect standard server logs including IP addresses, browser type, pages visited, and timestamps. We use Google Analytics 4 to collect anonymized usage data (pages visited, session duration, general location). This data is used solely to improve our website and is not shared with advertisers.",
           },
           {
             subheading: "Early access and contact form submissions",
@@ -142,7 +142,7 @@ const content = {
       {
         heading: "12. Cookies and tracking",
         body: [
-          "Our website uses only essential cookies necessary for the site to function. We do not use advertising cookies, retargeting pixels, or third-party analytics that share your data. No cookie consent is required for essential cookies under applicable law, but we disclose their use here for transparency.",
+          "Our website uses essential cookies necessary for the site to function, as well as Google Analytics 4 cookies for anonymized traffic analysis. We do not use advertising cookies or retargeting pixels. Google Analytics data is used solely to understand visitor behaviour and improve our website. You may opt out of Google Analytics by installing the Google Analytics opt-out browser add-on.",
         ],
       },
       {
@@ -189,7 +189,7 @@ const content = {
         subsections: [
           {
             subheading: "Visiteurs du site Web",
-            body: "Nous collectons des journaux de serveur standard comprenant les adresses IP, le type de navigateur, les pages visitées et les horodatages. Nous n'utilisons pas de traceurs publicitaires ni d'outils d'analyse tiers qui partagent vos données avec des annonceurs.",
+            body: "Nous collectons des journaux de serveur standard comprenant les adresses IP, le type de navigateur, les pages visitées et les horodatages. Nous utilisons Google Analytics 4 pour collecter des données d'utilisation anonymisées (pages visitées, durée de session, localisation générale). Ces données sont utilisées uniquement pour améliorer notre site Web et ne sont pas partagées avec des annonceurs.",
           },
           {
             subheading: "Soumissions de formulaires d'accès anticipé et de contact",
@@ -296,7 +296,7 @@ const content = {
       {
         heading: "12. Témoins de connexion et suivi",
         body: [
-          "Notre site Web utilise uniquement les témoins essentiels nécessaires au fonctionnement du site. Nous n'utilisons pas de témoins publicitaires, de pixels de reciblage ou d'outils d'analyse tiers qui partagent vos données. Aucun consentement aux témoins n'est requis pour les témoins essentiels en vertu de la loi applicable, mais nous divulguons leur utilisation ici par souci de transparence.",
+          "Notre site Web utilise les témoins essentiels nécessaires au fonctionnement du site, ainsi que les témoins de Google Analytics 4 pour l'analyse anonymisée du trafic. Nous n'utilisons pas de témoins publicitaires ni de pixels de reciblage. Les données de Google Analytics sont utilisées uniquement pour comprendre le comportement des visiteurs et améliorer notre site Web. Vous pouvez refuser Google Analytics en installant le module complémentaire de navigateur pour la désactivation de Google Analytics.",
         ],
       },
       {
