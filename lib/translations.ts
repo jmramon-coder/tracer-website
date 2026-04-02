@@ -240,8 +240,8 @@ export const translations = {
     // Research Brief
     brief: {
       sectionLabel: "Le Résultat",
-      headline: "Un rapport que",
-      headlineBold: "votre direction approuve",
+      headline: "Un rapport approuvé par",
+      headlineBold: "votre direction.",
       subtitle: "Conclusions structurées avec citations complètes et signaux de risque clairs. Prêt quand vos décideurs le sont.",
       docTitle: "Rapport de sécurité de la recherche",
       complete: "Complété",
