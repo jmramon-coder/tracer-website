@@ -123,7 +123,7 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header with logo centered */}
-        <div className="flex items-center justify-center mb-8">
+        <div className="flex items-center justify-center mb-4 md:mb-8">
           <div className="flex flex-col items-center">
             <TracerLogo size={28} animated={false} />
             <span className="text-[10px] font-medium tracking-[0.15em] uppercase text-foreground mt-1">Tracer</span>
@@ -151,18 +151,18 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
           ) : (
             <>
               {/* Header */}
-              <span className="inline-block text-[11px] uppercase tracking-[0.3em] text-muted-foreground mb-6">
+              <span className="inline-block text-[11px] uppercase tracking-[0.3em] text-muted-foreground mb-3 md:mb-6">
                 {t.waitlist.comingSummer}
               </span>
               <h2 className="text-3xl md:text-4xl font-light tracking-tight text-foreground mb-4">
                 {t.waitlist.joinWaitlist}
               </h2>
-              <p className="text-muted-foreground font-light leading-relaxed max-w-md mx-auto mb-10">
+              <p className="text-muted-foreground font-light leading-relaxed max-w-md mx-auto mb-6 md:mb-10">
                 {t.waitlist.subtitle}
               </p>
 
               {/* Email form */}
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-3 md:space-y-6">
                 <div className="relative">
                   <input
                     type="email"
@@ -276,7 +276,7 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
           )}
 
           {/* Countdown */}
-          <div className="mt-16 pt-8 border-t border-border/40">
+          <div className="mt-8 pt-6 md:mt-16 md:pt-8 border-t border-border/40">
             <p className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground mb-6">
               {t.waitlist.launchingIn}
             </p>
