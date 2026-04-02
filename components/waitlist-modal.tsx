@@ -99,19 +99,9 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
           { user_email: email },
           process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
         ),
-        fetch(process.env.NEXT_PUBLIC_GOOGLE_SHEET_URL!, {
-          method: "POST",
-          mode: "no-cors",
-          headers: {
-            "Content-Type": "text/plain",
-          },
-          body: JSON.stringify({
-            timestamp: new Date().toISOString(),
-            email,
-            language,
-            consent: consent ? "Yes" : "No",
-          }),
-        }).catch(() => {}) // Don't fail if sheet logging fails
+        fetch(
+          `${process.env.NEXT_PUBLIC_GOOGLE_SHEET_URL!}?timestamp=${encodeURIComponent(new Date().toISOString())}&email=${encodeURIComponent(email)}&language=${encodeURIComponent(language)}&consent=${encodeURIComponent(consent ? "Yes" : "No")}`
+        ).catch(() => {}) // Don't fail if sheet logging fails
       ])
       setIsSubmitted(true)
       setTimeout(() => setHasAnimated(true), 1200)
