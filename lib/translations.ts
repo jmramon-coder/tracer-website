@@ -286,8 +286,8 @@ export const translations = {
     // How It Works
     howItWorks: {
       sectionLabel: "Fonctionnement",
-      headline: "Trois étapes vers",
-      headlineBold: "des décisions éclairées",
+      headline: "Décisions éclairées",
+      headlineBold: "en trois étapes",
       subtitle: "De la soumission au rapport décisionnel en quelques heures, pas en semaines.",
       steps: [
         {
