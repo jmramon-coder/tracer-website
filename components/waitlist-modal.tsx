@@ -100,10 +100,17 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
           process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
         ),
         new Promise<void>((resolve) => {
+          const sheetUrl = process.env.NEXT_PUBLIC_GOOGLE_SHEET_URL || "https://script.google.com/macros/s/AKfycbxvwLaKhPrsZD0fsPIiK_ZClVgU_yr2qrt1LFBMDV7DjSQdypJwRDHoIk8zdG64ff6wMg/exec"
+          const params = new URLSearchParams({
+            timestamp: new Date().toISOString(),
+            email,
+            language,
+            consent: consent ? "Yes" : "No",
+          })
           const img = new Image()
           img.onload = () => resolve()
-          img.onerror = () => resolve() // Resolve even on error — the request still goes through
-          img.src = `${process.env.NEXT_PUBLIC_GOOGLE_SHEET_URL!}?timestamp=${encodeURIComponent(new Date().toISOString())}&email=${encodeURIComponent(email)}&language=${encodeURIComponent(language)}&consent=${encodeURIComponent(consent ? "Yes" : "No")}`
+          img.onerror = () => resolve()
+          img.src = `${sheetUrl}?${params.toString()}`
         })
       ])
       setIsSubmitted(true)
