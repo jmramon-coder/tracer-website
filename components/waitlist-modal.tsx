@@ -225,14 +225,14 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
 
                 {/* CASL consent checkbox */}
                 <label className="flex flex-col items-center gap-1.5 cursor-pointer text-center">
-                  <div className="flex items-start gap-2.5">
+                  <div className="flex items-start gap-2.5 justify-center">
                     <input
                       type="checkbox"
                       checked={consent}
                       onChange={(e) => setConsent(e.target.checked)}
                       className="mt-0.5 h-4 w-4 rounded border-border accent-foreground cursor-pointer shrink-0"
                     />
-                    <span className="text-xs text-muted-foreground leading-relaxed text-left">
+                    <span className="text-xs text-muted-foreground leading-relaxed text-center">
                       {language === "fr"
                         ? "J'accepte de recevoir des courriels concernant la liste d'attente, le lancement et les mises à jour produit de Tracer."
                         : "I agree to receive waitlist, launch, and product update emails from Tracer."}
