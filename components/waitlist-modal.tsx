@@ -19,6 +19,7 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
   const [email, setEmail] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [hasAnimated, setHasAnimated] = useState(false)
   const [hasError, setHasError] = useState(false)
   const [consent, setConsent] = useState(false)
   const [countdown, setCountdown] = useState({
@@ -85,6 +86,7 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
       )
       setIsSubmitted(true)
+      setTimeout(() => setHasAnimated(true), 1200)
       setTimeout(() => {
         onClose()
       }, 3500)
@@ -132,15 +134,15 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
           {isSubmitted ? (
             <div className="space-y-8">
               {/* Success circle */}
-              <div className="mx-auto h-20 w-20 flex items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-500/10 animate-in fade-in zoom-in-75 duration-700 ease-out">
-                <Check className="h-9 w-9 text-emerald-400 animate-in fade-in zoom-in-50 duration-500 delay-300 ease-out" strokeWidth={2.5} />
+              <div className={`mx-auto h-20 w-20 flex items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-500/10${hasAnimated ? "" : " animate-in fade-in zoom-in-75 duration-700 ease-out"}`}>
+                <Check className={`h-9 w-9 text-emerald-400${hasAnimated ? "" : " animate-in fade-in zoom-in-50 duration-500 delay-300 ease-out"}`} strokeWidth={2.5} />
               </div>
-              <div className="animate-in fade-in slide-in-from-bottom-3 duration-700 delay-500 ease-out">
+              <div className={hasAnimated ? "" : "animate-in fade-in slide-in-from-bottom-3 duration-700 delay-500 ease-out"}>
                 <h2 className="text-3xl md:text-4xl font-light tracking-tight text-foreground mb-4">
                   {t.waitlist.success}
                 </h2>
               </div>
-              <div className="animate-in fade-in duration-700 delay-700 ease-out">
+              <div className={hasAnimated ? "" : "animate-in fade-in duration-700 delay-700 ease-out"}>
                 <p className="text-muted-foreground font-light">
                   {t.waitlist.successMessage}
                 </p>
