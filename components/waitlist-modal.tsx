@@ -225,12 +225,13 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
 
                 {/* CASL consent checkbox */}
                 <label className="flex flex-col items-center gap-1.5 cursor-pointer text-center">
-                  <div className="flex items-start gap-2.5 justify-center">
+                  <div className="flex items-start justify-center" style={{ gap: "6px" }}>
                     <input
                       type="checkbox"
                       checked={consent}
                       onChange={(e) => setConsent(e.target.checked)}
-                      className="mt-0.5 h-4 w-4 rounded border-border accent-foreground cursor-pointer shrink-0"
+                      className="h-4 w-4 rounded border-border accent-foreground cursor-pointer shrink-0"
+                      style={{ marginTop: "-1px" }}
                     />
                     <span className="text-xs text-muted-foreground leading-relaxed text-center">
                       {language === "fr"
