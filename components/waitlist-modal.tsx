@@ -87,10 +87,7 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
       setIsSubmitted(true)
       setTimeout(() => {
         onClose()
-        setIsSubmitted(false)
-        setEmail("")
-        setConsent(false)
-      }, 2500)
+      }, 3500)
     } catch (err) {
       console.error("EmailJS error:", err)
       setHasError(true)
@@ -133,15 +130,17 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
 
         <div className="text-center">
           {isSubmitted ? (
-            <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="space-y-8">
               {/* Success circle */}
-              <div className="mx-auto h-20 w-20 flex items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-500/10 animate-in zoom-in-50 duration-300">
-                <Check className="h-9 w-9 text-emerald-400 animate-in zoom-in-0 duration-500 delay-200" strokeWidth={2.5} />
+              <div className="mx-auto h-20 w-20 flex items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-500/10 animate-in fade-in zoom-in-75 duration-700 ease-out">
+                <Check className="h-9 w-9 text-emerald-400 animate-in fade-in zoom-in-50 duration-500 delay-300 ease-out" strokeWidth={2.5} />
               </div>
-              <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 delay-300">
+              <div className="animate-in fade-in slide-in-from-bottom-3 duration-700 delay-500 ease-out">
                 <h2 className="text-3xl md:text-4xl font-light tracking-tight text-foreground mb-4">
                   {t.waitlist.success}
                 </h2>
+              </div>
+              <div className="animate-in fade-in duration-700 delay-700 ease-out">
                 <p className="text-muted-foreground font-light">
                   {t.waitlist.successMessage}
                 </p>
