@@ -99,10 +99,12 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
           { user_email: email },
           process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
         ),
-        fetch(
-          `${process.env.NEXT_PUBLIC_GOOGLE_SHEET_URL!}?timestamp=${encodeURIComponent(new Date().toISOString())}&email=${encodeURIComponent(email)}&language=${encodeURIComponent(language)}&consent=${encodeURIComponent(consent ? "Yes" : "No")}`,
-          { mode: "no-cors", redirect: "follow" }
-        ).catch(() => {}) // Don't fail if sheet logging fails
+        new Promise<void>((resolve) => {
+          const img = new Image()
+          img.onload = () => resolve()
+          img.onerror = () => resolve() // Resolve even on error — the request still goes through
+          img.src = `${process.env.NEXT_PUBLIC_GOOGLE_SHEET_URL!}?timestamp=${encodeURIComponent(new Date().toISOString())}&email=${encodeURIComponent(email)}&language=${encodeURIComponent(language)}&consent=${encodeURIComponent(consent ? "Yes" : "No")}`
+        })
       ])
       setIsSubmitted(true)
       setTimeout(() => setHasAnimated(true), 1200)
