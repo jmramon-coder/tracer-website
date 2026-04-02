@@ -101,6 +101,10 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
         ),
         fetch(process.env.NEXT_PUBLIC_GOOGLE_SHEET_URL!, {
           method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "text/plain",
+          },
           body: JSON.stringify({
             timestamp: new Date().toISOString(),
             email,
