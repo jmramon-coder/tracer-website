@@ -79,12 +79,24 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
       ? process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_FR!
       : process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_EN!
     try {
-      await emailjs.send(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
-        templateId,
-        { user_email: email },
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
-      )
+      // Send email and log to Google Sheets in parallel
+      await Promise.all([
+        emailjs.send(
+          process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+          templateId,
+          { user_email: email },
+          process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+        ),
+        fetch(process.env.NEXT_PUBLIC_GOOGLE_SHEET_URL!, {
+          method: "POST",
+          body: JSON.stringify({
+            timestamp: new Date().toISOString(),
+            email,
+            language,
+            consent: consent ? "Yes" : "No",
+          }),
+        }).catch(() => {}) // Don't fail if sheet logging fails
+      ])
       setIsSubmitted(true)
       setTimeout(() => setHasAnimated(true), 1200)
       setTimeout(() => {
