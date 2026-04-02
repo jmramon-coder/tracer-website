@@ -85,6 +85,12 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
       )
       setIsSubmitted(true)
+      setTimeout(() => {
+        onClose()
+        setIsSubmitted(false)
+        setEmail("")
+        setConsent(false)
+      }, 2500)
     } catch (err) {
       console.error("EmailJS error:", err)
       setHasError(true)
