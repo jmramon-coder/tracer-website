@@ -232,7 +232,7 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                       checked={consent}
                       onChange={(e) => setConsent(e.target.checked)}
                       className="h-4 w-4 rounded border-border accent-foreground cursor-pointer shrink-0"
-                      style={{ marginTop: "-1px" }}
+                      style={{ marginTop: "1px" }}
                     />
                     <span className="text-xs text-muted-foreground leading-relaxed text-center">
                       {language === "fr"
