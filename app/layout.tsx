@@ -16,7 +16,11 @@ const _instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: 'Tracer — Research Security Intelligence',
+  metadataBase: new URL('https://tracersecurity.ca'),
+  title: {
+    default: 'Tracer - Research Security Intelligence',
+    template: '%s | Tracer',
+  },
   description: 'Due Diligence, Purpose-Built for Universities. Tracer helps universities screen research partnerships faster, more thoroughly, and reliably.',
   icons: {
     icon: [
@@ -26,6 +30,18 @@ export const metadata: Metadata = {
       },
     ],
     apple: '/apple-icon.png',
+  },
+  openGraph: {
+    type: 'website',
+    siteName: 'Tracer',
+    title: 'Tracer - Research Security Intelligence',
+    description: 'Research security screening platform built in Canada. Screen international research partnerships against sanctions, affiliations, and adverse signals.',
+    url: 'https://tracersecurity.ca',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Tracer - Research Security Intelligence',
+    description: 'Research security screening platform built in Canada. Screen international research partnerships against sanctions, affiliations, and adverse signals.',
   },
 }
 

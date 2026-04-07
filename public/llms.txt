@@ -1,0 +1,24 @@
+# Tracer Security
+## About
+Tracer is a research security screening platform built in Canada, where the world's most comprehensive research security standards were established (NSGRP, STRAC, NRO list). It automates due diligence for international research partnerships by screening against sanctions lists, co-publication networks, institutional affiliations, and adverse media signals. Countries including the UK, Netherlands, and Australia are developing similar frameworks inspired by Canada's approach.
+
+## Key pages
+- /product - How Tracer works
+- /research-security-screening - What is research security screening
+- /blog - Research security insights and guides
+- /academic-partnership-due-diligence - Partnership screening explained
+- /sanctions-screening-universities - Sanctions screening for academic institutions
+
+## Use cases
+- Screening international research collaborators for sanctions and military affiliations
+- Assessing co-publication network risks in academic partnerships
+- Automating research partnership due diligence for NSGRP/STRAC compliance
+- Generating defensible screening reports with full source transparency
+
+## Key facts
+- 14+ data sources covering 400M+ records
+- Screens individuals and organizations
+- Every finding linked to source, confidence level, and known limitations
+- Built in Canada, designed for the regulatory framework other countries are adopting
+- Screening cost: ~$0.33 per researcher
+- Canada is the global leader in research security requirements
