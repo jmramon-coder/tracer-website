@@ -15,7 +15,6 @@ import {
   Server,
   ShieldCheck,
 } from "lucide-react"
-import { BrandLogo } from "@/components/brand-logo"
 import { Footer } from "@/components/footer"
 import { Header } from "@/components/header"
 import { LocalizedText } from "@/components/localized-text"
@@ -125,12 +124,7 @@ export default function PlatformPage() {
 
         <div className="relative mx-auto grid min-h-[82svh] max-w-[1500px] gap-6 px-6 pb-12 pt-24 lg:grid-cols-[0.54fr_1.18fr] lg:items-end lg:px-10 xl:px-14">
           <div className="max-w-lg">
-            <BrandLogo
-              variant="white"
-              markClassName="h-12 w-14"
-              textClassName="text-hero-foreground"
-            />
-            <p className="mt-12 text-xs font-semibold uppercase tracking-[0.22em] text-hero-foreground/65">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-hero-foreground/65">
               <LocalizedText en="Clear the path to great science" fr="Ouvrez la voie à une science d'excellence" />
             </p>
             <h1 className="mt-5 max-w-xl text-5xl font-semibold leading-[0.96] tracking-tight sm:text-6xl lg:text-[4rem]">

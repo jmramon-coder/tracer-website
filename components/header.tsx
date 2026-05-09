@@ -74,6 +74,19 @@ export function Header() {
     openMenu: language === "fr" ? "Ouvrir le menu" : "Open menu",
     closeMenu: language === "fr" ? "Fermer le menu" : "Close menu",
   }
+  const isActiveNavItem = (href: string) =>
+    pathname === href ||
+    (href === "/platform" && pathname === "/") ||
+    (href === "/solutions" && pathname === "/pricing") ||
+    (href === "/resources" &&
+      [
+        "/blog",
+        "/research-security-screening",
+        "/academic-partnership-due-diligence",
+        "/sanctions-screening-universities",
+        "/research-collaboration-risk",
+        "/research-security-tools",
+      ].some((path) => pathname === path || pathname.startsWith(`${path}/`)))
 
   useEffect(() => {
     const handleScroll = () => {
@@ -130,29 +143,38 @@ export function Header() {
 
             <nav
               aria-label={labels.primaryNavigation}
-              className="hidden items-center gap-6 lg:flex"
+              className="hidden items-center gap-2 lg:flex"
             >
-              {mainNav.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={item.href === "/labs" ? triggerLabsSpin : undefined}
-                  className={cn(
-                    "inline-flex items-center gap-1.5 text-sm font-medium transition-colors",
-                    item.href === "/labs" && "group/labs",
-                    isOverMedia
-                      ? "text-white/74 hover:text-white"
-                      : "text-foreground/72 hover:text-foreground"
-                  )}
-                >
-                  <NavItemMark
+              {mainNav.map((item) => {
+                const isActive = isActiveNavItem(item.href)
+
+                return (
+                  <Link
+                    key={item.href}
                     href={item.href}
-                    isOverMedia={isOverMedia}
-                    isSpinning={item.href === "/labs" && isLabsMarkSpinning}
-                  />
-                  {t.header.nav[navTranslationKeys[item.href]] ?? item.label}
-                </Link>
-              ))}
+                    aria-current={isActive ? "page" : undefined}
+                    onClick={item.href === "/labs" ? triggerLabsSpin : undefined}
+                    className={cn(
+                      "inline-flex h-10 items-center gap-1.5 rounded-full px-3 text-sm font-medium transition-all duration-200",
+                      item.href === "/labs" && "group/labs",
+                      isActive
+                        ? isOverMedia
+                          ? "border border-[#AFC7FF]/35 bg-[#2459B8]/32 text-white shadow-[0_10px_28px_rgba(36,89,184,0.26)]"
+                          : "border border-[#2459B8]/16 bg-[#EAF1FF] text-[#2459B8] shadow-[0_10px_24px_rgba(36,89,184,0.12)] dark:bg-[#2459B8]/20 dark:text-[#9DBBFF]"
+                        : isOverMedia
+                          ? "text-white/74 hover:bg-white/8 hover:text-white"
+                          : "text-foreground/72 hover:bg-[#2459B8]/[0.06] hover:text-foreground"
+                    )}
+                  >
+                    <NavItemMark
+                      href={item.href}
+                      isOverMedia={isOverMedia}
+                      isSpinning={item.href === "/labs" && isLabsMarkSpinning}
+                    />
+                    {t.header.nav[navTranslationKeys[item.href]] ?? item.label}
+                  </Link>
+                )
+              })}
             </nav>
 
             <div className="flex items-center gap-1.5 md:gap-3">
@@ -198,33 +220,42 @@ export function Header() {
           >
             <div className="px-4 py-4">
               <nav aria-label={labels.mobileNavigation} className="grid gap-1">
-                {mainNav.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => {
-                      if (item.href === "/labs") {
-                        triggerLabsSpin()
-                      }
+                {mainNav.map((item) => {
+                  const isActive = isActiveNavItem(item.href)
 
-                      setIsMenuOpen(false)
-                    }}
-                    className={cn(
-                      "inline-flex items-center gap-2 rounded-2xl px-3 py-3 text-sm font-medium transition-colors",
-                      item.href === "/labs" && "group/labs",
-                      isOverMedia
-                        ? "text-white/72 hover:bg-white/10 hover:text-white"
-                        : "text-foreground/72 hover:bg-card hover:text-foreground"
-                    )}
-                  >
-                    <NavItemMark
+                  return (
+                    <Link
+                      key={item.href}
                       href={item.href}
-                      isOverMedia={isOverMedia}
-                      isSpinning={item.href === "/labs" && isLabsMarkSpinning}
-                    />
-                    {t.header.nav[navTranslationKeys[item.href]] ?? item.label}
-                  </Link>
-                ))}
+                      aria-current={isActive ? "page" : undefined}
+                      onClick={() => {
+                        if (item.href === "/labs") {
+                          triggerLabsSpin()
+                        }
+
+                        setIsMenuOpen(false)
+                      }}
+                      className={cn(
+                        "inline-flex items-center gap-2 rounded-2xl px-3 py-3 text-sm font-medium transition-all duration-200",
+                        item.href === "/labs" && "group/labs",
+                        isActive
+                          ? isOverMedia
+                            ? "border border-[#AFC7FF]/30 bg-[#2459B8]/30 text-white"
+                            : "border border-[#2459B8]/16 bg-[#EAF1FF] text-[#2459B8] dark:bg-[#2459B8]/20 dark:text-[#9DBBFF]"
+                          : isOverMedia
+                            ? "text-white/72 hover:bg-white/10 hover:text-white"
+                            : "text-foreground/72 hover:bg-card hover:text-foreground"
+                      )}
+                    >
+                      <NavItemMark
+                        href={item.href}
+                        isOverMedia={isOverMedia}
+                        isSpinning={item.href === "/labs" && isLabsMarkSpinning}
+                      />
+                      {t.header.nav[navTranslationKeys[item.href]] ?? item.label}
+                    </Link>
+                  )
+                })}
               </nav>
               <div
                 className={cn(
