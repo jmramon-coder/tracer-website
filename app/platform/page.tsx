@@ -1,7 +1,6 @@
 import type { Metadata } from "next"
 import type { ReactNode } from "react"
 import Image from "next/image"
-import Link from "next/link"
 import {
   AlertTriangle,
   ArrowRight,
@@ -20,6 +19,7 @@ import { Header } from "@/components/header"
 import { LocalizedText } from "@/components/localized-text"
 import { PlatformShowcaseCarousel } from "@/components/platform-showcase-carousel"
 import { ScreeningCtaCarousel } from "@/components/screening-cta-carousel"
+import { TrackedLink } from "@/components/tracked-link"
 import { WaitlistButton } from "@/components/waitlist-button"
 import { platformModules } from "@/lib/site-data"
 
@@ -172,16 +172,24 @@ export default function PlatformPage() {
               />
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <WaitlistButton className="h-12 bg-hero-foreground px-6 text-hero shadow-xl shadow-black/20 hover:bg-hero-foreground/90">
+              <WaitlistButton
+                trackingLocation="platform_hero"
+                trackingLabel="Request access"
+                className="h-12 bg-hero-foreground px-6 text-hero shadow-xl shadow-black/20 hover:bg-hero-foreground/90"
+              >
                 <LocalizedText en="Request access" fr="Demander l'accès" />
               </WaitlistButton>
-              <Link
+              <TrackedLink
                 href="#brief"
+                trackingParams={{
+                  navigation_type: "platform_hero_anchor",
+                  link_text: "View the brief",
+                }}
                 className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-hero-foreground/25 px-6 text-sm font-medium text-hero-foreground transition-colors hover:bg-hero-foreground/10"
               >
                 <LocalizedText en="View the brief" fr="Voir la note" />
                 <ArrowRight className="h-4 w-4" />
-              </Link>
+              </TrackedLink>
             </div>
           </div>
 

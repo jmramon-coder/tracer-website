@@ -8,6 +8,7 @@ import { Menu, X } from "lucide-react"
 import { BrandLogo } from "@/components/brand-logo"
 import { LanguageToggle } from "@/components/language-toggle"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { trackEvent } from "@/lib/analytics"
 import { useLanguage } from "@/lib/language-context"
 import { mainNav } from "@/lib/site-data"
 import { WaitlistButton } from "@/components/waitlist-button"
@@ -116,6 +117,41 @@ export function Header() {
     }, 1100)
   }
 
+  const handleNavigationClick = (
+    href: string,
+    label: string,
+    navigationType: "logo" | "primary" | "mobile"
+  ) => {
+    trackEvent("navigation_click", {
+      navigation_type: navigationType,
+      link_url: href,
+      link_text: label,
+      language,
+    })
+
+    if (href === "/labs") {
+      triggerLabsSpin()
+    }
+  }
+
+  const handleTracerAppClick = (location: "header" | "mobile_menu") => {
+    trackEvent("tracer_app_click", {
+      cta_location: location,
+      link_url: "https://www.app.tracersecurity.ca",
+      language,
+    })
+  }
+
+  const handleMobileMenuToggle = () => {
+    const nextState = isMenuOpen ? "closed" : "open"
+
+    trackEvent("mobile_menu_toggle", {
+      menu_state: nextState,
+      language,
+    })
+    setIsMenuOpen((value) => !value)
+  }
+
   return (
     <>
       <header 
@@ -132,6 +168,7 @@ export function Header() {
           >
             <Link
               href="/platform"
+              onClick={() => handleNavigationClick("/platform", "Tracer", "logo")}
               className={cn("group", isOverMedia ? "text-white" : "text-foreground")}
             >
               <BrandLogo
@@ -147,13 +184,14 @@ export function Header() {
             >
               {mainNav.map((item) => {
                 const isActive = isActiveNavItem(item.href)
+                const label = t.header.nav[navTranslationKeys[item.href]] ?? item.label
 
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
                     aria-current={isActive ? "page" : undefined}
-                    onClick={item.href === "/labs" ? triggerLabsSpin : undefined}
+                    onClick={() => handleNavigationClick(item.href, label, "primary")}
                     className={cn(
                       "relative inline-flex h-10 items-center gap-1.5 px-1 text-sm font-medium transition-colors duration-200 after:absolute after:left-1/2 after:bottom-0 after:h-[3px] after:w-7 after:-translate-x-1/2 after:rounded-full after:bg-[#2459B8] after:shadow-[0_0_14px_rgba(36,89,184,0.48)] after:transition-all after:duration-300",
                       item.href === "/labs" && "group/labs",
@@ -171,7 +209,7 @@ export function Header() {
                       isOverMedia={isOverMedia}
                       isSpinning={item.href === "/labs" && isLabsMarkSpinning}
                     />
-                    {t.header.nav[navTranslationKeys[item.href]] ?? item.label}
+                    {label}
                   </Link>
                 )
               })}
@@ -188,12 +226,14 @@ export function Header() {
               />
               <WaitlistButton
                 showIcon={false}
+                trackingLocation="header_desktop"
                 className="hidden h-10 border border-[#6F98F2]/40 bg-[#2459B8] px-4 text-xs leading-none tracking-wide text-white shadow-xl shadow-[#2459B8]/30 ring-1 ring-white/15 hover:-translate-y-0.5 hover:bg-[#1E4C9D] hover:shadow-[#2459B8]/45 sm:inline-flex md:text-sm"
               >
                 {t.header.joinWaitlist}
               </WaitlistButton>
               <a
                 href="https://www.app.tracersecurity.ca"
+                onClick={() => handleTracerAppClick("header")}
                 className={cn(
                   "hidden h-10 items-center gap-2 rounded-full border px-4 text-xs font-medium leading-none tracking-wide shadow-xl transition-all duration-200 hover:-translate-y-0.5 lg:inline-flex md:text-sm",
                   isOverMedia
@@ -210,7 +250,7 @@ export function Header() {
               </a>
               <button
                 type="button"
-                onClick={() => setIsMenuOpen((value) => !value)}
+                onClick={handleMobileMenuToggle}
                 aria-label={isMenuOpen ? labels.closeMenu : labels.openMenu}
                 aria-expanded={isMenuOpen}
                 className={cn(
@@ -239,6 +279,7 @@ export function Header() {
               <nav aria-label={labels.mobileNavigation} className="grid gap-1">
                 {mainNav.map((item) => {
                   const isActive = isActiveNavItem(item.href)
+                  const label = t.header.nav[navTranslationKeys[item.href]] ?? item.label
 
                   return (
                     <Link
@@ -246,10 +287,7 @@ export function Header() {
                       href={item.href}
                       aria-current={isActive ? "page" : undefined}
                       onClick={() => {
-                        if (item.href === "/labs") {
-                          triggerLabsSpin()
-                        }
-
+                        handleNavigationClick(item.href, label, "mobile")
                         setIsMenuOpen(false)
                       }}
                       className={cn(
@@ -269,7 +307,7 @@ export function Header() {
                         isOverMedia={isOverMedia}
                         isSpinning={item.href === "/labs" && isLabsMarkSpinning}
                       />
-                      {t.header.nav[navTranslationKeys[item.href]] ?? item.label}
+                      {label}
                     </Link>
                   )
                 })}
@@ -286,6 +324,7 @@ export function Header() {
                 </div>
                 <WaitlistButton
                   showIcon={false}
+                  trackingLocation="header_mobile"
                   className="h-10 border border-[#6F98F2]/40 bg-[#2459B8] px-4 text-xs leading-none text-white shadow-xl shadow-[#2459B8]/30 ring-1 ring-white/15 hover:-translate-y-0.5 hover:bg-[#1E4C9D] hover:shadow-[#2459B8]/45"
                 >
                   {t.header.joinWaitlist}
@@ -293,7 +332,10 @@ export function Header() {
               </div>
               <a
                 href="https://www.app.tracersecurity.ca"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => {
+                  handleTracerAppClick("mobile_menu")
+                  setIsMenuOpen(false)
+                }}
                 className={cn(
                   "mt-3 inline-flex h-11 w-full items-center justify-center gap-2 rounded-full border px-4 text-sm font-medium leading-none shadow-xl transition-all duration-200 hover:-translate-y-0.5",
                   isOverMedia

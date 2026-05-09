@@ -444,6 +444,8 @@ export default function LabsPage() {
               <WaitlistButton
                 className="mt-9 h-12 border border-[#6F98F2]/40 bg-[#2459B8] px-6 text-white shadow-xl shadow-[#2459B8]/30 ring-1 ring-white/20 hover:-translate-y-0.5 hover:bg-[#1E4C9D] hover:shadow-[#2459B8]/45"
                 showIcon
+                trackingLocation="labs_bottom_cta"
+                trackingLabel="Join Labs waitlist"
               >
                 <LocalizedText en="Join Labs waitlist" fr="Rejoindre la liste Labs" />
               </WaitlistButton>

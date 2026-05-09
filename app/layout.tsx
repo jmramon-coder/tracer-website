@@ -2,10 +2,9 @@ import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next'
 import { ThemeProvider } from '@/lib/theme-context'
 import { LanguageProvider } from '@/lib/language-context'
+import { GA_MEASUREMENT_ID } from '@/lib/analytics'
 
 import './globals.css'
-
-const GA_MEASUREMENT_ID = 'G-ED4P5LG31N'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://tracersecurity.ca'),

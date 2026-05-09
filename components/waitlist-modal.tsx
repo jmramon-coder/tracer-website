@@ -7,6 +7,7 @@ import emailjs from "@emailjs/browser"
 import { Button } from "@/components/ui/button"
 import { X, ArrowRight, Check } from "lucide-react"
 import { Spinner } from "@/components/ui/spinner"
+import { trackEvent } from "@/lib/analytics"
 import { useLanguage } from "@/lib/language-context"
 
 const LAUNCH_DATE = new Date("2026-06-01T00:00:00")
@@ -113,6 +114,12 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
           img.src = `${sheetUrl}?${params.toString()}`
         })
       ])
+      trackEvent("generate_lead", {
+        method: "waitlist",
+        form_id: "waitlist_modal",
+        language,
+        consent_status: consent ? "accepted" : "not_accepted",
+      })
       setIsSubmitted(true)
       setTimeout(() => setHasAnimated(true), 1200)
       setTimeout(() => {
@@ -120,6 +127,10 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
       }, 3500)
     } catch (err) {
       console.error("EmailJS error:", err)
+      trackEvent("waitlist_submit_error", {
+        form_id: "waitlist_modal",
+        language,
+      })
       setHasError(true)
     } finally {
       setIsSubmitting(false)

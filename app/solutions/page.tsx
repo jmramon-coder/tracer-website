@@ -1,12 +1,12 @@
 import type { Metadata } from "next"
 import Image from "next/image"
-import Link from "next/link"
 import { CheckCircle2 } from "lucide-react"
 import { BrandLogo } from "@/components/brand-logo"
 import { HashScroll } from "@/components/hash-scroll"
 import { Header } from "@/components/header"
 import { LocalizedText } from "@/components/localized-text"
 import { MapleLeaf } from "@/components/maple-leaf"
+import { TrackedLink } from "@/components/tracked-link"
 import { WaitlistButton } from "@/components/waitlist-button"
 import { pricingPlans, resourceCards } from "@/lib/site-data"
 
@@ -144,6 +144,8 @@ export default function SolutionsPage() {
                     <WaitlistButton
                       variant={plan.featured ? "secondary" : "primary"}
                       showIcon={false}
+                      trackingLocation={`solutions_pricing_${plan.name.toLowerCase().replace(/[^a-z0-9]+/g, "_")}`}
+                      trackingLabel={plan.cta}
                       className={`h-12 w-full shrink-0 ${
                         plan.featured
                           ? "border-white/35 bg-white/18 text-white shadow-xl shadow-black/10 ring-1 ring-white/25 backdrop-blur-2xl hover:-translate-y-0.5 hover:bg-white/26 hover:text-white hover:shadow-black/20 supports-[backdrop-filter]:bg-white/14"
@@ -202,6 +204,8 @@ export default function SolutionsPage() {
             <WaitlistButton
               className="mt-9 h-12 bg-[#2459B8] px-6 text-white shadow-xl shadow-[#2459B8]/30 ring-1 ring-white/15 hover:-translate-y-0.5 hover:bg-[#1E4C9D]"
               showIcon
+              trackingLocation="solutions_bottom_cta"
+              trackingLabel="Get more info"
             >
               <LocalizedText en="Get more info" fr="En savoir plus" />
             </WaitlistButton>
@@ -212,13 +216,20 @@ export default function SolutionsPage() {
           <div className="mx-auto max-w-7xl px-6 py-14 sm:px-8 md:py-20 lg:px-12 xl:px-16">
             <div className="grid gap-12 lg:grid-cols-[1.1fr_2fr]">
               <div className="max-w-sm">
-                <Link href="/platform" className="mb-6 flex text-white">
+                <TrackedLink
+                  href="/platform"
+                  trackingParams={{
+                    navigation_type: "solutions_footer",
+                    link_text: "Tracer",
+                  }}
+                  className="mb-6 flex text-white"
+                >
                   <BrandLogo
                     variant="white"
                     markClassName="h-8 w-9"
                     textClassName="text-white"
                   />
-                </Link>
+                </TrackedLink>
                 <p className="text-sm leading-6 text-white/62">
                   <LocalizedText
                     en="Structured research security due diligence for high-trust institutional workflows."
@@ -238,13 +249,17 @@ export default function SolutionsPage() {
                   </p>
                   <nav className="grid gap-3">
                     {footerNavLinks.map((item) => (
-                      <Link
+                      <TrackedLink
                         key={item.href}
                         href={item.href}
+                        trackingParams={{
+                          navigation_type: "solutions_footer",
+                          link_text: item.label,
+                        }}
                         className="text-sm text-white/54 transition-colors hover:text-white"
                       >
                         <LocalizedText en={item.label} fr={item.labelFr} />
-                      </Link>
+                      </TrackedLink>
                     ))}
                   </nav>
                 </div>
@@ -254,13 +269,17 @@ export default function SolutionsPage() {
                   </p>
                   <nav className="grid gap-3">
                     {resourceCards.map((item) => (
-                      <Link
+                      <TrackedLink
                         key={item.href}
                         href={item.href}
+                        trackingParams={{
+                          navigation_type: "solutions_footer_guides",
+                          link_text: item.title,
+                        }}
                         className="text-sm text-white/54 transition-colors hover:text-white"
                       >
                         <LocalizedText en={item.title} fr={item.titleFr} />
-                      </Link>
+                      </TrackedLink>
                     ))}
                   </nav>
                 </div>
@@ -269,18 +288,26 @@ export default function SolutionsPage() {
                     <LocalizedText en="Legal" fr="Légal" />
                   </p>
                   <nav className="grid gap-3">
-                    <Link
+                    <TrackedLink
                       href="/privacy"
+                      trackingParams={{
+                        navigation_type: "solutions_footer_legal",
+                        link_text: "Privacy Policy",
+                      }}
                       className="text-sm text-white/54 transition-colors hover:text-white"
                     >
                       <LocalizedText en="Privacy Policy" fr="Politique de confidentialité" />
-                    </Link>
-                    <Link
+                    </TrackedLink>
+                    <TrackedLink
                       href="/blog"
+                      trackingParams={{
+                        navigation_type: "solutions_footer_legal",
+                        link_text: "Blog",
+                      }}
                       className="text-sm text-white/54 transition-colors hover:text-white"
                     >
                       <LocalizedText en="Blog" fr="Blogue" />
-                    </Link>
+                    </TrackedLink>
                   </nav>
                 </div>
               </div>

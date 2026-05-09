@@ -2,6 +2,7 @@
 
 import { forwardRef, useEffect, useMemo, useRef, useState } from "react"
 import type { MouseEvent } from "react"
+import { trackEvent } from "@/lib/analytics"
 import { resourceLibrary, type ResourceArticle, type ResourceSection } from "@/lib/resource-library"
 import { resourceLibraryFr } from "@/lib/resource-library.fr"
 import { useLanguage } from "@/lib/language-context"
@@ -231,6 +232,12 @@ export function ResourceReader() {
     event: MouseEvent<HTMLAnchorElement>
   ) => {
     event.preventDefault()
+    trackEvent("resource_select", {
+      resource_id: resource.id,
+      resource_title: resource.title,
+      resource_category: resource.category,
+      language,
+    })
     setSelectedId(resource.id)
     setActiveAnchorId(resource.id)
     setReadingProgress(0)
@@ -247,6 +254,16 @@ export function ResourceReader() {
 
   const handleAnchorClick = (anchorId: string) => (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault()
+    const section = selectedResource.sections.find(
+      (_, index) => getSectionId(selectedResource, index) === anchorId
+    )
+
+    trackEvent("resource_anchor_select", {
+      resource_id: selectedResource.id,
+      anchor_id: anchorId,
+      section_heading: section?.heading,
+      language,
+    })
     setActiveAnchorId(anchorId)
     updateHash(anchorId)
     scrollToAnchor(anchorId)

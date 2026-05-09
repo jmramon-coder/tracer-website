@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
 import Image from "next/image"
-import Link from "next/link"
 import {
   ArrowUpRight,
   CheckCircle2,
@@ -13,6 +12,7 @@ import { BrandLogo } from "@/components/brand-logo"
 import { Header } from "@/components/header"
 import { LocalizedText } from "@/components/localized-text"
 import { MapleLeaf } from "@/components/maple-leaf"
+import { TrackedLink } from "@/components/tracked-link"
 import { WaitlistButton } from "@/components/waitlist-button"
 import { resourceCards } from "@/lib/site-data"
 
@@ -127,16 +127,24 @@ export default function CompanyPage() {
               />
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <WaitlistButton className="h-12 bg-[#2459B8] px-6 text-white shadow-xl shadow-[#2459B8]/30 hover:bg-[#1E4C9D]">
+              <WaitlistButton
+                trackingLocation="company_hero"
+                trackingLabel="Request access"
+                className="h-12 bg-[#2459B8] px-6 text-white shadow-xl shadow-[#2459B8]/30 hover:bg-[#1E4C9D]"
+              >
                 <LocalizedText en="Request access" fr="Demander l'accès" />
               </WaitlistButton>
-              <Link
+              <TrackedLink
                 href="/platform"
+                trackingParams={{
+                  navigation_type: "company_hero_cta",
+                  link_text: "See the platform",
+                }}
                 className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-white/25 px-6 text-sm font-medium text-white transition-colors hover:bg-white/10"
               >
                 <LocalizedText en="See the platform" fr="Voir la plateforme" />
                 <ArrowUpRight className="h-4 w-4" />
-              </Link>
+              </TrackedLink>
             </div>
           </div>
 
@@ -351,7 +359,11 @@ export default function CompanyPage() {
                 fr="Tracer est bâti avec des institutions qui veulent faire avancer confiance, preuves et collaboration ensemble. Rejoignez le premier groupe qui aide à définir l'expérience moderne de la sécurité de la recherche."
               />
             </p>
-            <WaitlistButton className="mt-9 h-12 bg-[#2459B8] px-6 text-white shadow-xl shadow-[#2459B8]/30 ring-1 ring-white/15 hover:-translate-y-0.5 hover:bg-[#1E4C9D]">
+            <WaitlistButton
+              trackingLocation="company_bottom_cta"
+              trackingLabel="Join waitlist"
+              className="mt-9 h-12 bg-[#2459B8] px-6 text-white shadow-xl shadow-[#2459B8]/30 ring-1 ring-white/15 hover:-translate-y-0.5 hover:bg-[#1E4C9D]"
+            >
               <LocalizedText en="Join waitlist" fr="Rejoindre la liste" />
             </WaitlistButton>
           </div>
@@ -361,13 +373,20 @@ export default function CompanyPage() {
           <div className="mx-auto max-w-7xl px-6 py-14 sm:px-8 md:py-20 lg:px-12 xl:px-16">
             <div className="grid gap-12 lg:grid-cols-[1.1fr_2fr]">
               <div className="max-w-sm">
-                <Link href="/platform" className="mb-6 flex text-white">
+                <TrackedLink
+                  href="/platform"
+                  trackingParams={{
+                    navigation_type: "company_footer",
+                    link_text: "Tracer",
+                  }}
+                  className="mb-6 flex text-white"
+                >
                   <BrandLogo
                     variant="white"
                     markClassName="h-8 w-9"
                     textClassName="text-white"
                   />
-                </Link>
+                </TrackedLink>
                 <p className="text-sm leading-6 text-white/62">
                   <LocalizedText
                     en="Structured research security due diligence for high-trust institutional workflows."
@@ -387,13 +406,17 @@ export default function CompanyPage() {
                   </p>
                   <nav className="grid gap-3">
                     {footerNavLinks.map((item) => (
-                      <Link
+                      <TrackedLink
                         key={item.href}
                         href={item.href}
+                        trackingParams={{
+                          navigation_type: "company_footer",
+                          link_text: item.label,
+                        }}
                         className="text-sm text-white/54 transition-colors hover:text-white"
                       >
                         <LocalizedText en={item.label} fr={item.labelFr} />
-                      </Link>
+                      </TrackedLink>
                     ))}
                   </nav>
                 </div>
@@ -403,13 +426,17 @@ export default function CompanyPage() {
                   </p>
                   <nav className="grid gap-3">
                     {resourceCards.map((item) => (
-                      <Link
+                      <TrackedLink
                         key={item.href}
                         href={item.href}
+                        trackingParams={{
+                          navigation_type: "company_footer_guides",
+                          link_text: item.title,
+                        }}
                         className="text-sm text-white/54 transition-colors hover:text-white"
                       >
                         <LocalizedText en={item.title} fr={item.titleFr} />
-                      </Link>
+                      </TrackedLink>
                     ))}
                   </nav>
                 </div>
@@ -418,18 +445,26 @@ export default function CompanyPage() {
                     <LocalizedText en="Legal" fr="Légal" />
                   </p>
                   <nav className="grid gap-3">
-                    <Link
+                    <TrackedLink
                       href="/privacy"
+                      trackingParams={{
+                        navigation_type: "company_footer_legal",
+                        link_text: "Privacy Policy",
+                      }}
                       className="text-sm text-white/54 transition-colors hover:text-white"
                     >
                       <LocalizedText en="Privacy Policy" fr="Politique de confidentialité" />
-                    </Link>
-                    <Link
+                    </TrackedLink>
+                    <TrackedLink
                       href="/blog"
+                      trackingParams={{
+                        navigation_type: "company_footer_legal",
+                        link_text: "Blog",
+                      }}
                       className="text-sm text-white/54 transition-colors hover:text-white"
                     >
                       <LocalizedText en="Blog" fr="Blogue" />
-                    </Link>
+                    </TrackedLink>
                   </nav>
                 </div>
               </div>
