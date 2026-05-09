@@ -43,10 +43,7 @@ export async function POST(request: Request) {
     const resend = getResendClient()
     const from = process.env.RESEND_FROM_EMAIL || DEFAULT_FROM_EMAIL
     const internalTo = process.env.RESEND_INTERNAL_TO
-
-    if (!internalTo) {
-      throw new Error("Missing RESEND_INTERNAL_TO")
-    }
+    const contactsEnabled = process.env.RESEND_CONTACTS_ENABLED === "true"
 
     const submittedAt = new Date().toISOString()
     const contactProperties = {
@@ -56,31 +53,58 @@ export async function POST(request: Request) {
       submitted_at: submittedAt,
     }
 
-    await upsertWaitlistContact(resend, payload.email, contactProperties)
+    const [contactResult, internalNotificationResult, confirmationResult] =
+      await Promise.all([
+        contactsEnabled
+          ? captureWaitlistStep(
+              "contact_upsert",
+              upsertWaitlistContact(resend, payload.email, contactProperties)
+            )
+          : Promise.resolve(skipWaitlistStep("contact_upsert")),
+        captureWaitlistStep(
+          "internal_notification",
+          internalTo
+            ? sendResendEmail(
+                resend,
+                buildInternalNotificationEmail({
+                  email: payload.email,
+                  from,
+                  to: internalTo,
+                  language: payload.language,
+                  source: payload.source,
+                  submittedAt,
+                })
+              )
+            : Promise.reject(new Error("Missing RESEND_INTERNAL_TO"))
+        ),
+        captureWaitlistStep(
+          "confirmation_email",
+          sendResendEmail(
+            resend,
+            buildConfirmationEmail({
+              email: payload.email,
+              from,
+              replyTo: internalTo || from,
+              language: payload.language,
+              source: payload.source,
+            })
+          )
+        ),
+      ])
 
-    await Promise.all([
-      sendResendEmail(
-        resend,
-        buildConfirmationEmail({
-          email: payload.email,
-          from,
-          replyTo: internalTo,
-          language: payload.language,
-          source: payload.source,
-        })
-      ),
-      sendResendEmail(
-        resend,
-        buildInternalNotificationEmail({
-          email: payload.email,
-          from,
-          to: internalTo,
-          language: payload.language,
-          source: payload.source,
-          submittedAt,
-        })
-      ),
-    ])
+    for (const result of [
+      contactResult,
+      internalNotificationResult,
+      confirmationResult,
+    ]) {
+      if (!result.ok && !("skipped" in result)) {
+        console.warn(`Waitlist ${result.step} failed:`, result.error)
+      }
+    }
+
+    if (!contactResult.ok && !internalNotificationResult.ok) {
+      throw new Error("Waitlist capture failed")
+    }
 
     return NextResponse.json({ ok: true })
   } catch (error) {
@@ -129,6 +153,19 @@ async function sendResendEmail(
   if (response.error) {
     throw new Error(`Resend email failed: ${formatResendError(response.error)}`)
   }
+}
+
+async function captureWaitlistStep(step: string, promise: Promise<void>) {
+  try {
+    await promise
+    return { ok: true, step } as const
+  } catch (error) {
+    return { ok: false, step, error } as const
+  }
+}
+
+function skipWaitlistStep(step: string) {
+  return { ok: false, step, skipped: true } as const
 }
 
 function buildConfirmationEmail({
