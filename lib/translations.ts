@@ -8,6 +8,14 @@ export const translations = {
     header: {
       tagline: "Research Security",
       joinWaitlist: "Join Waitlist",
+      nav: {
+        platform: "Platform",
+        labs: "Labs",
+        solutions: "Solutions & Pricing",
+        pricing: "Pricing",
+        resources: "Resources",
+        company: "Company",
+      },
     },
 
     // Hero
@@ -20,6 +28,12 @@ export const translations = {
       subtitleEnd: "in minutes.",
       tagline: "Clear the Path to Great Science",
       viewMore: "View more",
+    },
+
+    // Logos
+    logos: {
+      title: "Built for research-intensive institutions",
+      types: ["Universities", "Research offices", "Grant teams", "Compliance teams"],
     },
 
     // Value Props
@@ -166,7 +180,7 @@ export const translations = {
 
     // Footer
     footer: {
-      tagline: "Research security intelligence, purpose-built for universities.",
+      tagline: "Structured research security due diligence for high-trust institutional workflows.",
       canadian: "A Canadian Company",
       privacy: "Privacy Policy",
       rights: "All rights reserved.",
@@ -195,6 +209,14 @@ export const translations = {
     header: {
       tagline: "Sécurité de la recherche",
       joinWaitlist: "Liste d'attente",
+      nav: {
+        platform: "Plateforme",
+        labs: "Labs",
+        solutions: "Solutions et tarifs",
+        pricing: "Tarifs",
+        resources: "Ressources",
+        company: "Entreprise",
+      },
     },
 
     // Hero
@@ -207,6 +229,12 @@ export const translations = {
       subtitleEnd: "en quelques minutes.",
       tagline: "Ouvrez la voie à une science d'excellence",
       viewMore: "En savoir plus",
+    },
+
+    // Logos
+    logos: {
+      title: "Conçu pour les institutions axées sur la recherche",
+      types: ["Universités", "Bureaux de recherche", "Équipes de subventions", "Équipes de conformité"],
     },
 
     // Value Props
@@ -353,7 +381,7 @@ export const translations = {
 
     // Footer
     footer: {
-      tagline: "Une plateforme de vérification diligente, conçue pour les universités.",
+      tagline: "Vérification diligente structurée pour les flux de travail institutionnels de haute confiance.",
       canadian: "Une entreprise canadienne",
       privacy: "Politique de confidentialité",
       rights: "Tous droits réservés.",

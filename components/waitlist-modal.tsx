@@ -2,12 +2,12 @@
 
 import { useState, useEffect } from "react"
 import { createPortal } from "react-dom"
+import NextImage from "next/image"
 import emailjs from "@emailjs/browser"
 import { Button } from "@/components/ui/button"
 import { X, ArrowRight, Check } from "lucide-react"
 import { Spinner } from "@/components/ui/spinner"
 import { useLanguage } from "@/lib/language-context"
-import { TracerLogo } from "@/components/tracer-logo"
 
 interface WaitlistModalProps {
   isOpen: boolean
@@ -133,28 +133,42 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
       className="fixed inset-0 z-[100] flex items-center justify-center"
     >
       {/* Backdrop - no click to close */}
-      <div 
-        className="absolute inset-0 bg-background/95 backdrop-blur-sm"
-      />
+      <div className="absolute inset-0 bg-black/35 backdrop-blur-sm" />
 
       {/* Close button — fixed top-right of viewport */}
       <button
         onClick={onClose}
-        className="absolute top-10 right-10 z-20 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+        aria-label={language === "fr" ? "Fermer la fenêtre de liste d'attente" : "Close waitlist modal"}
+        className="absolute right-6 top-6 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-muted-foreground shadow-sm transition-colors hover:text-foreground md:right-10 md:top-10"
       >
-        <X className="h-6 w-6" />
+        <X className="h-5 w-5" />
       </button>
 
       {/* Modal content */}
       <div
-        className="relative z-10 w-full max-w-lg mx-6 animate-in fade-in zoom-in-95 duration-300"
+        className="relative z-10 mx-6 w-full max-w-xl animate-in rounded-[28px] border border-border bg-card p-6 text-card-foreground shadow-[var(--modal-shadow)] fade-in zoom-in-95 duration-300 md:p-10"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header with logo centered */}
-        <div className="flex items-center justify-center mb-4 md:mb-8">
-          <div className="flex flex-col items-center">
-            <TracerLogo size={28} animated={false} />
-            <span className="text-[10px] font-medium tracking-[0.15em] uppercase text-foreground mt-1">Tracer</span>
+        <div className="mb-8 flex items-center justify-center text-foreground">
+          <div className="flex items-center gap-2.5">
+            <div className="relative h-10 w-10 shrink-0">
+              <NextImage
+                src="/brand/glass-logo-tracer.png"
+                alt=""
+                fill
+                sizes="40px"
+                className="object-contain drop-shadow-[0_8px_18px_rgba(15,23,42,0.18)]"
+              />
+            </div>
+            <div className="leading-none">
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-foreground">
+                Tracer
+              </p>
+              <p className="mt-1 text-[9px] font-medium uppercase tracking-[0.28em] text-muted-foreground">
+                Research Security
+              </p>
+            </div>
           </div>
         </div>
 
@@ -162,16 +176,16 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
           {isSubmitted ? (
             <div className="space-y-8">
               {/* Success circle */}
-              <div className={`mx-auto h-20 w-20 flex items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-500/10${hasAnimated ? "" : " animate-in fade-in zoom-in-75 duration-700 ease-out"}`}>
-                <Check className={`h-9 w-9 text-emerald-400${hasAnimated ? "" : " animate-in fade-in zoom-in-50 duration-500 delay-300 ease-out"}`} strokeWidth={2.5} />
+              <div className={`mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-success-muted bg-success-muted${hasAnimated ? "" : " animate-in fade-in zoom-in-75 duration-700 ease-out"}`}>
+                <Check className={`h-9 w-9 text-success${hasAnimated ? "" : " animate-in fade-in zoom-in-50 duration-500 delay-300 ease-out"}`} strokeWidth={2.5} />
               </div>
               <div className={hasAnimated ? "" : "animate-in fade-in slide-in-from-bottom-3 duration-700 delay-500 ease-out"}>
-                <h2 className="text-3xl md:text-4xl font-light tracking-tight text-foreground mb-4">
+                <h2 className="mb-4 text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
                   {t.waitlist.success}
                 </h2>
               </div>
               <div className={hasAnimated ? "" : "animate-in fade-in duration-700 delay-700 ease-out"}>
-                <p className="text-muted-foreground font-light">
+                <p className="text-muted-foreground">
                   {t.waitlist.successMessage}
                 </p>
               </div>
@@ -179,13 +193,13 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
           ) : (
             <>
               {/* Header */}
-              <span className="inline-block text-[11px] uppercase tracking-[0.3em] text-muted-foreground mb-3 md:mb-6">
+              <span className="mb-3 inline-block text-[11px] font-semibold uppercase tracking-[0.3em] text-muted-foreground md:mb-6">
                 {t.waitlist.comingSummer}
               </span>
-              <h2 className="text-3xl md:text-4xl font-light tracking-tight text-foreground mb-4">
+              <h2 className="mb-4 text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
                 {t.waitlist.joinWaitlist}
               </h2>
-              <p className="text-muted-foreground font-light leading-relaxed max-w-md mx-auto mb-6 md:mb-10">
+              <p className="mx-auto mb-6 max-w-md text-muted-foreground leading-relaxed md:mb-10">
                 {t.waitlist.subtitle}
               </p>
 
@@ -198,14 +212,14 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder={t.waitlist.emailPlaceholder}
                     required
-                    className="w-full px-6 py-4 bg-muted/30 border border-border rounded-lg text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-foreground/50 transition-colors"
+                    className="h-12 w-full rounded-2xl border border-input bg-background px-5 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-ring focus:outline-none"
                   />
                 </div>
                 <div className="relative group/btn">
                   <Button
                     type="submit"
                     disabled={isSubmitting || !consent}
-                    className="group w-full gap-3 py-6 text-sm tracking-wide bg-foreground text-background hover:bg-foreground/90 rounded-lg cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                    className="group h-12 w-full cursor-pointer gap-3 rounded-full bg-primary text-sm tracking-wide text-primary-foreground shadow-xl shadow-black/15 hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-40"
                   >
                     {isSubmitting ? (
                       <>
@@ -221,32 +235,12 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                   </Button>
                   {!consent && !isSubmitting && (
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 pointer-events-none opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200 z-50">
-                      <div
-                        className="relative rounded-md px-4 py-2.5 text-xs text-zinc-700 dark:text-zinc-200 whitespace-nowrap"
-                        style={{
-                          background: "white",
-                          border: "1px solid #e4e4e7",
-                          boxShadow: "0 4px 16px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.06)",
-                        }}
-                      >
+                      <div className="relative whitespace-nowrap rounded-md border border-border bg-popover px-4 py-2.5 text-xs text-popover-foreground shadow-[0_4px_16px_rgba(0,0,0,0.08),0_1px_3px_rgba(0,0,0,0.06)]">
                         {language === "fr"
                           ? "Vous devez accepter les communications pour continuer."
                           : "You must accept communications to join."}
                         {/* Tail */}
-                        <span
-                          className="absolute left-1/2 -translate-x-1/2"
-                          style={{
-                            bottom: "-6px",
-                            width: "12px",
-                            height: "12px",
-                            background: "white",
-                            border: "1px solid #e4e4e7",
-                            borderTop: "none",
-                            borderLeft: "none",
-                            transform: "translateX(-50%) rotate(45deg)",
-                            boxShadow: "2px 2px 4px rgba(0,0,0,0.04)",
-                          }}
-                        />
+                        <span className="absolute bottom-[-6px] left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 border-b border-r border-border bg-popover shadow-[2px_2px_4px_rgba(0,0,0,0.04)]" />
                       </div>
                     </div>
                   )}
@@ -259,16 +253,16 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                       type="checkbox"
                       checked={consent}
                       onChange={(e) => setConsent(e.target.checked)}
-                      className="h-4 w-4 rounded border-border accent-foreground cursor-pointer shrink-0"
+                      className="h-4 w-4 shrink-0 cursor-pointer rounded border-input accent-primary"
                       style={{ marginTop: "1px" }}
                     />
-                    <span className="text-xs text-muted-foreground leading-relaxed text-center">
+                    <span className="text-center text-xs leading-relaxed text-muted-foreground">
                       {language === "fr"
                         ? "J'accepte de recevoir des courriels concernant la liste d'attente, le lancement et les mises à jour produit de Tracer."
                         : "I agree to receive waitlist, launch, and product update emails from Tracer."}
                     </span>
                   </div>
-                  <span className="text-[11px] text-muted-foreground/60">
+                  <span className="text-[11px] text-subtle-foreground">
                     {language === "fr"
                       ? "Je peux me désabonner à tout moment."
                       : "I can unsubscribe at any time."}
@@ -276,16 +270,16 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                 </label>
 
                 {/* Privacy policy link */}
-                <p className="text-[11px] text-muted-foreground/60 text-center">
+                <p className="text-center text-[11px] text-subtle-foreground">
                   {language === "fr" ? (
                     <>En rejoignant la liste d&apos;attente, vous acceptez notre{" "}
-                      <a href="/privacy" target="_blank" className="underline hover:text-muted-foreground transition-colors">
+                      <a href="/privacy" target="_blank" className="underline transition-colors hover:text-foreground">
                         Politique de confidentialité
                       </a>.
                     </>
                   ) : (
                     <>By joining the waitlist, you agree to our{" "}
-                      <a href="/privacy" target="_blank" className="underline hover:text-muted-foreground transition-colors">
+                      <a href="/privacy" target="_blank" className="underline transition-colors hover:text-foreground">
                         Privacy Policy
                       </a>.
                     </>
@@ -293,7 +287,7 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                 </p>
 
                 {hasError && (
-                  <p className="text-sm text-muted-foreground text-center">
+                  <p className="text-center text-sm text-destructive">
                     {language === "fr"
                       ? "Nous éprouvons un problème temporaire. Veuillez réessayer sous peu."
                       : "We're experiencing a temporary issue. Please try again shortly."}
@@ -304,8 +298,8 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
           )}
 
           {/* Countdown */}
-          <div className="mt-8 pt-6 md:mt-16 md:pt-8 border-t border-border/40">
-            <p className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground mb-6">
+          <div className="mt-8 border-t border-border pt-6 md:mt-12 md:pt-8">
+            <p className="mb-6 text-[11px] font-semibold uppercase tracking-[0.3em] text-muted-foreground">
               {t.waitlist.launchingIn}
             </p>
             <div className="flex justify-center gap-6 md:gap-10">
@@ -325,10 +319,10 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
 function CountdownUnit({ value, label }: { value: number; label: string }) {
   return (
     <div className="text-center">
-      <div className="text-3xl md:text-4xl font-light text-foreground tabular-nums">
+      <div className="text-3xl font-semibold tabular-nums text-foreground md:text-4xl">
         {value.toString().padStart(2, "0")}
       </div>
-      <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mt-1">
+      <div className="mt-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
         {label}
       </div>
     </div>

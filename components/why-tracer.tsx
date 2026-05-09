@@ -14,21 +14,21 @@ export function WhyTracer() {
           {/* Left Column */}
           <div className="lg:sticky lg:top-32 lg:self-start">
             <span className="inline-block text-[11px] uppercase tracking-[0.3em] text-muted-foreground mb-6">
-              {t.whyTrace.sectionLabel}
+              {t.whyTracer.sectionLabel}
             </span>
             <h2 className="text-4xl md:text-5xl lg:text-6xl tracking-tight text-foreground leading-[1.1] mb-8">
-              <span className="font-sans font-extralight">{t.whyTrace.headline}</span>
+              <span className="font-sans font-extralight">{t.whyTracer.headline}</span>
               <br />
-              <span className="font-sans font-medium">{t.whyTrace.headlineBold}</span>
+              <span className="font-sans font-medium">{t.whyTracer.headlineBold}</span>
             </h2>
             <p className="text-lg text-muted-foreground font-light leading-relaxed max-w-md">
-              {t.whyTrace.subtitle}
+              {t.whyTracer.subtitle}
             </p>
           </div>
 
           {/* Right Column - Features */}
           <div className="space-y-0">
-            {t.whyTrace.features.map((feature, index) => (
+            {t.whyTracer.features.map((feature, index) => (
               <FeatureItem key={index} feature={feature} index={index} />
             ))}
           </div>

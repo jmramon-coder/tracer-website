@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { useLanguage } from "@/lib/language-context"
@@ -384,15 +385,15 @@ export default function PrivacyPage() {
       <main className="min-h-screen bg-background">
           <div className="mx-auto max-w-2xl px-6 pt-36 pb-24">
             {/* Back button */}
-            <a
-              href="/"
+            <Link
+              href="/platform"
               className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.15em] text-muted-foreground/50 hover:text-muted-foreground transition-colors duration-300 mb-16"
             >
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M7.5 2L3.5 6L7.5 10" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-              Back
-            </a>
+              {language === "fr" ? "Retour" : "Back"}
+            </Link>
 
             {/* Header */}
             <div className="mb-16">

@@ -1,19 +1,10 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { Geist, Geist_Mono, Instrument_Serif } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { ThemeProvider } from '@/lib/theme-context'
 import { LanguageProvider } from '@/lib/language-context'
 
 import './globals.css'
-
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
-const _instrumentSerif = Instrument_Serif({ 
-  weight: "400",
-  subsets: ["latin"],
-  style: ["normal", "italic"]
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://tracersecurity.ca'),
@@ -21,7 +12,7 @@ export const metadata: Metadata = {
     default: 'Tracer - Research Security Intelligence',
     template: '%s | Tracer',
   },
-  description: 'Due Diligence, Purpose-Built for Universities. Tracer helps universities screen research partnerships faster, more thoroughly, and reliably.',
+  description: 'Structured research security due diligence for Canadian research institutions. Tracer helps teams gather facts, synthesize findings, and render auditable screening reports.',
   icons: {
     icon: [
       {
@@ -35,13 +26,13 @@ export const metadata: Metadata = {
     type: 'website',
     siteName: 'Tracer',
     title: 'Tracer - Research Security Intelligence',
-    description: 'Research security screening platform built in Canada. Screen international research partnerships against sanctions, affiliations, and adverse signals.',
+    description: 'Research security due diligence platform for structured, auditable screening workflows.',
     url: 'https://tracersecurity.ca',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Tracer - Research Security Intelligence',
-    description: 'Research security screening platform built in Canada. Screen international research partnerships against sanctions, affiliations, and adverse signals.',
+    description: 'Research security due diligence platform for structured, auditable screening workflows.',
   },
 }
 

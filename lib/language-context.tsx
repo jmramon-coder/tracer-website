@@ -25,12 +25,16 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     const saved = localStorage.getItem("trace-lang") as Language
     if (saved && (saved === "en" || saved === "fr")) {
       setLanguage(saved)
+      document.documentElement.lang = saved
+    } else {
+      document.documentElement.lang = "en"
     }
   }, [])
 
   const handleSetLanguage = (lang: Language) => {
     setLanguage(lang)
     localStorage.setItem("trace-lang", lang)
+    document.documentElement.lang = lang
   }
 
   // Provide default values until mounted to avoid hydration mismatch

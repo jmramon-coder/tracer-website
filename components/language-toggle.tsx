@@ -1,20 +1,30 @@
 "use client"
 
 import { useLanguage } from "@/lib/language-context"
+import { cn } from "@/lib/utils"
 
-export function LanguageToggle() {
+type LanguageToggleProps = {
+  className?: string
+  tone?: "default" | "media"
+}
+
+export function LanguageToggle({ className, tone = "default" }: LanguageToggleProps) {
   const { language, setLanguage } = useLanguage()
+  const isMedia = tone === "media"
 
   return (
     <button
       onClick={() => setLanguage(language === "en" ? "fr" : "en")}
-      className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium tracking-wide rounded-md
-        border border-border/50 bg-background/50
-        hover:bg-muted/50 hover:border-border
-        transition-all duration-200 cursor-pointer"
+      className={cn(
+        "flex h-10 items-center gap-1 rounded-full border px-3.5 text-xs font-medium tracking-wide transition-all duration-200",
+        isMedia
+          ? "border-white/18 bg-white/12 text-white hover:bg-white/20"
+          : "border-border/70 bg-card/70 text-foreground hover:bg-muted",
+        className
+      )}
     >
       <span className={`transition-opacity ${language === "en" ? "opacity-100" : "opacity-40"}`}>EN</span>
-      <span className="text-muted-foreground/40">/</span>
+      <span className={isMedia ? "text-white/38" : "text-muted-foreground/40"}>/</span>
       <span className={`transition-opacity ${language === "fr" ? "opacity-100" : "opacity-40"}`}>FR</span>
     </button>
   )

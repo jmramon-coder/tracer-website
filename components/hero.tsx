@@ -1,6 +1,6 @@
 "use client"
 
-import { File, ChevronDown, CheckCircle2, AlertTriangle, XCircle, Users, Shield, Globe, BookOpen, Newspaper } from "lucide-react"
+import { File, CheckCircle2, AlertTriangle, Users, Shield, Globe, BookOpen, Newspaper } from "lucide-react"
 
 // Floating animation keyframes with CSS variable for delay
 const floatingStyles = `

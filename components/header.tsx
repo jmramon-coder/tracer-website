@@ -1,16 +1,79 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { TracerLogo } from "@/components/tracer-logo"
-import { WaitlistModal } from "@/components/waitlist-modal"
-import { ThemeToggle } from "@/components/theme-toggle"
+import { useState, useEffect, useRef } from "react"
+import Image from "next/image"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { Menu, X } from "lucide-react"
+import { BrandLogo } from "@/components/brand-logo"
 import { LanguageToggle } from "@/components/language-toggle"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { useLanguage } from "@/lib/language-context"
+import { mainNav } from "@/lib/site-data"
+import { WaitlistButton } from "@/components/waitlist-button"
+import { cn } from "@/lib/utils"
+
+const navTranslationKeys: Record<string, keyof typeof import("@/lib/translations").translations.en.header.nav> = {
+  "/platform": "platform",
+  "/labs": "labs",
+  "/solutions": "solutions",
+  "/pricing": "pricing",
+  "/resources": "resources",
+  "/company": "company",
+}
+
+function NavItemMark({
+  href,
+  isOverMedia,
+  isSpinning = false,
+}: {
+  href: string
+  isOverMedia: boolean
+  isSpinning?: boolean
+}) {
+  if (href === "/platform") {
+    return (
+      <BrandLogo
+        variant={isOverMedia ? "white" : "auto"}
+        showText={false}
+        markClassName="h-4 w-4"
+      />
+    )
+  }
+
+  if (href === "/labs") {
+    return (
+      <Image
+        src="/brand/tracer-labs-v2.png"
+        alt=""
+        width={386}
+        height={383}
+        className={cn(
+          "h-4 w-4 origin-center object-contain",
+          isSpinning && "animate-[labs-disc-spin_0.75s_linear_infinite]"
+        )}
+      />
+    )
+  }
+
+  return null
+}
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false)
-  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false)
-  const { t } = useLanguage()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isLabsMarkSpinning, setIsLabsMarkSpinning] = useState(false)
+  const labsSpinTimeoutRef = useRef<number | null>(null)
+  const pathname = usePathname()
+  const { t, language } = useLanguage()
+  const isMediaHero = pathname === "/" || pathname === "/platform" || pathname === "/labs" || pathname === "/solutions"
+  const isOverMedia = isMediaHero && !scrolled
+  const labels = {
+    primaryNavigation: language === "fr" ? "Navigation principale" : "Primary navigation",
+    mobileNavigation: language === "fr" ? "Navigation mobile" : "Mobile navigation",
+    openMenu: language === "fr" ? "Ouvrir le menu" : "Open menu",
+    closeMenu: language === "fr" ? "Fermer le menu" : "Close menu",
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,57 +83,163 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  useEffect(() => {
+    return () => {
+      if (labsSpinTimeoutRef.current) {
+        window.clearTimeout(labsSpinTimeoutRef.current)
+      }
+    }
+  }, [])
+
+  const triggerLabsSpin = () => {
+    if (labsSpinTimeoutRef.current) {
+      window.clearTimeout(labsSpinTimeoutRef.current)
+    }
+
+    setIsLabsMarkSpinning(true)
+    labsSpinTimeoutRef.current = window.setTimeout(() => {
+      setIsLabsMarkSpinning(false)
+      labsSpinTimeoutRef.current = null
+    }, 1100)
+  }
+
   return (
     <>
       <header 
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled 
-            ? "bg-background/90 backdrop-blur-md border-b border-border/50" 
-            : "bg-transparent"
-        }`}
+        className="pointer-events-none fixed left-0 right-0 top-3 z-50 px-3 transition-all duration-500 md:top-4 md:px-6"
       >
-        <div className="mx-auto max-w-6xl px-4 md:px-6">
-          <div className="flex h-16 md:h-20 items-center justify-between">
-            {/* Logo with tagline */}
-            <a href="/" className="group flex items-center gap-1.5 md:gap-2 cursor-pointer">
-              <TracerLogo size={24} className="md:w-7 md:h-7" animated={true} />
-              <div className="flex flex-col -space-y-0.5">
-                <span className="text-xs md:text-sm font-medium tracking-[0.15em] uppercase text-foreground">
-                  Tracer
-                </span>
-                <span className="text-[7px] md:text-[9px] tracking-[0.1em] md:tracking-[0.12em] uppercase text-foreground/70 max-w-[50px] md:max-w-none leading-tight">
-                  {t.header.tagline}
-                </span>
-              </div>
-            </a>
+        <div className="mx-auto max-w-7xl">
+          <div
+            className={cn(
+              "pointer-events-auto flex h-14 items-center justify-between rounded-[28px] border px-3 shadow-[var(--floating-shadow)] backdrop-blur-2xl transition-all duration-500 md:h-16 md:px-4",
+              isOverMedia
+                ? "border-white/22 bg-black/28 supports-[backdrop-filter]:bg-black/24"
+                : "border-white/30 bg-background/70 supports-[backdrop-filter]:bg-background/58 dark:border-white/12 dark:bg-background/42"
+            )}
+          >
+            <Link
+              href="/platform"
+              className={cn("group", isOverMedia ? "text-white" : "text-foreground")}
+            >
+              <BrandLogo
+                variant={isOverMedia ? "white" : "auto"}
+                markClassName="h-7 w-8 md:h-8 md:w-9"
+                textClassName="hidden sm:flex"
+              />
+            </Link>
 
-            {/* Right side controls */}
+            <nav
+              aria-label={labels.primaryNavigation}
+              className="hidden items-center gap-6 lg:flex"
+            >
+              {mainNav.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={item.href === "/labs" ? triggerLabsSpin : undefined}
+                  className={cn(
+                    "inline-flex items-center gap-1.5 text-sm font-medium transition-colors",
+                    isOverMedia
+                      ? "text-white/74 hover:text-white"
+                      : "text-foreground/72 hover:text-foreground"
+                  )}
+                >
+                  <NavItemMark
+                    href={item.href}
+                    isOverMedia={isOverMedia}
+                    isSpinning={item.href === "/labs" && isLabsMarkSpinning}
+                  />
+                  {t.header.nav[navTranslationKeys[item.href]] ?? item.label}
+                </Link>
+              ))}
+            </nav>
+
             <div className="flex items-center gap-1.5 md:gap-3">
-              <LanguageToggle />
-              <ThemeToggle />
-              
-              {/* Join Waitlist button */}
-              <button
-                onClick={() => setIsWaitlistOpen(true)}
-                className="px-3 md:px-5 py-2 md:py-2.5 text-[11px] md:text-[13px] tracking-wide font-medium rounded-lg
-                  bg-foreground text-background
-                  dark:shadow-[0_2px_12px_rgba(0,0,0,0.2),0_1px_4px_rgba(0,0,0,0.1)]
-                  shadow-[0_2px_8px_rgba(0,0,0,0.06),0_1px_3px_rgba(0,0,0,0.04)]
-                  dark:hover:shadow-[0_4px_20px_rgba(0,0,0,0.3),0_2px_6px_rgba(0,0,0,0.15)]
-                  hover:shadow-[0_4px_12px_rgba(0,0,0,0.1),0_2px_4px_rgba(0,0,0,0.06)]
-                  hover:opacity-90
-                  active:scale-[0.97] active:shadow-[0_1px_4px_rgba(0,0,0,0.05)]
-                  transition-all duration-150 ease-out
-                  cursor-pointer"
+              <div className="hidden items-center gap-1.5 sm:flex md:gap-3">
+                <ThemeToggle tone={isOverMedia ? "media" : "default"} />
+                <LanguageToggle tone={isOverMedia ? "media" : "default"} />
+              </div>
+              <WaitlistButton
+                className="hidden h-10 border border-[#6F98F2]/40 bg-[#2459B8] px-4 text-xs tracking-wide text-white shadow-xl shadow-[#2459B8]/30 ring-1 ring-white/15 hover:-translate-y-0.5 hover:bg-[#1E4C9D] hover:shadow-[#2459B8]/45 sm:inline-flex md:text-sm"
               >
                 {t.header.joinWaitlist}
+              </WaitlistButton>
+              <button
+                type="button"
+                onClick={() => setIsMenuOpen((value) => !value)}
+                aria-label={isMenuOpen ? labels.closeMenu : labels.openMenu}
+                aria-expanded={isMenuOpen}
+                className={cn(
+                  "inline-flex h-10 w-10 items-center justify-center rounded-2xl border backdrop-blur-xl transition-colors lg:hidden",
+                  isOverMedia
+                    ? "border-white/18 bg-white/12 text-white hover:bg-white/20"
+                    : "border-border/70 bg-card/70 text-foreground hover:bg-muted"
+                )}
+              >
+                {isMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
               </button>
             </div>
           </div>
         </div>
-      </header>
 
-      <WaitlistModal isOpen={isWaitlistOpen} onClose={() => setIsWaitlistOpen(false)} />
+        {isMenuOpen && (
+          <div
+            className={cn(
+              "pointer-events-auto mx-auto mt-2 max-w-7xl rounded-[28px] border shadow-[var(--floating-shadow)] backdrop-blur-2xl lg:hidden",
+              isOverMedia
+                ? "border-white/18 bg-black/62 text-white"
+                : "border-white/25 bg-background/74 dark:border-white/12 dark:bg-background/58"
+            )}
+          >
+            <div className="px-4 py-4">
+              <nav aria-label={labels.mobileNavigation} className="grid gap-1">
+                {mainNav.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => {
+                      if (item.href === "/labs") {
+                        triggerLabsSpin()
+                      }
+
+                      setIsMenuOpen(false)
+                    }}
+                    className={cn(
+                      "inline-flex items-center gap-2 rounded-2xl px-3 py-3 text-sm font-medium transition-colors",
+                      isOverMedia
+                        ? "text-white/72 hover:bg-white/10 hover:text-white"
+                        : "text-foreground/72 hover:bg-card hover:text-foreground"
+                    )}
+                  >
+                    <NavItemMark
+                      href={item.href}
+                      isOverMedia={isOverMedia}
+                      isSpinning={item.href === "/labs" && isLabsMarkSpinning}
+                    />
+                    {t.header.nav[navTranslationKeys[item.href]] ?? item.label}
+                  </Link>
+                ))}
+              </nav>
+              <div
+                className={cn(
+                  "mt-4 flex items-center justify-between gap-3 border-t pt-4",
+                  isOverMedia ? "border-white/12" : "border-border"
+                )}
+              >
+                <div className="flex items-center gap-2">
+                  <ThemeToggle tone={isOverMedia ? "media" : "default"} />
+                  <LanguageToggle tone={isOverMedia ? "media" : "default"} />
+                </div>
+                <WaitlistButton
+                  className="h-10 border border-[#6F98F2]/40 bg-[#2459B8] px-4 text-xs text-white shadow-xl shadow-[#2459B8]/30 ring-1 ring-white/15 hover:-translate-y-0.5 hover:bg-[#1E4C9D] hover:shadow-[#2459B8]/45"
+                >
+                  {t.header.joinWaitlist}
+                </WaitlistButton>
+              </div>
+            </div>
+          </div>
+        )}
+      </header>
     </>
   )
 }

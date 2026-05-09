@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { TracerLogo } from "@/components/tracer-logo"
+import { BrandLogo } from "@/components/brand-logo"
 
 const pillarPages = [
   { href: "/research-security-screening", label: "Research Security Screening" },
@@ -11,40 +11,34 @@ const pillarPages = [
 
 export function PillarPageLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      <header className="border-b border-border/50">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
+      <header className="border-b border-border">
         <div className="mx-auto max-w-4xl px-6 py-5">
-          <Link href="/" className="inline-flex items-center gap-2">
-            <TracerLogo size={22} animated={false} />
-            <span className="text-xs font-medium tracking-[0.15em] uppercase text-foreground">
-              Tracer
-            </span>
+          <Link href="/platform" className="inline-flex text-foreground">
+            <BrandLogo markClassName="h-7 w-8" />
           </Link>
         </div>
       </header>
 
-      <main className="flex-1 mx-auto w-full max-w-4xl px-6 py-12 md:py-20">
+      <main className="mx-auto w-full max-w-4xl flex-1 rounded-t-[28px] bg-card px-6 py-12 shadow-[var(--surface-shadow)] md:py-20">
         {children}
       </main>
 
-      <footer className="border-t border-border bg-muted/20">
+      <footer className="border-t border-border bg-background">
         <div className="mx-auto max-w-4xl px-6 py-12">
-          <div className="flex items-center gap-2 mb-8">
-            <TracerLogo size={20} animated={false} className="opacity-60" />
-            <span className="text-xs font-medium tracking-[0.15em] uppercase text-foreground/70">
-              Tracer
-            </span>
+          <div className="mb-8 flex text-foreground">
+            <BrandLogo markClassName="h-7 w-8" />
           </div>
           <nav aria-label="Related pages">
-            <p className="text-[11px] uppercase tracking-[0.15em] text-muted-foreground/60 mb-4">
+            <p className="mb-4 text-[11px] uppercase tracking-[0.15em] text-muted-foreground">
               Research Security Guides
             </p>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
               {pillarPages.map((page) => (
                 <li key={page.href}>
                   <Link
                     href={page.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
+                    className="text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
                   >
                     {page.label}
                   </Link>
@@ -53,20 +47,20 @@ export function PillarPageLayout({ children }: { children: React.ReactNode }) {
               <li>
                 <Link
                   href="/blog"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
+                  className="text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
                 >
                   Blog
                 </Link>
               </li>
             </ul>
           </nav>
-          <div className="mt-10 pt-6 border-t border-border flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-            <p className="text-[11px] text-muted-foreground/50 tracking-wide">
+          <div className="mt-10 flex flex-col items-start justify-between gap-3 border-t border-border pt-6 sm:flex-row sm:items-center">
+            <p className="text-[11px] tracking-wide text-subtle-foreground">
               &copy; {new Date().getFullYear()} Tracer. All rights reserved.
             </p>
             <Link
               href="/privacy"
-              className="text-[11px] text-muted-foreground/50 hover:text-muted-foreground tracking-wide transition-colors duration-200"
+              className="text-[11px] tracking-wide text-subtle-foreground transition-colors duration-200 hover:text-foreground"
             >
               Privacy Policy
             </Link>
