@@ -41,9 +41,9 @@ const valueIcons = [Gauge, ShieldCheck, UsersRound, FileCheck2] as const
 const copy = {
   en: {
     eyebrow: "Platform experience",
-    title: "A workspace built for research security review.",
+    title: "A workspace built for research security due diligence.",
     description:
-      "Tracer keeps intake, entity screening, live activity, cited reports, and export-ready evidence in one calm operating layer.",
+      "Tracer helps universities screen research partners across the full spectrum of security risks so great science can move forward with confidence.",
     slides: [
       {
         label: "Home",
@@ -53,21 +53,21 @@ const copy = {
         alt: "Tracer home workspace with individual and organization screening modules.",
       },
       {
-        label: "Screening and monitoring",
+        label: "Screening",
         title: "Monitor every screening run while work is moving.",
         description:
           "Track running, completed, and attention-needed work without losing context.",
         alt: "Tracer screening and monitoring workspace placeholder.",
       },
       {
-        label: "Case and entities",
+        label: "Case",
         title: "Keep each case, entity, and review path organized.",
         description:
           "Connect people, organizations, affiliations, notes, and audit history inside one case view.",
         alt: "Tracer case and entities workspace placeholder.",
       },
       {
-        label: "Report and audit",
+        label: "Report",
         title: "Render cited reports with audit-ready context.",
         description:
           "Prepare report cards, source handling, verdict matrices, and export-ready evidence.",
@@ -82,7 +82,7 @@ const copy = {
       },
       {
         label: "Consistency",
-        title: "Every screen.",
+        title: "Every output.",
         detail: "The same standard.",
       },
       {
@@ -100,9 +100,9 @@ const copy = {
   },
   fr: {
     eyebrow: "Experience plateforme",
-    title: "Un espace de travail pour la revue de sécurité de la recherche.",
+    title: "Un espace de travail pour la diligence raisonnable en sécurité de la recherche.",
     description:
-      "Tracer regroupe l'admission, la vérification des entités, l'activité en cours, les rapports cités et les preuves exportables dans une couche opérationnelle calme.",
+      "Tracer aide les universités à vérifier leurs partenaires de recherche sur tout le spectre des risques de sécurité afin que la grande science avance avec confiance.",
     slides: [
       {
         label: "Accueil",
@@ -112,21 +112,21 @@ const copy = {
         alt: "Espace d'accueil Tracer avec les modules de vérification individuelle et organisationnelle.",
       },
       {
-        label: "Vérification et suivi",
+        label: "Vérification",
         title: "Suivez chaque vérification pendant que le travail avance.",
         description:
           "Suivez les travaux en cours, terminés et à revoir sans perdre le contexte.",
         alt: "Espace Tracer de vérification et suivi en préparation.",
       },
       {
-        label: "Dossiers et entités",
+        label: "Dossier",
         title: "Gardez chaque dossier, entité et parcours de revue organisé.",
         description:
           "Reliez personnes, organisations, affiliations, notes et historique d'audit dans une seule vue.",
         alt: "Espace Tracer de dossiers et entités en préparation.",
       },
       {
-        label: "Rapport et audit",
+        label: "Rapport",
         title: "Générez des rapports cités avec un contexte prêt pour l'audit.",
         description:
           "Préparez fiches de rapport, sources, matrices de verdicts et preuves exportables.",
@@ -141,7 +141,7 @@ const copy = {
       },
       {
         label: "Constance",
-        title: "Chaque vérification.",
+        title: "Chaque sortie.",
         detail: "Le même standard.",
       },
       {

@@ -20,7 +20,7 @@ export const translations = {
 
     // Hero
     hero: {
-      screenResearch: "Screen research",
+      screenResearch: "Screen partners",
       inMinutes: "in minutes",
       words: ["partnerships", "collaborations", "affiliations", "networks", "risks"],
       subtitle: "Tracer cross-references 400M+ records across 320+ sources and delivers a",
@@ -189,13 +189,13 @@ export const translations = {
 
     // Waitlist Modal
     waitlist: {
-      comingSummer: "Coming Summer 2026",
+      comingSummer: "Coming June 1st 2026",
       joinWaitlist: "Join the Waitlist",
       subtitle: "Be the first to know when Tracer launches. Early access members will get priority onboarding and direct input on features.",
       emailPlaceholder: "Enter your email",
       joining: "Joining...",
       success: "You're on the list",
-      successMessage: "We'll notify you when Tracer launches this summer.",
+      successMessage: "We'll notify you when Tracer launches on June 1, 2026.",
       launchingIn: "Launching in",
       days: "Days",
       hours: "Hours",
@@ -221,7 +221,7 @@ export const translations = {
 
     // Hero
     hero: {
-      screenResearch: "Évaluez vos",
+      screenResearch: "Vérifiez vos partenaires",
       inMinutes: "en quelques minutes",
       words: ["partenariats", "collaborations", "affiliations", "réseaux", "risques"],
       subtitle: "Tracer référence plus de 400M+ de données à travers 320 sources et génère un",
@@ -390,13 +390,13 @@ export const translations = {
 
     // Waitlist Modal
     waitlist: {
-      comingSummer: "Lancement été 2026",
+      comingSummer: "Lancement le 1er juin 2026",
       joinWaitlist: "Rejoindre la liste d'attente",
       subtitle: "Soyez les premiers informés du lancement de Tracer. Les membres en accès anticipé bénéficieront d'une intégration prioritaire et pourront contribuer aux fonctionnalités.",
       emailPlaceholder: "Entrez votre courriel",
       joining: "Inscription...",
       success: "Vous êtes inscrit",
-      successMessage: "Nous vous informerons du lancement de Tracer cet été.",
+      successMessage: "Nous vous informerons du lancement de Tracer le 1er juin 2026.",
       launchingIn: "Lancement dans",
       days: "Jours",
       hours: "Heures",

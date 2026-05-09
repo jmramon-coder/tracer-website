@@ -40,31 +40,55 @@ const heroWords = [
 const signalCards = [
   {
     icon: ShieldCheck,
-    title: "Sanctions lists",
-    titleFr: "Listes de sanctions",
-    description: "Canadian, U.S., and international lists.",
-    descriptionFr: "Listes canadiennes, américaines et internationales.",
+    title: "Sanctions & designations",
+    titleFr: "Sanctions et désignations",
+    description: "NRO, Canadian, US, EU, UK, UN and other international lists.",
+    descriptionFr: "Listes NRO, canadiennes, américaines, européennes, britanniques, onusiennes et autres listes internationales.",
+  },
+  {
+    icon: Server,
+    title: "Institutional affiliation",
+    titleFr: "Affiliation institutionnelle",
+    description:
+      "Legal identity, governance chain, supervisory authority, military and defence ties, and state programme membership.",
+    descriptionFr:
+      "Identité juridique, chaîne de gouvernance, autorité de supervision, liens militaires et de défense, et participation à des programmes d'État.",
   },
   {
     icon: Network,
     title: "Academic network",
     titleFr: "Réseau académique",
-    description: "Co-authors, affiliations, and institutional ties.",
-    descriptionFr: "Co-auteurs, affiliations et liens institutionnels.",
-  },
-  {
-    icon: Globe2,
-    title: "OSINT signals",
-    titleFr: "Signaux OSINT",
-    description: "Reputational signals, legal proceedings, adverse media, and academic retractions.",
-    descriptionFr: "Signaux réputationnels, procédures juridiques, médias défavorables et rétractations académiques.",
+    description:
+      "Co-author clusters, flagged collaborations, joint publications, and institutional ties across designation lists.",
+    descriptionFr:
+      "Groupes de coauteurs, collaborations signalées, publications conjointes et liens institutionnels dans les listes de désignation.",
   },
   {
     icon: Database,
-    title: "Corporate structure",
-    titleFr: "Structure corporative",
-    description: "Parent entities, ownership, registries, and jurisdictional context.",
-    descriptionFr: "Entités mères, propriété, registres et contexte juridictionnel.",
+    title: "Funding & foreign ties",
+    titleFr: "Financement et liens étrangers",
+    description:
+      "Grant funders, undisclosed funding, talent programme participation, foreign appointments, and state-linked awards.",
+    descriptionFr:
+      "Bailleurs de subventions, financement non déclaré, participation à des programmes de talents, nominations étrangères et prix liés à l'État.",
+  },
+  {
+    icon: FileCheck,
+    title: "Legal & regulatory record",
+    titleFr: "Dossier juridique et réglementaire",
+    description:
+      "Criminal, civil, and regulatory proceedings, debarments, exclusions, and export control enforcement actions.",
+    descriptionFr:
+      "Procédures criminelles, civiles et réglementaires, interdictions, exclusions et mesures d'application du contrôle des exportations.",
+  },
+  {
+    icon: Globe2,
+    title: "Adverse media & integrity",
+    titleFr: "Médias défavorables et intégrité",
+    description:
+      "Professional and financial misconduct, research integrity findings, reputational concerns.",
+    descriptionFr:
+      "Inconduite professionnelle et financière, constats d'intégrité en recherche et préoccupations réputationnelles.",
   },
 ]
 
@@ -129,7 +153,7 @@ export default function PlatformPage() {
               <LocalizedText en="Clear the path to great science" fr="Ouvrez la voie à une science d'excellence" />
             </p>
             <h1 className="mt-5 max-w-xl text-5xl font-semibold leading-[0.96] tracking-tight sm:text-6xl lg:text-[4rem]">
-              <LocalizedText en="Screen research in minutes." fr="Vérifiez la recherche en quelques minutes." />
+              <LocalizedText en="Screen partners in minutes." fr="Vérifiez vos partenaires en quelques minutes." />
             </h1>
             <div className="mt-6 flex flex-wrap gap-2">
               {heroWords.map(([en, fr]) => (
@@ -173,14 +197,14 @@ export default function PlatformPage() {
             eyebrow={<LocalizedText en="Screening modules" fr="Modules de vérification" />}
             title={
               <LocalizedText
-                en="Start with individuals. Extend to organizations."
-                fr="Commencez par les personnes. Étendez aux organisations."
+                en="Two screening pipelines, one workflow."
+                fr="Deux pipelines de vérification, un seul flux."
               />
             }
             copy={
               <LocalizedText
-                en="Tracer keeps the first screening choice simple while preserving the same case structure, audit trail, and report workflow for both people and institutions."
-                fr="Tracer simplifie le premier choix de vérification tout en conservant la même structure de dossier, piste d'audit et logique de rapport pour les personnes comme pour les institutions."
+                en="Whether you're vetting an individual researcher or a partner institution, Tracer applies the same evidence standards, audit trail, and report structure, so analysts can review consistent files regardless of subject."
+                fr="Que vous vérifiiez une personne chercheuse ou une institution partenaire, Tracer applique les mêmes standards de preuve, la même piste d'audit et la même structure de rapport afin que les analystes révisent des dossiers cohérents, peu importe le sujet."
               />
             }
           />
@@ -205,9 +229,6 @@ export default function PlatformPage() {
                       <h3 className="text-3xl font-semibold tracking-tight">
                         <LocalizedText en={module.title} fr={module.titleFr} />
                       </h3>
-                      <span className="rounded-full border border-white/20 bg-white/12 px-3 py-1 text-xs font-semibold text-white backdrop-blur-xl">
-                        <LocalizedText en={module.status} fr={module.statusFr} />
-                      </span>
                     </div>
                     <p className="mt-3 max-w-xl text-sm leading-6 text-white/72">
                       <LocalizedText en={module.description} fr={module.descriptionFr} />
@@ -267,14 +288,14 @@ export default function PlatformPage() {
               </p>
               <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
                 <LocalizedText
-                  en="Academic signals without raw-data overload."
-                  fr="Des signaux académiques sans surcharge de données brutes."
+                  en="See who a researcher works with, and which collaborators are affiliated with designated institutions."
+                  fr="Voyez avec qui une personne chercheuse travaille, et quels collaborateurs sont affiliés à des institutions désignées."
                 />
               </h2>
               <p className="mt-6 text-base leading-7 text-muted-foreground">
                 <LocalizedText
-                  en="Tracer presents co-authorship and affiliation signals in context, including what was checked, what was found, and where human review should continue."
-                  fr="Tracer présente les signaux de co-publication et d'affiliation en contexte, avec ce qui a été vérifié, ce qui a été trouvé et les points où la revue humaine doit se poursuivre."
+                  en="Tracer maps co-authors by country and institution, flags every collaboration tied to a sanctions or research security list, and shows paper counts and collaboration periods so analysts can judge depth, not just presence."
+                  fr="Tracer cartographie les coauteurs par pays et institution, signale chaque collaboration liée à une liste de sanctions ou de sécurité de la recherche, et affiche le nombre d'articles et les périodes de collaboration afin que les analystes évaluent la profondeur du lien, pas seulement sa présence."
                 />
               </p>
             </div>
@@ -286,12 +307,12 @@ export default function PlatformPage() {
       <section className="bg-background py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-6">
           <SectionIntro
-            eyebrow={<LocalizedText en="Canada-ready" fr="Prêt pour le Canada" />}
-            title={<LocalizedText en="Built for the world, optimized for Canada." fr="Conçu pour le monde, optimisé pour le Canada." />}
+            eyebrow={<LocalizedText en="Canadian compliance" fr="Conformité canadienne" />}
+            title={<LocalizedText en="Built for Canadian compliance." fr="Conçu pour la conformité canadienne." />}
             copy={
               <LocalizedText
-                en="The platform reflects Canadian research security expectations while supporting global research partnerships."
-                fr="La plateforme reflète les attentes canadiennes en sécurité de la recherche tout en soutenant les partenariats de recherche mondiaux."
+                en="Tracer is designed around the Policy on Sensitive Technology Research and Affiliations of Concern, the National Security Guidelines for Research Partnerships, and the NRO list, with screening that extends across U.S., EU, UK, and UN sanctions regimes for partners anywhere in the world."
+                fr="Tracer est conçu autour de la Politique sur la recherche en technologies sensibles et les affiliations préoccupantes, des Lignes directrices sur la sécurité nationale pour les partenariats de recherche et de la liste des organisations de recherche nommées, avec une vérification qui s'étend aux régimes de sanctions américains, européens, britanniques et onusiens pour les partenaires partout dans le monde."
               />
             }
           />
@@ -341,7 +362,7 @@ function HeroCardDeck() {
         ["Network", "Réseau", "7 flags", "7 signaux", "warn"],
         ["Identity", "Identité", "Matched", "Confirmée", "good"],
       ],
-      className: "left-0 top-6 z-[8] -rotate-6 sm:left-4 sm:top-12 lg:left-[18px] lg:top-[58px]",
+      className: "-left-1 top-10 z-[8] -rotate-6 sm:-left-2 sm:top-16 lg:left-[-28px] lg:top-[86px]",
     },
     {
       kind: "organization",
@@ -361,7 +382,7 @@ function HeroCardDeck() {
         ["NRO", "ORN", "Review", "Révision", "warn"],
         ["Ownership", "Propriété", "Mapped", "Cartographiée", "neutral"],
       ],
-      className: "right-0 top-[130px] z-[9] rotate-3 sm:right-8 sm:top-[170px] lg:right-11 lg:top-[190px]",
+      className: "right-0 top-[72px] z-[9] rotate-3 sm:right-8 sm:top-[92px] lg:right-11 lg:top-[98px]",
     },
     {
       kind: "case",
@@ -620,24 +641,34 @@ function ReportExample() {
             </p>
             <div className="mt-3 grid gap-2">
               <SignalRow
-                label={<LocalizedText en="Sanctions lists" fr="Listes de sanctions" />}
+                label={<LocalizedText en="Sanctions & designations" fr="Sanctions et désignations" />}
                 status={<LocalizedText en="No signal" fr="Aucun signal" />}
                 tone="good"
               />
               <SignalRow
-                label={<LocalizedText en="Corporate structure" fr="Structure corporative" />}
+                label={<LocalizedText en="Institutional affiliation" fr="Affiliation institutionnelle" />}
                 status={<LocalizedText en="Review" fr="Révision" />}
                 tone="warn"
-              />
-              <SignalRow
-                label={<LocalizedText en="Adverse media" fr="Médias défavorables" />}
-                status={<LocalizedText en="No signal" fr="Aucun signal" />}
-                tone="good"
               />
               <SignalRow
                 label={<LocalizedText en="Academic network" fr="Réseau académique" />}
                 status={<LocalizedText en="7 flags" fr="7 signaux" />}
                 tone="bad"
+              />
+              <SignalRow
+                label={<LocalizedText en="Funding & foreign ties" fr="Financement et liens étrangers" />}
+                status={<LocalizedText en="Review" fr="Révision" />}
+                tone="warn"
+              />
+              <SignalRow
+                label={<LocalizedText en="Legal & regulatory record" fr="Dossier juridique et réglementaire" />}
+                status={<LocalizedText en="No signal" fr="Aucun signal" />}
+                tone="good"
+              />
+              <SignalRow
+                label={<LocalizedText en="Adverse media & integrity" fr="Médias défavorables et intégrité" />}
+                status={<LocalizedText en="No signal" fr="Aucun signal" />}
+                tone="good"
               />
             </div>
           </div>

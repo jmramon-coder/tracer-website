@@ -66,7 +66,7 @@ export function Header() {
   const labsSpinTimeoutRef = useRef<number | null>(null)
   const pathname = usePathname()
   const { t, language } = useLanguage()
-  const isMediaHero = pathname === "/" || pathname === "/platform" || pathname === "/labs" || pathname === "/solutions"
+  const isMediaHero = pathname === "/" || pathname === "/platform" || pathname === "/labs"
   const isOverMedia = isMediaHero && !scrolled
   const labels = {
     primaryNavigation: language === "fr" ? "Navigation principale" : "Primary navigation",

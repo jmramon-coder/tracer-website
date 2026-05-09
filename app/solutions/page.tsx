@@ -30,12 +30,12 @@ export default function SolutionsPage() {
       <Header />
       <HashScroll />
 
-      <section id="pricing" className="relative z-10 scroll-mt-28 overflow-hidden rounded-b-[34px] bg-[#07101F] pt-28 pb-16 text-white md:pt-32 md:pb-20">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(36,89,184,0.34),transparent_38%),linear-gradient(180deg,rgba(255,255,255,0.07),transparent_32%)]" />
-        <div className="absolute inset-x-0 bottom-0 h-px bg-white/10" />
+      <section id="pricing" className="relative z-10 scroll-mt-28 overflow-hidden rounded-b-[34px] border-b border-border bg-background pt-28 pb-16 text-foreground shadow-[var(--surface-shadow)] md:pt-32 md:pb-20">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(36,89,184,0.12),transparent_38%),linear-gradient(180deg,rgba(255,255,255,0.72),transparent_44%)] dark:bg-[radial-gradient(circle_at_50%_0%,rgba(36,89,184,0.18),transparent_38%),linear-gradient(180deg,rgba(255,255,255,0.04),transparent_44%)]" />
+        <div className="absolute inset-x-0 bottom-0 h-px bg-border" />
         <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 xl:px-16">
           <div className="relative z-10 max-w-4xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/58">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#2459B8]">
               <LocalizedText en="Transparent pricing" fr="Tarification transparente" />
             </p>
             <h1 className="mt-5 max-w-5xl text-5xl font-semibold leading-[0.96] tracking-tight md:text-7xl">
@@ -44,7 +44,7 @@ export default function SolutionsPage() {
                 fr="La sécurité de la recherche rendue accessible et efficace."
               />
             </h1>
-            <p className="mt-7 max-w-3xl text-lg leading-8 text-white/74">
+            <p className="mt-7 max-w-3xl text-lg leading-8 text-muted-foreground">
               <LocalizedText
                 en="Transparent pricing for Canadian research institutions, backed by efficient workflows and top-of-market deep-search intelligence."
                 fr="Une tarification transparente pour les institutions de recherche canadiennes, appuyée par des flux efficaces et une intelligence de recherche approfondie de premier plan."
@@ -157,7 +157,7 @@ export default function SolutionsPage() {
               </article>
             ))}
           </div>
-          <p className="relative z-10 mx-auto mt-7 max-w-2xl text-center text-sm font-medium leading-6 text-white/64">
+          <p className="relative z-10 mx-auto mt-7 max-w-2xl text-center text-sm font-medium leading-6 text-muted-foreground">
             <LocalizedText
               en="Pricing may evolve as Tracer expands its product surface, intelligence layer, and institutional support model."
               fr="Les tarifs peuvent évoluer à mesure que Tracer élargit sa surface produit, sa couche d'intelligence et son modèle d'accompagnement institutionnel."

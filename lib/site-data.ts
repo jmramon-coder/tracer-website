@@ -231,9 +231,9 @@ export const platformModules = [
     status: "Active path",
     statusFr: "Parcours actif",
     description:
-      "Create individual screening cases, capture entity details, gather signals, and render a review-ready card.",
+      "Submit a name. Tracer returns a full file: institutional affiliation, co-author network, funding history, sanctions status, foreign ties, legal record, and adverse media, each with its own verdict and source trail for RSO review.",
     descriptionFr:
-      "Créez des dossiers individuels, saisissez les détails d'entité, rassemblez les signaux et générez une fiche prête à réviser.",
+      "Soumettez un nom. Tracer retourne un dossier complet : affiliation institutionnelle, réseau de coauteurs, historique de financement, statut de sanctions, liens étrangers, dossier juridique et médias défavorables, chacun avec son verdict et sa piste de sources pour la revue RSO.",
     image: "/brand/screen-individuals.png",
   },
   {
@@ -242,9 +242,9 @@ export const platformModules = [
     status: "Staged",
     statusFr: "En préparation",
     description:
-      "Extend the same case workflow to organizations, affiliations, and institutional context as the production path expands.",
+      "Submit an institution. Tracer returns a full file: legal structure and governance chain, sanctions screening across the entity and its supervisory authority, partner and vendor network, export control exposure, legal record, and adverse media, each with its own verdict and source trail for RSO review.",
     descriptionFr:
-      "Étendez le même flux aux organisations, affiliations et contextes institutionnels à mesure que le parcours s'élargit.",
+      "Soumettez une institution. Tracer retourne un dossier complet : structure juridique et chaîne de gouvernance, vérification des sanctions sur l'entité et son autorité de supervision, réseau de partenaires et fournisseurs, exposition au contrôle des exportations, dossier juridique et médias défavorables, chacun avec son verdict et sa piste de sources pour la revue RSO.",
     image: "/brand/screening-organizations.png",
   },
 ]

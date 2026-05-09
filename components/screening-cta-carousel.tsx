@@ -12,12 +12,12 @@ const slides = [
     id: "individual",
     label: "Individual",
     labelFr: "Individu",
-    title: "Know who is behind the collaboration before the review starts.",
-    titleFr: "Sachez qui se trouve derrière la collaboration avant le début de la revue.",
+    title: "Screen individuals",
+    titleFr: "Vérifier des personnes",
     description:
-      "Resolve identity, affiliations, publication history, sanctions checks, adverse signals, and academic networks into one RSO-ready screening card.",
+      "Submit a name. Tracer returns a full file: institutional affiliation, co-author network, funding history, sanctions status, foreign ties, legal record, and adverse media, each with its own verdict and source trail for RSO review.",
     descriptionFr:
-      "Rassemblez identité, affiliations, historique de publications, listes de sanctions, signaux pertinents et réseaux académiques dans une fiche prête pour la revue RSO.",
+      "Soumettez un nom. Tracer retourne un dossier complet : affiliation institutionnelle, réseau de coauteurs, historique de financement, statut de sanctions, liens étrangers, dossier juridique et médias défavorables, chacun avec son verdict et sa piste de sources pour la revue RSO.",
     image: "/brand/screen-individuals.png",
     metrics: ["Identity resolved", "Academic network mapped", "Cited report ready"],
     metricsFr: ["Identité résolue", "Réseau académique cartographié", "Rapport cité prêt"],
@@ -26,12 +26,12 @@ const slides = [
     id: "organization",
     label: "Organization",
     labelFr: "Organisation",
-    title: "Screen institutions, labs, and partner organizations with the same discipline.",
-    titleFr: "Vérifiez institutions, laboratoires et organisations partenaires avec la même rigueur.",
+    title: "Screen organizations",
+    titleFr: "Vérifier des organisations",
     description:
-      "Bring registries, parent entities, restricted-list context, institutional affiliations, and source-backed notes into a repeatable partnership review.",
+      "Submit an institution. Tracer returns a full file: legal structure and governance chain, sanctions screening across the entity and its supervisory authority, partner and vendor network, export control exposure, legal record, and adverse media, each with its own verdict and source trail for RSO review.",
     descriptionFr:
-      "Regroupez registres, entités parentes, contexte de listes restreintes, affiliations institutionnelles et notes sourcées dans une revue de partenariat répétable.",
+      "Soumettez une institution. Tracer retourne un dossier complet : structure juridique et chaîne de gouvernance, vérification des sanctions sur l'entité et son autorité de supervision, réseau de partenaires et fournisseurs, exposition au contrôle des exportations, dossier juridique et médias défavorables, chacun avec son verdict et sa piste de sources pour la revue RSO.",
     image: "/brand/screening-organizations.png",
     metrics: ["Registry context", "Affiliations surfaced", "Audit trail preserved"],
     metricsFr: ["Contexte de registre", "Affiliations révélées", "Piste d'audit préservée"],

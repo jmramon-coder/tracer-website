@@ -9,6 +9,8 @@ import { X, ArrowRight, Check } from "lucide-react"
 import { Spinner } from "@/components/ui/spinner"
 import { useLanguage } from "@/lib/language-context"
 
+const LAUNCH_DATE = new Date("2026-06-01T00:00:00")
+
 interface WaitlistModalProps {
   isOpen: boolean
   onClose: () => void
@@ -36,13 +38,11 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
     emailjs.init({ publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY! })
   }, [])
 
-  // Calculate countdown to Summer 2026 (June 21, 2026)
+  // Calculate countdown to launch day.
   useEffect(() => {
-    const targetDate = new Date("2026-06-21T00:00:00")
-    
     const updateCountdown = () => {
       const now = new Date()
-      const diff = targetDate.getTime() - now.getTime()
+      const diff = LAUNCH_DATE.getTime() - now.getTime()
       
       if (diff > 0) {
         setCountdown({
