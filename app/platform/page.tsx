@@ -3,9 +3,7 @@ import type { ReactNode } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import {
-  AlertTriangle,
   ArrowRight,
-  CheckCircle2,
   Database,
   Download,
   FileCheck,
@@ -256,21 +254,32 @@ export default function PlatformPage() {
           <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_0.82fr] lg:items-start">
             <ReportExample />
             <div className="grid gap-3">
-              {signalCards.map(({ icon: Icon, title, titleFr, description, descriptionFr }) => (
+              {signalCards.map(({ title, titleFr, description, descriptionFr }, index) => (
                 <article
                   key={title}
-                  className="grid gap-4 rounded-[22px] border border-border bg-card p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#2459B8]/25 hover:shadow-[var(--floating-shadow)] sm:grid-cols-[44px_1fr] sm:items-start"
+                  className="rounded-[10px] border border-[#E6E6E3] bg-white px-5 py-4 transition-colors duration-300 hover:border-[#175CD3]/35"
                 >
-                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-background">
-                    <Icon className="h-5 w-5 text-foreground" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold tracking-tight">
-                      <LocalizedText en={title} fr={titleFr} />
-                    </h3>
-                    <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                      <LocalizedText en={description} fr={descriptionFr} />
-                    </p>
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex gap-3">
+                      <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-[#175CD3]">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <div>
+                        <h3 className="text-[13.5px] font-semibold tracking-tight text-[#1D1D1F]">
+                          <LocalizedText en={title} fr={titleFr} />
+                        </h3>
+                        <p className="mt-2 text-[12.5px] leading-[1.62] text-[#6F6F68]">
+                          <LocalizedText en={description} fr={descriptionFr} />
+                        </p>
+                      </div>
+                    </div>
+                    <ReportVerdict tone={[1, 2, 3].includes(index) ? "bad" : "good"}>
+                      {[1, 2, 3].includes(index) ? (
+                        <LocalizedText en="Review" fr="Révision" />
+                      ) : (
+                        <LocalizedText en="Clear" fr="Clair" />
+                      )}
+                    </ReportVerdict>
                   </div>
                 </article>
               ))}
@@ -343,246 +352,127 @@ export default function PlatformPage() {
 }
 
 function HeroCardDeck() {
-  const cards = [
-    {
-      kind: "individual",
-      type: "Individual",
-      typeFr: "Personne",
-      briefLabel: "Individual brief",
-      briefLabelFr: "Note personne",
-      title: "Reza Kamali",
-      subtitle: "Navid University · Aerospace engineering",
-      subtitleFr: "Université Navid · Génie aérospatial",
-      status: "RSO review",
-      statusFr: "Révision RSO",
-      meta: "10 sources · 4m 12s",
-      metaFr: "10 sources · 4 min 12 s",
-      signals: [
-        ["Sanctions", "Sanctions", "Clear", "Clair", "good"],
-        ["Network", "Réseau", "7 flags", "7 signaux", "warn"],
-        ["Identity", "Identité", "Matched", "Confirmée", "good"],
-      ],
-      className: "-left-1 top-10 z-[8] -rotate-6 sm:-left-2 sm:top-16 lg:left-[-28px] lg:top-[86px]",
-    },
-    {
-      kind: "organization",
-      type: "Organization",
-      typeFr: "Organisation",
-      briefLabel: "Organization brief",
-      briefLabelFr: "Note organisation",
-      title: "Longhua Institute of Technology",
-      subtitle: "Institutional affiliation screening",
-      subtitleFr: "Vérification des affiliations institutionnelles",
-      status: "Context found",
-      statusFr: "Contexte trouvé",
-      meta: "18 sources · 6m 03s",
-      metaFr: "18 sources · 6 min 03 s",
-      signals: [
-        ["Registry", "Registre", "Verified", "Vérifié", "good"],
-        ["NRO", "ORN", "Review", "Révision", "warn"],
-        ["Ownership", "Propriété", "Mapped", "Cartographiée", "neutral"],
-      ],
-      className: "right-0 top-[72px] z-[9] rotate-3 sm:right-8 sm:top-[92px] lg:right-11 lg:top-[98px]",
-    },
-    {
-      kind: "case",
-      type: "Case",
-      typeFr: "Dossier",
-      briefLabel: "Case brief",
-      briefLabelFr: "Note dossier",
-      title: "NSERC Grant Review 2026",
-      subtitle: "5 entities · Partnership intake",
-      subtitleFr: "5 entités · Admission partenariat",
-      status: "Ready",
-      statusFr: "Prêt",
-      meta: "Case packet · PDF ready",
-      metaFr: "Dossier · PDF prêt",
-      signals: [
-        ["People", "Personnes", "3 screened", "3 vérifiées", "good"],
-        ["Orgs", "Organisations", "2 staged", "2 préparées", "neutral"],
-        ["Audit", "Audit", "Saved", "Sauvé", "good"],
-      ],
-      className: "bottom-10 left-8 z-10 -rotate-2 sm:bottom-14 sm:left-20 lg:bottom-[68px] lg:left-[82px]",
-    },
-  ] as const
-
-  const toneClasses = {
-    good: "bg-emerald-300/16 text-emerald-100 ring-emerald-200/22",
-    warn: "bg-amber-300/18 text-amber-100 ring-amber-200/24",
-    neutral: "bg-white/10 text-white/68 ring-white/14",
-  }
-
   return (
     <div className="relative min-h-[560px] sm:min-h-[620px] lg:min-h-[560px]">
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-full">
-        {cards.map((card) => (
-          <article
-            key={card.title}
-            className={`absolute w-[176px] rounded-[16px] border border-white/32 bg-white/[0.105] p-2.5 text-white shadow-2xl shadow-black/28 backdrop-blur-2xl ring-1 ring-white/16 transition-transform duration-300 hover:-translate-y-1 sm:w-[216px] sm:rounded-[18px] sm:p-3 xl:w-[250px] ${card.className}`}
-          >
-            <div className="flex items-start gap-2.5">
-              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[12px] border border-white/20 bg-white/12 text-[9px] font-semibold text-white shadow-inner shadow-white/10 sm:h-8 sm:w-8 sm:rounded-[13px] sm:text-[10px]">
-                {card.type === "Individual" ? "RK" : card.type === "Organization" ? "LI" : "CG"}
-              </div>
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center justify-between gap-2">
-                  <p className="truncate text-[9px] font-medium text-white/52 sm:text-[10px]">
-                    <LocalizedText en={card.briefLabel} fr={card.briefLabelFr} />
-                  </p>
-                  <span className="shrink-0 rounded-full bg-white px-1.5 py-0.5 text-[8px] font-semibold text-hero sm:text-[9px]">
-                    <LocalizedText en={card.status} fr={card.statusFr} />
-                  </span>
-                </div>
-                <h2 className="mt-1.5 truncate text-xs font-semibold tracking-tight sm:text-sm">
-                  {card.title}
-                </h2>
-                <p className="mt-0.5 truncate text-[10px] text-white/62 sm:text-[11px]">
-                  <LocalizedText en={card.subtitle} fr={card.subtitleFr} />
+      <div className="absolute bottom-[-118px] left-1/2 z-30 h-[430px] w-[min(92vw,420px)] -translate-x-1/2 sm:bottom-[-132px] sm:h-[500px] sm:w-[540px] md:w-[600px] lg:bottom-[-156px] lg:left-[92px] lg:h-[545px] lg:w-[610px] lg:translate-x-0 xl:left-[118px] xl:w-[700px]">
+        <div className="absolute inset-0 translate-x-5 translate-y-5 rotate-2 rounded-[16px] border border-[#ECECE8] bg-[#FAFAF9] shadow-[0_16px_34px_rgba(15,23,42,0.16)]" />
+        <div className="absolute inset-0 -translate-x-3 translate-y-3 -rotate-1 rounded-[16px] border border-[#ECECE8] bg-white shadow-[0_10px_24px_rgba(15,23,42,0.12)]" />
+        <article className="relative flex h-full flex-col overflow-hidden rounded-[16px] border-x border-b border-[#ECECE8] bg-white text-[#1D1D1F] shadow-[0_24px_70px_rgba(15,23,42,0.22)]">
+          <div className="border-b border-[#ECECE8] bg-[#F6F6F4] px-4 py-4 text-[#1D1D1F] sm:px-5 sm:py-5">
+            <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_176px] sm:items-start">
+              <div>
+                <p className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#6F6F68]">
+                  <LocalizedText en="Tracer · Research security due diligence" fr="Tracer · Diligence de sécurité de la recherche" />
                 </p>
+                <h2 className="mt-2 text-2xl font-semibold leading-[1.16] tracking-tight sm:text-[30px]">
+                  Mara Vellin
+                </h2>
+                <p className="mt-2 max-w-md text-[11px] leading-5 text-[#6F6F68]">
+                  <LocalizedText
+                    en="Helios Materials Lab · Applied photonics · Montreal, Canada"
+                    fr="Helios Materials Lab · Photonique appliquée · Montréal, Canada"
+                  />
+                </p>
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {[
+                    ["Applied photonics", "Photonique appliquée"],
+                    ["Energy storage", "Stockage énergétique"],
+                    ["Materials engineering", "Génie des matériaux"],
+                    ["Synthetic profile", "Profil synthétique"],
+                  ].map(([en, fr]) => (
+                    <ReportTag key={en}>
+                      <LocalizedText en={en} fr={fr} />
+                    </ReportTag>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-[12px] bg-white/75 p-3 shadow-[inset_0_0_0_1px_rgba(29,29,31,0.045)]">
+                <p className="font-mono text-[8.5px] font-semibold uppercase tracking-[0.14em] text-[#6F6F68]">
+                  <LocalizedText en="Verdict matrix" fr="Matrice de verdicts" />
+                </p>
+                <div className="mt-2 grid gap-1.5">
+                  {[
+                    ["Sanctions", "Clear", "good"],
+                    ["Affiliation", "Review", "bad"],
+                    ["Academic net.", "Review", "bad"],
+                    ["Funding ties", "Clear", "good"],
+                  ].map(([code, verdict, tone]) => (
+                    <div key={code} className="flex items-center justify-between gap-3">
+                      <span className="font-mono text-[10px] text-[#1D1D1F]">{code}</span>
+                      <ReportVerdict tone={tone as "good" | "warn" | "bad"}>
+                        {verdict === "Review" ? (
+                          <LocalizedText en="Review" fr="Révision" />
+                        ) : verdict === "Clear" ? (
+                          <LocalizedText en="Clear" fr="Clair" />
+                        ) : (
+                          <LocalizedText en="Review" fr="Révision" />
+                        )}
+                      </ReportVerdict>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
+          </div>
 
-            <div className="mt-2 flex flex-wrap gap-1 sm:mt-2.5 sm:gap-1.5">
-              <span className="rounded-full bg-white/10 px-1.5 py-0.5 text-[8px] font-medium text-white/58 ring-1 ring-white/16 sm:px-2 sm:text-[9px]">
-                <LocalizedText en={card.meta} fr={card.metaFr} />
-              </span>
-              {card.signals.map(([label, labelFr, value, valueFr, tone]) => (
-                <span
-                  key={label}
-                  className={`rounded-full px-1.5 py-0.5 text-[8px] font-medium ring-1 sm:px-2 sm:text-[9px] ${toneClasses[tone]}`}
-                >
-                  <LocalizedText en={label} fr={labelFr} />:{" "}
-                  <span className="font-semibold">
-                    <LocalizedText en={value} fr={valueFr} />
-                  </span>
-                </span>
+          <div className="border-b border-[#F1F1EE] bg-white px-4 py-3 sm:px-5">
+            <div className="grid grid-cols-3 overflow-hidden rounded-[10px] border border-[#ECECE8]">
+              {[
+                ["42", "Publications", "Publications"],
+                ["18", "H-index", "Indice h"],
+                ["10", "Sources", "Sources"],
+              ].map(([value, label, labelFr]) => (
+                <div key={label} className="border-r border-[#ECECE8] px-3 py-2 last:border-r-0">
+                  <p className="font-mono text-lg leading-none text-[#1D1D1F]">{value}</p>
+                  <p className="mt-1 font-mono text-[8.5px] uppercase tracking-[0.12em] text-[#6F6F68]">
+                    <LocalizedText en={label} fr={labelFr} />
+                  </p>
+                </div>
               ))}
             </div>
-          </article>
-        ))}
-      </div>
-
-      <div className="absolute bottom-[-118px] left-1/2 z-30 h-[430px] w-[min(92vw,420px)] -translate-x-1/2 sm:bottom-[-132px] sm:h-[500px] sm:w-[540px] md:w-[600px] lg:bottom-[-156px] lg:left-[92px] lg:h-[545px] lg:w-[610px] lg:translate-x-0 xl:left-[118px] xl:w-[700px]">
-        <div className="absolute inset-0 translate-x-7 translate-y-7 rotate-3 rounded-[30px] border border-white/30 bg-white/[0.105] shadow-2xl shadow-black/30 backdrop-blur-2xl ring-1 ring-white/14" />
-        <div className="absolute inset-0 -translate-x-4 translate-y-4 -rotate-2 rounded-[30px] border border-white/28 bg-white/[0.088] shadow-2xl shadow-black/24 backdrop-blur-2xl ring-1 ring-white/12" />
-        <article className="relative flex h-full flex-col overflow-hidden rounded-[28px] border border-white/48 bg-white/[0.12] text-white shadow-2xl shadow-black/38 backdrop-blur-2xl ring-1 ring-white/24">
-        <div className="bg-[#F6F6F5]/95 px-4 py-3 text-[#1D1D1F] sm:px-6 sm:py-4">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#777777]">
-                <LocalizedText en="Researcher brief" fr="Note chercheur" />
-              </p>
-              <h2 className="mt-2 text-xl font-semibold tracking-tight sm:text-2xl xl:text-[28px]">
-                Federico F. Rosei
-              </h2>
-              <p className="mt-1.5 max-w-md text-[11px] leading-5 text-[#666666] sm:mt-2 sm:text-xs">
-                <LocalizedText
-                  en="Institut national de la recherche scientifique · Advanced materials · Quebec, Canada"
-                  fr="Institut national de la recherche scientifique · Matériaux avancés · Québec, Canada"
-                />
-              </p>
-            </div>
-            <span className="rounded-full border border-[#DADAD6] bg-white px-2.5 py-1 text-[11px] font-semibold text-[#1D1D1F] sm:px-3 sm:py-1.5 sm:text-xs">
-              <LocalizedText en="Review" fr="Révision" />
-            </span>
           </div>
 
-          <div className="mt-2.5 flex flex-wrap gap-1.5 sm:mt-3">
-            {[
-              ["Nanophotonics", "Nanophotonique"],
-              ["Solar energy", "Énergie solaire"],
-              ["Materials science", "Science des matériaux"],
-              ["INRS", "INRS"],
-            ].map(([en, fr]) => (
-              <span
-                key={en}
-                className="rounded-full border border-[#DADAD6] bg-white/70 px-2 py-0.5 text-[9px] font-medium uppercase tracking-[0.12em] text-[#575757]"
-              >
-                <LocalizedText en={en} fr={fr} />
-              </span>
-            ))}
-          </div>
-
-          <div className="mt-3 flex flex-wrap gap-1.5 sm:mt-4">
-            {[
-              ["IND-1", "Clear with caveats", "warn"],
-              ["IND-2", "Review", "bad"],
-              ["IND-4", "Clear", "good"],
-              ["ORG-1", "Clear with caveats", "warn"],
-            ].map(([code, verdict, tone]) => (
-              <span
-                key={code}
-                className="inline-flex items-center gap-1.5 rounded-full border border-[#DADAD6] bg-white/80 px-2 py-1 text-[10px] font-medium text-[#4F4F4F]"
-              >
-                <span className="font-mono text-[#777777]">{code}</span>
-                <span
-                  className={`h-1.5 w-1.5 rounded-full ${
-                    tone === "good"
-                      ? "bg-emerald-400"
-                      : tone === "warn"
-                        ? "bg-amber-400"
-                        : "bg-red-400"
-                  }`}
-                />
-                <span>
-                  {verdict === "Review" ? (
-                    <LocalizedText en="Review" fr="Révision" />
-                  ) : verdict === "Clear" ? (
-                    <LocalizedText en="Clear" fr="Clair" />
-                  ) : (
-                    <LocalizedText en="Clear with caveats" fr="Clair avec réserves" />
-                  )}
+          <section className="flex-1 bg-[#FAFAF8] text-[#1d1d1f]">
+            <div className="flex items-center justify-between gap-4 border-b border-[#ECECE8] px-4 py-3 sm:px-5">
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-[#175CD3]">
+                  Affiliation
                 </span>
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <div className="flex-1 bg-white px-4 py-4 text-[#1d1d1f] sm:px-6 sm:py-5">
-          <div className="flex items-center justify-between gap-4 border-b border-[#E6E6E3] pb-3 sm:pb-4">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8A8A8A]">
-              <LocalizedText en="Primary affiliation" fr="Affiliation principale" />
+                <h3 className="text-[18px] font-semibold tracking-tight">
+                  <LocalizedText en="Institutional affiliation" fr="Affiliation institutionnelle" />
+                </h3>
+              </div>
+              <ReportVerdict tone="bad">
+                <LocalizedText en="Review" fr="Révision" />
+              </ReportVerdict>
+            </div>
+            <p className="mt-3 max-w-xl px-4 text-[12.5px] leading-[1.62] text-[#3F3F3A] sm:px-5">
+              <LocalizedText
+                en="Synthetic institutional profile with citation handling, affiliation context, collaboration signals, and human review notes."
+                fr="Profil institutionnel synthétique avec citations, contexte d'affiliation, signaux de collaboration et notes de revue humaine."
+              />{" "}
+              <sup className="font-mono text-[9px] text-[#175CD3]">1</sup>
             </p>
-            <span className="rounded-full bg-[#FFFBF5] px-2.5 py-1 text-[10px] font-semibold text-[#B45309]">
-              <LocalizedText en="Caveats" fr="Réserves" />
-            </span>
-          </div>
-          <p className="mt-3 max-w-xl text-xs leading-5 text-[#4A4A4A] sm:mt-4 sm:text-sm sm:leading-6">
-            <LocalizedText
-              en="Source-backed institutional profile with citation handling, affiliation context, collaboration signals, and human review notes."
-              fr="Profil institutionnel appuyé par les sources, avec citations, contexte d'affiliation, signaux de collaboration et notes de revue humaine."
-            />
-          </p>
-          <div className="mt-4 grid grid-cols-3 gap-2 sm:mt-5">
-            {[
-              ["Legal name verified", "Nom légal vérifié"],
-              ["Publication network mapped", "Réseau de publications cartographié"],
-              ["Export-ready report", "Rapport prêt à exporter"],
-            ].map(([en, fr]) => (
-              <div key={en} className="rounded-xl bg-[#F6F6F5] px-2 py-2 text-[9px] font-medium leading-4 text-[#5A5A5A] sm:rounded-2xl sm:px-3 sm:py-3 sm:text-[11px]">
-                <LocalizedText en={en} fr={fr} />
-              </div>
-            ))}
-          </div>
-          <div className="mt-3 grid grid-cols-2 gap-2 sm:mt-4">
-            {[
-              ["Primary affiliation", "Affiliation principale", "INRS, Quebec", "INRS, Québec"],
-              ["Screening scope", "Portée de vérification", "Individual + organization context", "Contexte personne + organisation"],
-              ["Report status", "Statut du rapport", "Human review ready", "Prêt pour revue humaine"],
-              ["Audit trail", "Piste d'audit", "Sources and stage notes saved", "Sources et notes d'étapes sauvegardées"],
-            ].map(([label, labelFr, value, valueFr]) => (
-              <div key={label} className="rounded-xl border border-[#E6E6E3] bg-white px-2 py-2 sm:rounded-2xl sm:px-3 sm:py-3">
-                <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-[#8A8A8A]">
-                  <LocalizedText en={label} fr={labelFr} />
-                </p>
-                <p className="mt-1 text-[10px] font-semibold leading-4 text-[#333333] sm:text-xs">
-                  <LocalizedText en={value} fr={valueFr} />
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </article>
+            <div className="mt-4 grid grid-cols-2 gap-2 px-4 pb-4 sm:px-5">
+              {[
+                ["Legal name", "Nom légal", "Mara Vellin", "Mara Vellin"],
+                ["Screening scope", "Portée", "Individual + partner context", "Personne + contexte partenaire"],
+                ["Report status", "Statut", "Human review ready", "Prêt pour revue humaine"],
+                ["Audit trail", "Audit", "Synthetic sources saved", "Sources synthétiques sauvegardées"],
+              ].map(([label, labelFr, value, valueFr]) => (
+                <div key={label} className="rounded-[10px] bg-white px-3 py-2 shadow-[inset_0_0_0_1px_rgba(29,29,31,0.055)]">
+                  <p className="font-mono text-[8.5px] font-semibold uppercase tracking-[0.12em] text-[#6F6F68]">
+                    <LocalizedText en={label} fr={labelFr} />
+                  </p>
+                  <p className="mt-1 text-[11.5px] font-semibold leading-4 text-[#1D1D1F]">
+                    <LocalizedText en={value} fr={valueFr} />
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+        </article>
       </div>
 
     </div>
@@ -591,160 +481,208 @@ function HeroCardDeck() {
 
 function ReportExample() {
   return (
-    <div className="relative py-5">
-      <div className="absolute inset-x-5 inset-y-8 rotate-[-2deg] rounded-[26px] bg-border/45" />
-      <div className="absolute inset-x-3 inset-y-6 rotate-[1.5deg] rounded-[26px] bg-muted" />
-      <div className="relative overflow-hidden rounded-[26px] border border-border bg-card shadow-[var(--panel-shadow)]">
-          <div className="flex items-center justify-between gap-4 border-b border-border px-5 py-4">
-            <div className="flex items-center gap-2">
-              <FileText className="h-4 w-4 text-muted-foreground" />
-              <span className="text-sm font-semibold">
-                <LocalizedText
-                  en="Research Security Brief"
-                  fr="Note de sécurité de la recherche"
-                />
-              </span>
-              <span className="text-xs text-muted-foreground">· Tracer</span>
+    <div className="overflow-hidden rounded-[16px] border border-[#F0F0EC] bg-white text-[#1D1D1F] shadow-[0_18px_46px_rgba(15,23,42,0.07)]">
+      <div className="grid gap-5 border-b border-[#F0F0EC] bg-[#FAFAF8] px-5 py-5 text-[#1D1D1F] sm:grid-cols-[minmax(0,1fr)_178px]">
+        <div>
+          <div className="flex items-center gap-2">
+            <FileText className="h-3.5 w-3.5 text-[#6F6F68]" />
+            <p className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#6F6F68]">
+              <LocalizedText en="Research Security Brief" fr="Note de sécurité de la recherche" />
+            </p>
+          </div>
+          <h3 className="mt-3 text-[30px] font-semibold leading-[1.16] tracking-tight">
+            Reza Kamali
+          </h3>
+          <p className="mt-2 text-[12.5px] leading-[1.62] text-[#6F6F68]">
+            <LocalizedText
+              en="Navid University · Aerospace Engineering · Scholar confirmed"
+              fr="Université Navid · Génie aérospatial · Chercheur confirmé"
+            />
+          </p>
+        </div>
+
+        <div className="rounded-[12px] bg-white/80 p-3 shadow-[inset_0_0_0_1px_rgba(29,29,31,0.045)]">
+          <div className="flex items-start justify-between gap-3">
+            <p className="font-mono text-[8.5px] font-semibold uppercase tracking-[0.12em] text-[#6F6F68]">
+              <LocalizedText en="Verdict" fr="Verdict" />
+            </p>
+            <ReportVerdict tone="bad">
+              <LocalizedText en="Review" fr="Révision" />
+            </ReportVerdict>
+          </div>
+          <div className="mt-4 grid grid-cols-2 gap-3">
+            <div>
+              <p className="font-mono text-[8px] font-semibold uppercase tracking-[0.12em] text-[#8A8A83]">
+                <LocalizedText en="Sources" fr="Sources" />
+              </p>
+              <p className="mt-1 font-mono text-[11px] font-semibold text-[#1D1D1F]">10</p>
             </div>
-            <ToneBadge tone="good">
-              <LocalizedText en="Complete" fr="Terminé" />
-            </ToneBadge>
-          </div>
-
-          <div className="border-b border-border px-5 py-4">
-            <h3 className="text-xl font-semibold tracking-tight">Reza Kamali</h3>
-            <p className="mt-1 text-sm text-muted-foreground">
-              <LocalizedText
-                en="Navid University · Aerospace Engineering · Scholar confirmed"
-                fr="Université Navid · Génie aérospatial · Chercheur confirmé"
-              />
-            </p>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {[
-                ["89 publications", "89 publications"],
-                ["h-index 24", "indice h 24"],
-                ["ORCID verified", "ORCID vérifié"],
-              ].map(([en, fr]) => (
-                <span
-                  key={en}
-                  className="rounded-full border border-border bg-card px-2.5 py-1 text-xs text-muted-foreground"
-                >
-                  <LocalizedText en={en} fr={fr} />
-                </span>
-              ))}
+            <div>
+              <p className="font-mono text-[8px] font-semibold uppercase tracking-[0.12em] text-[#8A8A83]">
+                <LocalizedText en="Elapsed" fr="Durée" />
+              </p>
+              <p className="mt-1 font-mono text-[11px] font-semibold text-[#1D1D1F]">
+                <LocalizedText en="4m 12s" fr="4 min 12 s" />
+              </p>
             </div>
-          </div>
-
-          <div className="border-b border-border px-5 py-4">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-subtle-foreground">
-              <LocalizedText en="Screening signals" fr="Signaux de vérification" />
-            </p>
-            <div className="mt-3 grid gap-2">
-              <SignalRow
-                label={<LocalizedText en="Sanctions & designations" fr="Sanctions et désignations" />}
-                status={<LocalizedText en="No signal" fr="Aucun signal" />}
-                tone="good"
-              />
-              <SignalRow
-                label={<LocalizedText en="Institutional affiliation" fr="Affiliation institutionnelle" />}
-                status={<LocalizedText en="Review" fr="Révision" />}
-                tone="warn"
-              />
-              <SignalRow
-                label={<LocalizedText en="Academic network" fr="Réseau académique" />}
-                status={<LocalizedText en="7 flags" fr="7 signaux" />}
-                tone="bad"
-              />
-              <SignalRow
-                label={<LocalizedText en="Funding & foreign ties" fr="Financement et liens étrangers" />}
-                status={<LocalizedText en="Review" fr="Révision" />}
-                tone="warn"
-              />
-              <SignalRow
-                label={<LocalizedText en="Legal & regulatory record" fr="Dossier juridique et réglementaire" />}
-                status={<LocalizedText en="No signal" fr="Aucun signal" />}
-                tone="good"
-              />
-              <SignalRow
-                label={<LocalizedText en="Adverse media & integrity" fr="Médias défavorables et intégrité" />}
-                status={<LocalizedText en="No signal" fr="Aucun signal" />}
-                tone="good"
-              />
-            </div>
-          </div>
-
-          <div className="border-b border-border px-5 py-4">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-subtle-foreground">
-              <LocalizedText en="Summary" fr="Résumé" />
-            </p>
-            <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              <LocalizedText
-                en="No matches on OFAC, Canadian sanctions, or UN lists. Corporate structure shows parent company registered in a high-risk jurisdiction. One co-author flagged for academic retraction in 2019. Recommend legal review before proceeding."
-                fr="Aucune correspondance sur OFAC, les sanctions canadiennes ou les listes de l'ONU. La structure corporative montre une société mère enregistrée dans une juridiction à risque élevé. Un coauteur est signalé pour une rétractation académique en 2019. Une revue juridique est recommandée avant de poursuivre."
-              />
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-3 bg-muted px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
-            <span className="text-xs text-muted-foreground">
-              <LocalizedText
-                en="27 Mar 2026 · 10 sources · 4 min 12 sec"
-                fr="27 mars 2026 · 10 sources · 4 min 12 s"
-              />
-            </span>
-            <span className="inline-flex items-center gap-2 text-xs font-semibold text-foreground">
-              <Download className="h-3.5 w-3.5" />
-              <LocalizedText en="Export PDF" fr="Exporter PDF" />
-            </span>
           </div>
         </div>
-    </div>
-  )
-}
+      </div>
 
-function SignalRow({
-  label,
-  status,
-  tone,
-}: {
-  label: ReactNode
-  status: ReactNode
-  tone: "good" | "warn" | "bad"
-}) {
-  const Icon = tone === "good" ? CheckCircle2 : AlertTriangle
+      <div className="border-b border-[#F1F1EE] px-5 py-4">
+        <div className="flex flex-wrap gap-2">
+          {[
+            ["89 publications", "89 publications"],
+            ["h-index 24", "indice h 24"],
+            ["ORCID verified", "ORCID vérifié"],
+          ].map(([en, fr]) => (
+            <ReportTag key={en}>
+              <LocalizedText en={en} fr={fr} />
+            </ReportTag>
+          ))}
+        </div>
+        <div className="mt-4 grid overflow-hidden rounded-[10px] border border-[#ECECE8] sm:grid-cols-3">
+          {[
+            ["1", "Designation match", "Désignation trouvée"],
+            ["9", "Lists cleared", "Listes sans signal"],
+            ["4", "Source citations", "Citations sources"],
+          ].map(([value, label, labelFr]) => (
+            <div key={label} className="border-b border-[#ECECE8] px-4 py-3 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
+              <p className="font-mono text-xl leading-none text-[#1D1D1F]">{value}</p>
+              <p className="mt-1 font-mono text-[8.5px] uppercase tracking-[0.12em] text-[#6F6F68]">
+                <LocalizedText en={label} fr={labelFr} />
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
 
-  return (
-    <div className="flex items-center justify-between gap-4 rounded-2xl border border-border bg-card px-4 py-3">
-      <span className="text-sm text-muted-foreground">{label}</span>
-      <span className="inline-flex items-center gap-1.5">
-        <Icon className="h-3.5 w-3.5" />
-        <ToneBadge tone={tone}>{status}</ToneBadge>
-      </span>
+      <div className="border-b border-[#F1F1EE] px-5 py-4">
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-[#175CD3]">
+              02
+            </span>
+            <h3 className="text-[18px] font-semibold tracking-tight">
+              <LocalizedText en="Sanctions" fr="Sanctions" />
+            </h3>
+          </div>
+          <ReportVerdict tone="bad">
+            <LocalizedText en="Match" fr="Correspondance" />
+          </ReportVerdict>
+        </div>
+
+        <div className="mt-4 overflow-hidden rounded-[12px] border border-[#F1C7C2] bg-[#FDECEA]/55">
+          <div className="flex items-center justify-between gap-4 border-b border-[#F1C7C2] px-4 py-3">
+            <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-[#A83227]">
+              <LocalizedText en="BIS Entity List" fr="Liste des entités BIS" />
+            </p>
+            <ReportVerdict tone="bad">
+              <LocalizedText en="Match" fr="Signal" />
+            </ReportVerdict>
+          </div>
+
+          {[
+            [
+              "List name",
+              "Nom de la liste",
+              "US Department of Commerce, Bureau of Industry and Security - Entity List (Supplement No. 4 to Part 744)",
+              "US Department of Commerce, Bureau of Industry and Security - Entity List (Supplement No. 4 to Part 744)",
+            ],
+            [
+              "Administering body",
+              "Organisme responsable",
+              "US Department of Commerce, Bureau of Industry and Security (BIS)",
+              "US Department of Commerce, Bureau of Industry and Security (BIS)",
+            ],
+            [
+              "Legal basis",
+              "Base juridique",
+              "Export Administration Regulations (EAR), 15 C.F.R. Parts 730-774 - End-User Review Committee determination",
+              "Export Administration Regulations (EAR), 15 C.F.R. Parts 730-774 - détermination de l'End-User Review Committee",
+            ],
+            ["Designation date", "Date de désignation", "June 17, 2024", "17 juin 2024"],
+            [
+              "Stated reason",
+              "Motif déclaré",
+              "Acting contrary to the national security and foreign policy interests of the United States by acquiring and attempting to acquire US-origin items in support of the People's Liberation Army modernization, including hypersonic research and advanced semiconductor fabrication.",
+              "Agissements contraires aux intérêts de sécurité nationale et de politique étrangère des États-Unis par l'acquisition ou la tentative d'acquisition d'articles d'origine américaine au soutien de la modernisation de l'Armée populaire de libération, notamment la recherche hypersonique et la fabrication avancée de semi-conducteurs.",
+            ],
+          ].map(([label, labelFr, value, valueFr], index) => (
+            <div
+              key={label}
+              className="grid gap-2 border-b border-[#F1C7C2] px-4 py-3 last:border-b-0 sm:grid-cols-[132px_1fr]"
+            >
+              <p className="font-mono text-[8.5px] font-semibold uppercase tracking-[0.12em] text-[#A83227]">
+                <LocalizedText en={label} fr={labelFr} />
+              </p>
+              <p className="text-[11.5px] leading-[1.62] text-[#1D1D1F]">
+                <LocalizedText en={value} fr={valueFr} />
+                {index === 4 ? <sup className="font-mono text-[9px] text-[#175CD3]">4</sup> : null}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-3 overflow-hidden rounded-[12px] border border-[#ECECE8]">
+          {[
+            "Canada NRO List",
+            "Canada Autonomous Sanctions",
+            "OFAC SDN List",
+            "EU Consolidated Sanctions",
+            "UK Consolidated Sanctions",
+            "UN Security Council Consolidated",
+          ].map((item) => (
+            <div
+              key={item}
+              className="flex items-center justify-between gap-4 border-b border-[#ECECE8] bg-white px-4 py-2.5 last:border-b-0"
+            >
+              <p className="font-mono text-[10px] font-semibold text-[#1D1D1F]">{item}</p>
+              <ReportVerdict tone="good">
+                <LocalizedText en="Clear" fr="Clair" />
+              </ReportVerdict>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-3 bg-[#FAFAF9] px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+        <span className="font-mono text-[10px] text-[#6F6F68]">
+          <LocalizedText
+            en="27 Mar 2026 · 10 sources · 4 min 12 sec"
+            fr="27 mars 2026 · 10 sources · 4 min 12 s"
+          />
+        </span>
+        <span className="inline-flex items-center gap-2 text-xs font-semibold text-[#1D1D1F]">
+          <Download className="h-3.5 w-3.5" />
+          <LocalizedText en="Export PDF" fr="Exporter PDF" />
+        </span>
+      </div>
     </div>
   )
 }
 
 function NetworkExample() {
   return (
-    <div className="overflow-hidden rounded-[28px] border border-border bg-background shadow-[var(--panel-shadow)]">
-      <div className="border-b border-border p-6">
+    <div className="overflow-hidden rounded-[16px] border border-[#ECECE8] bg-white text-[#1D1D1F]">
+      <div className="border-b border-[#ECECE8] bg-[#F6F6F4] px-5 py-4 text-[#1D1D1F]">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+            <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-[#6F6F68]">
               <LocalizedText en="Academic network" fr="Réseau académique" />
             </p>
-            <h3 className="mt-3 text-2xl font-semibold tracking-tight">
+            <h3 className="mt-3 text-[18px] font-semibold tracking-tight text-[#1D1D1F]">
               <LocalizedText
                 en="Individual risk profile."
                 fr="Profil de risque individuel."
               />
             </h3>
           </div>
-          <ToneBadge tone="bad">
+          <ReportVerdict tone="bad">
             <LocalizedText en="7 flags" fr="7 signaux" />
-          </ToneBadge>
+          </ReportVerdict>
         </div>
-        <p className="mt-4 max-w-2xl text-sm leading-6 text-muted-foreground">
+        <p className="mt-4 max-w-2xl text-[12.5px] leading-[1.62] text-[#6F6F68]">
           <LocalizedText
             en="89 publications analyzed from 2016 to 2026. 23 publications, or 26%, involve co-authors at flagged institutions."
             fr="89 publications analysées de 2016 à 2026. 23 publications, soit 26 %, impliquent des coauteurs affiliés à des institutions signalées."
@@ -752,64 +690,90 @@ function NetworkExample() {
         </p>
       </div>
 
-      <div className="overflow-x-auto p-4">
-        <table className="w-full min-w-[680px] border-collapse text-sm">
+      <div className="border-b border-[#F1F1EE] px-5 py-4">
+        <p className="text-[13.5px] font-semibold tracking-tight text-[#1D1D1F]">
+          <LocalizedText en="Co-author statistics" fr="Statistiques des coauteurs" />
+        </p>
+        <div className="mt-3 grid overflow-hidden rounded-[10px] border border-[#ECECE8] sm:grid-cols-4">
+          {[
+            ["202+", "Publications analyzed", "Publications analysées"],
+            ["30+", "Total co-authors identified", "Coauteurs identifiés"],
+            ["4", "Flagged co-authors", "Coauteurs signalés"],
+            ["2000-2025", "Period covered", "Période couverte"],
+          ].map(([value, label, labelFr]) => (
+            <div
+              key={label}
+              className="border-b border-[#ECECE8] bg-white px-4 py-3 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0"
+            >
+              <p className="font-mono text-xl font-semibold leading-none text-[#24221D]">
+                {value}
+              </p>
+              <p className="mt-2 font-mono text-[8.5px] font-semibold uppercase tracking-[0.12em] text-[#6F6F68]">
+                <LocalizedText en={label} fr={labelFr} />
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="overflow-x-auto px-4 py-3">
+        <table className="w-full min-w-[680px] border-collapse text-[11.5px]">
           <thead>
-            <tr className="text-left text-[10px] font-semibold uppercase tracking-[0.18em] text-subtle-foreground">
-              <th className="pb-3 pr-4">
+            <tr className="text-left font-mono text-[8.5px] font-semibold uppercase tracking-[0.12em] text-[#6F6F68]">
+              <th className="px-[10px] py-2">
                 <LocalizedText en="Name" fr="Nom" />
               </th>
-              <th className="pb-3 pr-4">
+              <th className="px-[10px] py-2">
                 <LocalizedText en="Institution" fr="Institution" />
               </th>
-              <th className="pb-3 pr-4">
+              <th className="px-[10px] py-2">
                 <LocalizedText en="List" fr="Liste" />
               </th>
-              <th className="pb-3 pr-4 text-right">
+              <th className="px-[10px] py-2 text-right">
                 <LocalizedText en="Papers" fr="Articles" />
               </th>
-              <th className="pb-3 text-right">
+              <th className="px-[10px] py-2 text-right">
                 <LocalizedText en="Last" fr="Dernier" />
               </th>
             </tr>
           </thead>
-          <tbody className="text-muted-foreground">
+          <tbody className="text-[#6F6F68]">
             {coAuthors.map((row) => (
-              <tr key={`${row.name}-${row.list}`} className="border-t border-border">
-                <td className="py-3 pr-4 font-medium text-foreground">{row.name}</td>
-                <td className="py-3 pr-4">{row.institution}</td>
-                <td className="py-3 pr-4">
-                  <span className="rounded-full border border-border bg-muted px-2 py-1 text-xs font-medium text-foreground">
+              <tr key={`${row.name}-${row.list}`} className="border-t border-[#F1F1EE]">
+                <td className="px-[10px] py-2 font-medium text-[#1D1D1F]">{row.name}</td>
+                <td className="px-[10px] py-2">{row.institution}</td>
+                <td className="px-[10px] py-2">
+                  <span className="rounded-full bg-[#F5F5F3] px-2 py-0.5 font-mono text-[9px] font-medium text-[#5F5F58]">
                     {row.list}
                   </span>
                 </td>
-                <td className="py-3 pr-4 text-right">{row.papers}</td>
-                <td className="py-3 text-right">{row.last}</td>
+                <td className="px-[10px] py-2 text-right">{row.papers}</td>
+                <td className="px-[10px] py-2 text-right">{row.last}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
-      <div className="border-t border-border bg-muted px-6 py-5">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-subtle-foreground">
+      <div className="border-t border-[#F1F1EE] bg-[#FAFAF9] px-5 py-4">
+        <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-[#6F6F68]">
           <LocalizedText en="Network timeline" fr="Chronologie du réseau" />
         </p>
-        <div className="mt-4 grid gap-2">
+        <div className="mt-4 grid gap-2.5">
           {timeline.map((bar) => (
             <div key={bar.year} className="grid grid-cols-[44px_1fr_120px] items-center gap-3">
-              <span className="text-xs text-muted-foreground">{bar.year}</span>
-              <div className="h-1.5 overflow-hidden rounded-full bg-background">
-                <div className="h-full rounded-full bg-warning" style={{ width: bar.width }} />
+              <span className="font-mono text-[10px] text-[#6F6F68]">{bar.year}</span>
+              <div className="h-[5px] overflow-hidden rounded-full bg-[#DEDED8]">
+                <div className="h-[5px] rounded-full bg-[#FF7A1A]" style={{ width: bar.width }} />
               </div>
-              <span className="text-right text-xs text-muted-foreground">
+              <span className="text-right text-[11.5px] text-[#6F6F68]">
                 {bar.count}{" "}
                 <LocalizedText en="flagged" fr="signalés" />
               </span>
             </div>
           ))}
         </div>
-        <p className="mt-4 text-xs italic text-muted-foreground">
+        <p className="mt-4 text-[11px] italic text-[#6F6F68]">
           <LocalizedText
             en="Coverage note: screening limited to OpenAlex and Google Scholar."
             fr="Note de couverture : vérification limitée à OpenAlex et Google Scholar."
@@ -820,21 +784,30 @@ function NetworkExample() {
   )
 }
 
-function ToneBadge({
+function ReportVerdict({
   tone,
   children,
 }: {
-  tone: "good" | "warn" | "bad"
+  tone: "good" | "warn" | "bad" | "neutral"
   children: ReactNode
 }) {
   const toneClasses = {
-    good: "bg-success-muted text-success",
-    warn: "bg-warning-muted text-warning",
-    bad: "bg-destructive-muted text-destructive",
+    good: "bg-[#EEF8F3] text-[#256C54]",
+    warn: "bg-[#FFF6E8] text-[#9A5B12]",
+    bad: "bg-[#FBEDEA] text-[#A83227]",
+    neutral: "bg-[#F5F5F3] text-[#5F5F58]",
   }
 
   return (
-    <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${toneClasses[tone]}`}>
+    <span className={`inline-flex rounded-full px-2.5 py-1 font-mono text-[9.5px] font-semibold uppercase leading-none tracking-[0.06em] ${toneClasses[tone]}`}>
+      {children}
+    </span>
+  )
+}
+
+function ReportTag({ children }: { children: ReactNode }) {
+  return (
+    <span className="inline-flex rounded-full bg-white px-2.5 py-1 font-mono text-[9.5px] font-semibold uppercase leading-none tracking-[0.04em] text-[#4E4E48] shadow-[inset_0_0_0_1px_rgba(29,29,31,0.04)]">
       {children}
     </span>
   )

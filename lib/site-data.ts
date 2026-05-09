@@ -16,10 +16,10 @@ import {
 
 export const mainNav = [
   { href: "/platform", label: "Platform" },
-  { href: "/labs", label: "Labs" },
   { href: "/solutions", label: "Solutions & Pricing" },
   { href: "/resources", label: "Resources" },
   { href: "/company", label: "Company" },
+  { href: "/labs", label: "Labs" },
 ]
 
 export const productStats = [
