@@ -1,10 +1,11 @@
 import type { Metadata } from 'next'
-import Script from 'next/script'
 import { Analytics } from '@vercel/analytics/next'
 import { ThemeProvider } from '@/lib/theme-context'
 import { LanguageProvider } from '@/lib/language-context'
 
 import './globals.css'
+
+const GA_MEASUREMENT_ID = 'G-ED4P5LG31N'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://tracersecurity.ca'),
@@ -44,6 +45,13 @@ export default function RootLayout({
   return (
     <html lang="en" className="light" suppressHydrationWarning>
       <head>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} />
+        <script dangerouslySetInnerHTML={{ __html: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${GA_MEASUREMENT_ID}');
+        `}} />
         <script dangerouslySetInnerHTML={{ __html: `
           (function(){try{var t=localStorage.getItem('trace-theme');if(t==='light'||t==='dark'){document.documentElement.className=t;}else if(window.matchMedia('(prefers-color-scheme: dark)').matches){document.documentElement.className='dark';}else{document.documentElement.className='light';}}catch(e){}}());
         `}} />
@@ -54,15 +62,6 @@ export default function RootLayout({
             {children}
           </LanguageProvider>
         </ThemeProvider>
-        <Script src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`} strategy="afterInteractive" />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');
-          `}
-        </Script>
         <Analytics />
       </body>
     </html>
