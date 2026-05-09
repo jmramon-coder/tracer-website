@@ -1,6 +1,7 @@
 "use client"
 
 import { useTheme } from "@/lib/theme-context"
+import { useLanguage } from "@/lib/language-context"
 import { cn } from "@/lib/utils"
 import { Sun, Moon } from "lucide-react"
 
@@ -11,7 +12,16 @@ type ThemeToggleProps = {
 
 export function ThemeToggle({ className, tone = "default" }: ThemeToggleProps) {
   const { theme, toggleTheme } = useTheme()
+  const { language } = useLanguage()
   const isMedia = tone === "media"
+  const ariaLabel =
+    theme === "dark"
+      ? language === "fr"
+        ? "Passer au mode clair"
+        : "Switch to light mode"
+      : language === "fr"
+        ? "Passer au mode sombre"
+        : "Switch to dark mode"
 
   return (
     <button
@@ -24,7 +34,7 @@ export function ThemeToggle({ className, tone = "default" }: ThemeToggleProps) {
           : "border-border/70 bg-card/70 text-foreground hover:bg-muted",
         className
       )}
-      aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+      aria-label={ariaLabel}
       aria-pressed={theme === "dark"}
     >
       {theme === "dark" ? (

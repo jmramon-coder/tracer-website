@@ -1,12 +1,33 @@
 import Link from "next/link"
 import { BrandLogo } from "@/components/brand-logo"
+import { LocalizedText } from "@/components/localized-text"
 
 const pillarPages = [
-  { href: "/research-security-screening", label: "Research Security Screening" },
-  { href: "/academic-partnership-due-diligence", label: "Academic Due Diligence" },
-  { href: "/sanctions-screening-universities", label: "Sanctions Screening" },
-  { href: "/research-collaboration-risk", label: "Collaboration Risk" },
-  { href: "/research-security-tools", label: "Security Tools" },
+  {
+    href: "/research-security-screening",
+    label: "Research Security Screening",
+    labelFr: "Vérification de sécurité de la recherche",
+  },
+  {
+    href: "/academic-partnership-due-diligence",
+    label: "Academic Due Diligence",
+    labelFr: "Diligence raisonnable académique",
+  },
+  {
+    href: "/sanctions-screening-universities",
+    label: "Sanctions Screening",
+    labelFr: "Vérification des sanctions",
+  },
+  {
+    href: "/research-collaboration-risk",
+    label: "Collaboration Risk",
+    labelFr: "Risque de collaboration",
+  },
+  {
+    href: "/research-security-tools",
+    label: "Security Tools",
+    labelFr: "Outils de sécurité",
+  },
 ]
 
 export function PillarPageLayout({ children }: { children: React.ReactNode }) {
@@ -29,9 +50,12 @@ export function PillarPageLayout({ children }: { children: React.ReactNode }) {
           <div className="mb-8 flex text-foreground">
             <BrandLogo markClassName="h-7 w-8" />
           </div>
-          <nav aria-label="Related pages">
+          <nav aria-label="Related pages / Pages liées">
             <p className="mb-4 text-[11px] uppercase tracking-[0.15em] text-muted-foreground">
-              Research Security Guides
+              <LocalizedText
+                en="Research Security Guides"
+                fr="Guides de sécurité de la recherche"
+              />
             </p>
             <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
               {pillarPages.map((page) => (
@@ -40,7 +64,7 @@ export function PillarPageLayout({ children }: { children: React.ReactNode }) {
                     href={page.href}
                     className="text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
                   >
-                    {page.label}
+                    <LocalizedText en={page.label} fr={page.labelFr} />
                   </Link>
                 </li>
               ))}
@@ -49,20 +73,21 @@ export function PillarPageLayout({ children }: { children: React.ReactNode }) {
                   href="/blog"
                   className="text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
                 >
-                  Blog
+                  <LocalizedText en="Blog" fr="Blogue" />
                 </Link>
               </li>
             </ul>
           </nav>
           <div className="mt-10 flex flex-col items-start justify-between gap-3 border-t border-border pt-6 sm:flex-row sm:items-center">
             <p className="text-[11px] tracking-wide text-subtle-foreground">
-              &copy; {new Date().getFullYear()} Tracer. All rights reserved.
+              &copy; {new Date().getFullYear()} Tracer.{" "}
+              <LocalizedText en="All rights reserved." fr="Tous droits réservés." />
             </p>
             <Link
               href="/privacy"
               className="text-[11px] tracking-wide text-subtle-foreground transition-colors duration-200 hover:text-foreground"
             >
-              Privacy Policy
+              <LocalizedText en="Privacy Policy" fr="Politique de confidentialité" />
             </Link>
           </div>
         </div>

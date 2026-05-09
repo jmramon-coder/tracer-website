@@ -6,16 +6,15 @@ import {
   CheckCircle2,
   Compass,
   FileSearch,
-  Linkedin,
   Network,
   ShieldCheck,
-  Sparkles,
 } from "lucide-react"
 import { BrandLogo } from "@/components/brand-logo"
-import { Footer } from "@/components/footer"
 import { Header } from "@/components/header"
 import { LocalizedText } from "@/components/localized-text"
+import { MapleLeaf } from "@/components/maple-leaf"
 import { WaitlistButton } from "@/components/waitlist-button"
+import { resourceCards } from "@/lib/site-data"
 
 export const metadata: Metadata = {
   title: "Company",
@@ -26,27 +25,27 @@ export const metadata: Metadata = {
 const visionCards = [
   {
     icon: ShieldCheck,
-    title: "Human review stays central",
-    titleFr: "La revue humaine reste centrale",
-    copy: "Tracer gathers, structures, and renders facts so research security teams can review with better context.",
+    title: "Trust should be usable",
+    titleFr: "La confiance doit être utilisable",
+    copy: "Research security policies matter most when teams can turn them into clear, repeatable review practice.",
     copyFr:
-      "Tracer rassemble, structure et rend les faits pour que les équipes de sécurité de la recherche révisent avec un meilleur contexte.",
+      "Les politiques de sécurité de la recherche comptent surtout lorsque les équipes peuvent les transformer en pratique de revue claire et répétable.",
   },
   {
     icon: FileSearch,
-    title: "Evidence should be traceable",
-    titleFr: "Les preuves doivent être traçables",
-    copy: "Every workflow is designed around sources, citations, limitations, and audit-ready records.",
+    title: "Evidence should carry context",
+    titleFr: "Les preuves doivent garder leur contexte",
+    copy: "Sources, limitations, uncertainty, and reasoning should stay attached from intake to leadership review.",
     copyFr:
-      "Chaque flux est conçu autour des sources, citations, limites et dossiers prêts pour l'audit.",
+      "Les sources, limites, incertitudes et raisonnements doivent rester liés du dépôt initial à la revue de direction.",
   },
   {
     icon: Network,
-    title: "Trusted science should move",
-    titleFr: "La science fiable doit avancer",
-    copy: "Research security should help good collaborations move forward, not bury teams in repeated manual checks.",
+    title: "Good collaborations should move",
+    titleFr: "Les bonnes collaborations doivent avancer",
+    copy: "The goal is not more friction. It is faster clarity for trusted work and better escalation when review is needed.",
     copyFr:
-      "La sécurité de la recherche doit aider les bonnes collaborations à avancer, pas enfouir les équipes sous des vérifications répétées.",
+      "L'objectif n'est pas d'ajouter de la friction. Il est d'obtenir une clarté plus rapide pour les travaux fiables et une meilleure escalade lorsque la revue est nécessaire.",
   },
 ] as const
 
@@ -81,40 +80,12 @@ const operatingPrinciples = [
   },
 ] as const
 
-const founders = [
-  {
-    initials: "01",
-    name: "Founder profile",
-    nameFr: "Profil fondateur",
-    role: "Product, intelligence systems, and platform direction",
-    roleFr: "Produit, systèmes d'intelligence et direction plateforme",
-    bio: "Building the operating layer for research security teams: from institutional workflow design to the intelligence surfaces that make evidence reviewable.",
-    bioFr:
-      "Développe la couche opérationnelle pour les équipes de sécurité de la recherche : du design des flux institutionnels aux surfaces d'intelligence qui rendent les preuves révisables.",
-    linkedin: "https://www.linkedin.com/",
-  },
-  {
-    initials: "02",
-    name: "Research security lead",
-    nameFr: "Responsable sécurité de la recherche",
-    role: "Policy translation, RSO workflow, and institutional review",
-    roleFr: "Traduction des politiques, flux RSO et revue institutionnelle",
-    bio: "A placeholder profile for the domain lead shaping how Tracer reflects Canadian research security expectations and human review practice.",
-    bioFr:
-      "Profil placeholder pour la personne experte du domaine qui façonne la façon dont Tracer reflète les attentes canadiennes et la pratique de revue humaine.",
-    linkedin: "https://www.linkedin.com/",
-  },
-  {
-    initials: "03",
-    name: "Engineering partner",
-    nameFr: "Partenaire ingénierie",
-    role: "Secure infrastructure, data architecture, and product reliability",
-    roleFr: "Infrastructure sécurisée, architecture de données et fiabilité produit",
-    bio: "A placeholder profile for the technical partner focused on dependable systems, privacy-aware architecture, and audit-ready product behavior.",
-    bioFr:
-      "Profil placeholder pour le partenaire technique axé sur les systèmes fiables, l'architecture sensible à la confidentialité et les comportements auditables du produit.",
-    linkedin: "https://www.linkedin.com/",
-  },
+const footerNavLinks = [
+  { href: "/platform", label: "Platform", labelFr: "Plateforme" },
+  { href: "/labs", label: "Labs", labelFr: "Labs" },
+  { href: "/solutions", label: "Solutions & Pricing", labelFr: "Solutions et tarifs" },
+  { href: "/resources", label: "Resources", labelFr: "Ressources" },
+  { href: "/company", label: "Company", labelFr: "Entreprise" },
 ] as const
 
 export default function CompanyPage() {
@@ -122,7 +93,7 @@ export default function CompanyPage() {
     <main className="min-h-screen bg-background text-foreground">
       <Header />
 
-      <section className="relative z-10 overflow-hidden rounded-b-[34px] bg-hero pt-28 text-hero-foreground md:pt-32">
+      <section className="relative z-10 overflow-hidden rounded-b-[34px] bg-hero pt-24 text-hero-foreground">
         <Image
           src="/brand/bg-tracer-web-1.png"
           alt=""
@@ -133,7 +104,7 @@ export default function CompanyPage() {
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.78),rgba(0,0,0,0.44)_54%,rgba(0,0,0,0.22))]" />
 
-        <div className="relative mx-auto grid min-h-[82svh] max-w-[1500px] gap-10 px-6 pb-16 sm:px-8 lg:grid-cols-[0.9fr_0.58fr] lg:items-end lg:px-12 xl:px-16">
+        <div className="relative mx-auto grid min-h-[74svh] max-w-[1500px] gap-10 px-6 pb-12 sm:px-8 lg:grid-cols-[0.9fr_0.58fr] lg:items-end lg:px-12 xl:px-16">
           <div className="max-w-5xl">
             <BrandLogo
               variant="white"
@@ -169,38 +140,33 @@ export default function CompanyPage() {
             </div>
           </div>
 
-          <div className="rounded-[30px] border border-white/16 bg-black/22 p-5 shadow-2xl shadow-black/25 backdrop-blur-2xl">
-            <div className="rounded-[24px] border border-white/12 bg-white/10 p-5">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/52">
-                <LocalizedText en="Vision" fr="Vision" />
-              </p>
-              <h2 className="mt-4 text-2xl font-semibold tracking-tight">
-                <LocalizedText
-                  en="Make research security repeatable without making it mechanical."
-                  fr="Rendre la sécurité de la recherche répétable sans la rendre mécanique."
-                />
-              </h2>
-              <p className="mt-4 text-sm leading-6 text-white/66">
-                <LocalizedText
-                  en="The best review systems make evidence easier to inspect, context easier to share, and uncertainty easier to name."
-                  fr="Les meilleurs systèmes de revue rendent les preuves plus faciles à inspecter, le contexte plus facile à partager et l'incertitude plus facile à nommer."
-                />
-              </p>
-              <div className="mt-6 grid gap-2">
-                {[
-                  ["Human decision layer", "Couche de décision humaine"],
-                  ["Source-backed reports", "Rapports appuyés par les sources"],
-                  ["Bilingual institutional workflows", "Flux institutionnels bilingues"],
-                ].map(([en, fr]) => (
-                  <div
-                    key={en}
-                    className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/8 px-3 py-3 text-sm text-white/72"
-                  >
-                    <CheckCircle2 className="h-4 w-4 text-white" />
-                    <LocalizedText en={en} fr={fr} />
-                  </div>
-                ))}
-              </div>
+          <div className="rounded-[30px] border border-white/16 bg-black/24 p-6 shadow-2xl shadow-black/25 backdrop-blur-2xl">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/52">
+              <LocalizedText en="Vision" fr="Vision" />
+            </p>
+            <h2 className="mt-4 text-2xl font-semibold tracking-tight">
+              <LocalizedText
+                en="Make research security repeatable without making it mechanical."
+                fr="Rendre la sécurité de la recherche répétable sans la rendre mécanique."
+              />
+            </h2>
+            <p className="mt-4 text-sm leading-6 text-white/68">
+              <LocalizedText
+                en="Tracer is a fact-gathering and workflow layer: evidence stays source-backed, uncertainty stays visible, and final judgment stays with institutional reviewers."
+                fr="Tracer est une couche de collecte de faits et de flux de travail : les preuves restent sourcées, l'incertitude reste visible et le jugement final demeure entre les mains des réviseurs institutionnels."
+              />
+            </p>
+            <div className="mt-6 grid gap-3 text-sm text-white/72">
+              {[
+                ["Human decision layer", "Couche de décision humaine"],
+                ["Source-backed reports", "Rapports appuyés par les sources"],
+                ["Bilingual institutional workflows", "Flux institutionnels bilingues"],
+              ].map(([en, fr]) => (
+                <div key={en} className="flex items-center gap-3">
+                  <CheckCircle2 className="h-4 w-4 text-white" />
+                  <LocalizedText en={en} fr={fr} />
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -211,19 +177,19 @@ export default function CompanyPage() {
           <div className="grid gap-8 lg:grid-cols-[0.8fr_0.9fr] lg:items-end">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                <LocalizedText en="What we believe" fr="Ce que nous croyons" />
+                <LocalizedText en="What we believe" fr="Notre conviction" />
               </p>
               <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight md:text-5xl">
                 <LocalizedText
-                  en="Research security should accelerate trusted collaboration."
-                  fr="La sécurité de la recherche doit accélérer la collaboration fiable."
+                  en="Great science needs a calmer path through trust."
+                  fr="La grande science a besoin d'un chemin plus calme vers la confiance."
                 />
               </h2>
             </div>
             <p className="max-w-2xl text-base leading-7 text-muted-foreground lg:justify-self-end">
               <LocalizedText
-                en="We are building Tracer for institutions that need operational clarity: who was screened, what sources were checked, what evidence was found, and where human review should continue."
-                fr="Nous bâtissons Tracer pour les institutions qui ont besoin de clarté opérationnelle : qui a été vérifié, quelles sources ont été consultées, quelles preuves ont été trouvées et où la revue humaine doit se poursuivre."
+                en="We believe research security should make responsible collaboration easier to defend, easier to explain, and easier to keep moving without turning judgment into a machine decision."
+                fr="Nous croyons que la sécurité de la recherche doit rendre la collaboration responsable plus défendable, plus explicable et plus fluide, sans transformer le jugement en décision automatisée."
               />
             </p>
           </div>
@@ -292,81 +258,6 @@ export default function CompanyPage() {
         </div>
       </section>
 
-      <section className="bg-card py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 xl:px-16">
-          <div className="grid gap-8 lg:grid-cols-[0.82fr_0.9fr] lg:items-end">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                <LocalizedText en="Founders" fr="Fondateurs" />
-              </p>
-              <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight md:text-5xl">
-                <LocalizedText
-                  en="A founder gallery ready for the team behind Tracer."
-                  fr="Une galerie fondatrice prête pour l'équipe derrière Tracer."
-                />
-              </h2>
-            </div>
-            <p className="max-w-2xl text-base leading-7 text-muted-foreground lg:justify-self-end">
-              <LocalizedText
-                en="These cards are structured as polished placeholders: add real portraits, LinkedIn URLs, and final bios when the public team page is ready."
-                fr="Ces cartes sont des placeholders soignés : ajoutez les vrais portraits, URLs LinkedIn et biographies finales lorsque la page équipe publique sera prête."
-              />
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-4 lg:grid-cols-3">
-            {founders.map((founder) => (
-              <article
-                key={founder.initials}
-                className="overflow-hidden rounded-[28px] border border-border bg-background shadow-sm"
-              >
-                <div className="relative min-h-[260px] overflow-hidden bg-[#F6F6F5] dark:bg-white/[0.04]">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_32%_22%,rgba(36,89,184,0.22),transparent_34%),linear-gradient(135deg,rgba(255,255,255,0.92),rgba(230,230,227,0.72))] dark:bg-[radial-gradient(circle_at_32%_22%,rgba(36,89,184,0.28),transparent_34%),linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02))]" />
-                  <Image
-                    src="/brand/glass-logo-tracer.png"
-                    alt=""
-                    width={523}
-                    height={478}
-                    className="absolute bottom-5 right-5 h-auto w-32 opacity-50 drop-shadow-[0_20px_50px_rgba(15,23,42,0.22)]"
-                  />
-                  <div className="absolute left-6 top-6 rounded-full border border-border bg-card/80 px-3 py-1 text-xs font-semibold text-muted-foreground backdrop-blur-xl">
-                    <LocalizedText en="Photo placeholder" fr="Placeholder photo" />
-                  </div>
-                  <div className="absolute bottom-6 left-6 flex h-20 w-20 items-center justify-center rounded-[26px] border border-border bg-card text-2xl font-semibold tracking-tight shadow-sm">
-                    {founder.initials}
-                  </div>
-                </div>
-
-                <div className="p-6">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <h3 className="text-2xl font-semibold tracking-tight">
-                        <LocalizedText en={founder.name} fr={founder.nameFr} />
-                      </h3>
-                      <p className="mt-2 text-sm font-medium text-[#2459B8]">
-                        <LocalizedText en={founder.role} fr={founder.roleFr} />
-                      </p>
-                    </div>
-                    <Link
-                      href={founder.linkedin}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label="LinkedIn profile"
-                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:bg-muted"
-                    >
-                      <Linkedin className="h-4 w-4" />
-                    </Link>
-                  </div>
-                  <p className="mt-5 text-sm leading-6 text-muted-foreground">
-                    <LocalizedText en={founder.bio} fr={founder.bioFr} />
-                  </p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="bg-background py-20 md:py-28">
         <div className="mx-auto grid max-w-7xl gap-6 px-6 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-stretch lg:px-12 xl:px-16">
           <div className="rounded-[30px] border border-border bg-card p-8 shadow-[var(--panel-shadow)] md:p-10">
@@ -399,10 +290,24 @@ export default function CompanyPage() {
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.2),rgba(0,0,0,0.74))]" />
             <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10">
               <div className="flex items-center gap-3">
-                <Sparkles className="h-5 w-5" />
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/70">
-                  <LocalizedText en="Tracer Labs" fr="Tracer Labs" />
-                </p>
+                <Image
+                  src="/brand/tracer-labs-v2.png"
+                  alt=""
+                  width={42}
+                  height={42}
+                  className="h-9 w-9 object-contain"
+                />
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white">
+                    Tracer Labs
+                  </p>
+                  <p className="mt-1 text-xs text-white/62">
+                    <LocalizedText
+                      en="Innovation workspace for adaptive screening intelligence."
+                      fr="Espace d'innovation pour l'intelligence de vérification adaptative."
+                    />
+                  </p>
+                </div>
               </div>
               <h3 className="mt-5 max-w-2xl text-3xl font-semibold tracking-tight md:text-4xl">
                 <LocalizedText
@@ -415,24 +320,136 @@ export default function CompanyPage() {
         </div>
       </section>
 
-      <section className="bg-background px-6 pb-20 sm:px-8 md:pb-28 lg:px-12 xl:px-16">
-        <div className="relative mx-auto flex max-w-7xl flex-col gap-8 overflow-hidden rounded-[30px] border border-border bg-card p-8 shadow-[var(--panel-shadow)] md:flex-row md:items-center md:justify-between md:p-10">
-          <div>
-            <BrandLogo />
-            <h2 className="mt-8 max-w-2xl text-3xl font-semibold tracking-tight md:text-4xl">
+      <section className="relative isolate overflow-hidden bg-[#07101F] text-white">
+        <Image
+          src="/brand/tracer-nature-bg.png"
+          alt=""
+          fill
+          sizes="100vw"
+          className="absolute inset-0 -z-30 h-full w-full object-cover object-center"
+        />
+        <div className="absolute inset-0 -z-20 bg-[linear-gradient(90deg,rgba(0,0,0,0.62),rgba(0,0,0,0.28)_48%,rgba(0,0,0,0.18)_76%)]" />
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(7,16,31,0)_0%,rgba(7,16,31,0.24)_36%,rgba(7,16,31,0.82)_70%,#07101F_100%)]" />
+        <div className="absolute inset-x-0 bottom-0 -z-10 h-[52%] bg-[radial-gradient(circle_at_12%_92%,rgba(36,89,184,0.36),transparent_36%),radial-gradient(circle_at_82%_100%,rgba(10,72,48,0.34),transparent_32%)]" />
+
+        <div className="relative mx-auto flex min-h-[640px] max-w-[1500px] items-end px-6 py-20 sm:px-8 lg:px-12 xl:px-16">
+          <div className="max-w-3xl">
+            <BrandLogo
+              variant="white"
+              markClassName="h-9 w-10"
+              textClassName="text-white"
+            />
+            <h2 className="mt-8 max-w-3xl text-4xl font-semibold tracking-tight md:text-6xl">
               <LocalizedText
                 en="Help shape the next standard for research security operations."
                 fr="Aidez à façonner le prochain standard des opérations de sécurité de la recherche."
               />
             </h2>
+            <p className="mt-5 max-w-2xl text-base leading-7 text-white/72">
+              <LocalizedText
+                en="Tracer is being built with institutions that want trust, evidence, and collaboration to move together. Join the early group helping define how modern research security work should feel."
+                fr="Tracer est bâti avec des institutions qui veulent faire avancer confiance, preuves et collaboration ensemble. Rejoignez le premier groupe qui aide à définir l'expérience moderne de la sécurité de la recherche."
+              />
+            </p>
+            <WaitlistButton className="mt-9 h-12 bg-[#2459B8] px-6 text-white shadow-xl shadow-[#2459B8]/30 ring-1 ring-white/15 hover:-translate-y-0.5 hover:bg-[#1E4C9D]">
+              <LocalizedText en="Join waitlist" fr="Rejoindre la liste" />
+            </WaitlistButton>
           </div>
-          <WaitlistButton className="h-12 bg-[#2459B8] px-6 text-white shadow-xl shadow-[#2459B8]/25 hover:bg-[#1E4C9D]">
-            <LocalizedText en="Join waitlist" fr="Rejoindre la liste" />
-          </WaitlistButton>
         </div>
-      </section>
 
-      <Footer />
+        <footer className="relative border-t border-white/10">
+          <div className="mx-auto max-w-7xl px-6 py-14 sm:px-8 md:py-20 lg:px-12 xl:px-16">
+            <div className="grid gap-12 lg:grid-cols-[1.1fr_2fr]">
+              <div className="max-w-sm">
+                <Link href="/platform" className="mb-6 flex text-white">
+                  <BrandLogo
+                    variant="white"
+                    markClassName="h-8 w-9"
+                    textClassName="text-white"
+                  />
+                </Link>
+                <p className="text-sm leading-6 text-white/62">
+                  <LocalizedText
+                    en="Structured research security due diligence for high-trust institutional workflows."
+                    fr="Diligence raisonnable structurée en sécurité de la recherche pour des flux institutionnels de haute confiance."
+                  />
+                </p>
+                <p className="mt-8 flex items-center gap-1.5 text-[11px] uppercase tracking-[0.2em] text-white/48">
+                  <LocalizedText en="A Canadian Company" fr="Une entreprise canadienne" />
+                  <MapleLeaf size={12} />
+                </p>
+              </div>
+
+              <div className="grid gap-8 sm:grid-cols-3">
+                <div>
+                  <p className="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-white/82">
+                    <LocalizedText en="Website" fr="Site" />
+                  </p>
+                  <nav className="grid gap-3">
+                    {footerNavLinks.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className="text-sm text-white/54 transition-colors hover:text-white"
+                      >
+                        <LocalizedText en={item.label} fr={item.labelFr} />
+                      </Link>
+                    ))}
+                  </nav>
+                </div>
+                <div>
+                  <p className="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-white/82">
+                    <LocalizedText en="Guides" fr="Guides" />
+                  </p>
+                  <nav className="grid gap-3">
+                    {resourceCards.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className="text-sm text-white/54 transition-colors hover:text-white"
+                      >
+                        <LocalizedText en={item.title} fr={item.titleFr} />
+                      </Link>
+                    ))}
+                  </nav>
+                </div>
+                <div>
+                  <p className="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-white/82">
+                    <LocalizedText en="Legal" fr="Légal" />
+                  </p>
+                  <nav className="grid gap-3">
+                    <Link
+                      href="/privacy"
+                      className="text-sm text-white/54 transition-colors hover:text-white"
+                    >
+                      <LocalizedText en="Privacy Policy" fr="Politique de confidentialité" />
+                    </Link>
+                    <Link
+                      href="/blog"
+                      className="text-sm text-white/54 transition-colors hover:text-white"
+                    >
+                      <LocalizedText en="Blog" fr="Blogue" />
+                    </Link>
+                  </nav>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-14 flex flex-col gap-3 border-t border-white/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-[11px] tracking-wide text-white/42">
+                © {new Date().getFullYear()} Tracer.{" "}
+                <LocalizedText en="All rights reserved." fr="Tous droits réservés." />
+              </p>
+              <p className="text-[11px] tracking-wide text-white/42">
+                <LocalizedText
+                  en="Designed for universities worldwide"
+                  fr="Conçu pour les universités du monde entier"
+                />
+              </p>
+            </div>
+          </div>
+        </footer>
+      </section>
     </main>
   )
 }

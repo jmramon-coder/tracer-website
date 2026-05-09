@@ -166,7 +166,7 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                 Tracer
               </p>
               <p className="mt-1 text-[9px] font-medium uppercase tracking-[0.28em] text-muted-foreground">
-                Research Security
+                {t.header.tagline}
               </p>
             </div>
           </div>

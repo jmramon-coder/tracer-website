@@ -3,6 +3,7 @@
 import { forwardRef, useEffect, useMemo, useRef, useState } from "react"
 import type { MouseEvent } from "react"
 import { resourceLibrary, type ResourceArticle, type ResourceSection } from "@/lib/resource-library"
+import { resourceLibraryFr } from "@/lib/resource-library.fr"
 import { useLanguage } from "@/lib/language-context"
 import { cn } from "@/lib/utils"
 
@@ -13,25 +14,43 @@ function slugify(value: string) {
     .replace(/^-|-$/g, "")
 }
 
-function getSectionId(resource: ResourceArticle, section: ResourceSection) {
-  return `${resource.id}-${slugify(section.heading)}`
+function getSectionId(resource: ResourceArticle, sectionIndex: number) {
+  return `${resource.id}-section-${sectionIndex + 1}`
 }
 
-function getHashTarget(hash: string) {
+function getHashTarget(hash: string, resources: ResourceArticle[]) {
   const value = hash.replace("#", "")
-  const exactResource = resourceLibrary.find((resource) => resource.id === value)
+  const exactResource = resources.find((resource) => resource.id === value)
 
   if (exactResource) {
     return { resourceId: exactResource.id, anchorId: exactResource.id }
   }
 
-  for (const resource of resourceLibrary) {
-    const section = resource.sections.find(
-      (item) => getSectionId(resource, item) === value
-    )
+  for (const resource of resources) {
+    const librariesToCheck = [resources, resourceLibrary, resourceLibraryFr]
+    let sectionIndex = -1
 
-    if (section) {
-      return { resourceId: resource.id, anchorId: getSectionId(resource, section) }
+    for (const library of librariesToCheck) {
+      const localizedResource = library.find((item) => item.id === resource.id)
+
+      if (!localizedResource) {
+        continue
+      }
+
+      sectionIndex = localizedResource.sections.findIndex((item, index) => {
+        const stableId = getSectionId(resource, index)
+        const legacyTranslatedId = `${resource.id}-${slugify(item.heading)}`
+
+        return stableId === value || legacyTranslatedId === value
+      })
+
+      if (sectionIndex >= 0) {
+        break
+      }
+    }
+
+    if (sectionIndex >= 0) {
+      return { resourceId: resource.id, anchorId: getSectionId(resource, sectionIndex) }
     }
   }
 
@@ -53,25 +72,33 @@ const tracerResourceLinks = [
   },
 ] as const
 
+const categoryLabels: Record<string, { en: string; fr: string }> = {
+  Foundations: { en: "Foundations", fr: "Fondations" },
+  Operations: { en: "Operations", fr: "Opérations" },
+  Compliance: { en: "Compliance", fr: "Conformité" },
+}
+
 export function ResourceReader() {
   const { language } = useLanguage()
+  const resources = language === "fr" ? resourceLibraryFr : resourceLibrary
   const [selectedId, setSelectedId] = useState(resourceLibrary[0].id)
   const [activeAnchorId, setActiveAnchorId] = useState(resourceLibrary[0].id)
   const [readingProgress, setReadingProgress] = useState(0)
+  const [isArticleScrolled, setIsArticleScrolled] = useState(false)
   const articleRef = useRef<HTMLElement>(null)
   const scrollPaneRef = useRef<HTMLDivElement>(null)
   const pendingAnchorRef = useRef<string | null>(null)
   const selectedResource = useMemo(
     () =>
-      resourceLibrary.find((resource) => resource.id === selectedId) ??
-      resourceLibrary[0],
-    [selectedId]
+      resources.find((resource) => resource.id === selectedId) ??
+      resources[0],
+    [resources, selectedId]
   )
   const activeAnchorIds = useMemo(
     () => [
       selectedResource.id,
-      ...selectedResource.sections.map((section) =>
-        getSectionId(selectedResource, section)
+      ...selectedResource.sections.map((_, index) =>
+        getSectionId(selectedResource, index)
       ),
     ],
     [selectedResource]
@@ -79,7 +106,7 @@ export function ResourceReader() {
 
   useEffect(() => {
     const applyHashSelection = () => {
-      const target = getHashTarget(window.location.hash)
+      const target = getHashTarget(window.location.hash, resources)
 
       if (target) {
         setSelectedId(target.resourceId)
@@ -91,7 +118,7 @@ export function ResourceReader() {
     applyHashSelection()
     window.addEventListener("hashchange", applyHashSelection)
     return () => window.removeEventListener("hashchange", applyHashSelection)
-  }, [])
+  }, [resources])
 
   useEffect(() => {
     const pendingAnchor = pendingAnchorRef.current
@@ -119,10 +146,12 @@ export function ResourceReader() {
 
         if (!scrollPane) {
           setReadingProgress(0)
+          setIsArticleScrolled(false)
           return
         }
 
         const readableDistance = scrollPane.scrollHeight - scrollPane.clientHeight
+        setIsArticleScrolled(scrollPane.scrollTop > 2)
 
         if (readableDistance <= 0) {
           setReadingProgress(0)
@@ -193,7 +222,7 @@ export function ResourceReader() {
     const elementRect = element.getBoundingClientRect()
 
     scrollPane.scrollTo({
-      top: scrollPane.scrollTop + elementRect.top - paneRect.top - 6,
+      top: scrollPane.scrollTop + elementRect.top - paneRect.top - 28,
       behavior,
     })
   }
@@ -205,6 +234,7 @@ export function ResourceReader() {
     setSelectedId(resource.id)
     setActiveAnchorId(resource.id)
     setReadingProgress(0)
+    setIsArticleScrolled(false)
     updateHash(resource.id)
 
     if (resource.id === selectedResource.id) {
@@ -242,7 +272,7 @@ export function ResourceReader() {
                 {language === "fr" ? "Blogue et articles" : "Blog and articles"}
               </p>
               <div className="mt-3 space-y-1">
-                {resourceLibrary.map((resource) => {
+                {resources.map((resource) => {
                   const isArticleActive = selectedResource.id === resource.id
 
                   return (
@@ -255,7 +285,7 @@ export function ResourceReader() {
                           "block py-1.5 text-left text-sm leading-5 transition-colors",
                           isArticleActive
                             ? "font-semibold text-foreground"
-                            : "font-medium text-muted-foreground/45 hover:text-muted-foreground"
+                            : "font-medium text-muted-foreground/62 hover:text-muted-foreground"
                         )}
                       >
                         {resource.title}
@@ -268,8 +298,8 @@ export function ResourceReader() {
                         )}
                       >
                         <div className="min-h-0 space-y-0.5">
-                          {resource.sections.map((section) => {
-                            const sectionId = getSectionId(resource, section)
+                          {resource.sections.map((section, index) => {
+                            const sectionId = getSectionId(resource, index)
                             const isSectionActive = activeAnchorId === sectionId
 
                             return (
@@ -282,7 +312,7 @@ export function ResourceReader() {
                                   "block py-1 text-xs leading-5 transition-colors",
                                   isSectionActive
                                     ? "font-semibold text-foreground"
-                                    : "font-medium text-muted-foreground/45 hover:text-muted-foreground"
+                                    : "font-medium text-muted-foreground/58 hover:text-muted-foreground"
                                 )}
                               >
                                 {section.heading}
@@ -305,7 +335,7 @@ export function ResourceReader() {
                 {tracerResourceLinks.map((item) => (
                   <span
                     key={item.en}
-                    className="block py-1 text-sm font-medium leading-5 text-muted-foreground/35"
+                    className="block py-1 text-sm font-medium leading-5 text-muted-foreground/58"
                   >
                     {language === "fr" ? item.fr : item.en}
                   </span>
@@ -318,17 +348,20 @@ export function ResourceReader() {
         <div className="relative min-h-0 md:h-full">
           <div
             ref={scrollPaneRef}
-            className="resource-scrollbar-hide scroll-smooth pr-1 pb-28 md:h-full md:overflow-y-auto md:pb-36 md:pr-4"
+            className="resource-scrollbar-hide scroll-smooth pr-1 pb-28 md:h-full md:overflow-y-auto md:pb-28 md:pr-4"
           >
             <ResourceArticleView ref={articleRef} resource={selectedResource} />
           </div>
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-0 hidden h-10 bg-gradient-to-b from-background/95 to-transparent md:block"
+            className={cn(
+              "pointer-events-none absolute inset-x-0 top-0 hidden h-7 bg-[linear-gradient(180deg,var(--background)_0%,color-mix(in_srgb,var(--background)_72%,transparent)_54%,transparent_100%)] transition-opacity duration-200 md:block",
+              isArticleScrolled ? "opacity-100" : "opacity-0"
+            )}
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 bottom-0 hidden h-32 bg-gradient-to-t from-background via-background/90 to-transparent md:block"
+            className="pointer-events-none absolute inset-x-0 bottom-0 hidden h-20 bg-[linear-gradient(0deg,var(--background)_0%,color-mix(in_srgb,var(--background)_78%,transparent)_42%,transparent_100%)] md:block"
           />
         </div>
       </div>
@@ -344,14 +377,16 @@ const ResourceArticleView = forwardRef<HTMLElement, { resource: ResourceArticle 
       <article id={resource.id} ref={ref} className="w-full max-w-3xl scroll-mt-32">
         <header className="pb-10">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-            {resource.eyebrow} · {resource.category} · {resource.audience}
+            {resource.eyebrow} · {categoryLabels[resource.category]?.[language] ?? resource.category} · {resource.audience}
           </p>
           <div className="mt-5 flex flex-col gap-2 md:flex-row md:items-end md:justify-between md:gap-6">
             <h1 className="text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl">
               {resource.title}
             </h1>
             <span className="shrink-0 pb-1 text-sm font-medium text-muted-foreground/55 md:pb-2">
-              {resource.readTime} {language === "fr" ? "lecture" : "read"}
+              {language === "fr"
+                ? `${resource.readTime} de lecture`
+                : `${resource.readTime} read`}
             </span>
           </div>
           <p className="mt-6 text-lg leading-8 text-muted-foreground">
@@ -369,11 +404,11 @@ const ResourceArticleView = forwardRef<HTMLElement, { resource: ResourceArticle 
         </header>
 
         <div className="space-y-14">
-          {resource.sections.map((section) => (
+          {resource.sections.map((section, index) => (
             <ResourceSectionView
               key={section.heading}
               section={section}
-              id={getSectionId(resource, section)}
+              id={getSectionId(resource, index)}
             />
           ))}
         </div>

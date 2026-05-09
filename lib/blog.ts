@@ -9,22 +9,45 @@ const BLOG_DIR = path.join(process.cwd(), "content", "blog")
 export interface BlogPost {
   slug: string
   title: string
+  titleFr: string
   description: string
+  descriptionFr: string
   date: string
   author: string
   tags: string[]
+  tagsFr: string[]
   image?: string
   content: string
+  contentFr: string
 }
 
 export interface BlogPostMeta {
   slug: string
   title: string
+  titleFr: string
   description: string
+  descriptionFr: string
   date: string
   author: string
   tags: string[]
+  tagsFr: string[]
   image?: string
+}
+
+const LOCALIZED_CONTENT_SEPARATOR = /<!--\s*fr\s*-->/i
+
+function splitLocalizedMarkdown(rawContent: string) {
+  const [enContent, frContent] = rawContent.split(LOCALIZED_CONTENT_SEPARATOR)
+
+  return {
+    en: enContent.trim(),
+    fr: (frContent ?? enContent).trim(),
+  }
+}
+
+async function renderMarkdown(markdown: string) {
+  const result = await remark().use(html).process(markdown)
+  return result.toString()
 }
 
 export function getAllPostSlugs(): string[] {
@@ -53,10 +76,13 @@ export function getPostMeta(slug: string): BlogPostMeta | null {
   return {
     slug,
     title: data.title ?? "",
+    titleFr: data.titleFr ?? data.title ?? "",
     description: data.description ?? "",
+    descriptionFr: data.descriptionFr ?? data.description ?? "",
     date: data.date ?? "",
     author: data.author ?? "",
     tags: data.tags ?? [],
+    tagsFr: data.tagsFr ?? data.tags ?? [],
     image: data.image,
   }
 }
@@ -67,17 +93,20 @@ export async function getPost(slug: string): Promise<BlogPost | null> {
 
   const fileContent = fs.readFileSync(filePath, "utf-8")
   const { data, content: rawContent } = matter(fileContent)
-
-  const result = await remark().use(html).process(rawContent)
+  const localizedContent = splitLocalizedMarkdown(rawContent)
 
   return {
     slug,
     title: data.title ?? "",
+    titleFr: data.titleFr ?? data.title ?? "",
     description: data.description ?? "",
+    descriptionFr: data.descriptionFr ?? data.description ?? "",
     date: data.date ?? "",
     author: data.author ?? "",
     tags: data.tags ?? [],
+    tagsFr: data.tagsFr ?? data.tags ?? [],
     image: data.image,
-    content: result.toString(),
+    content: await renderMarkdown(localizedContent.en),
+    contentFr: await renderMarkdown(localizedContent.fr),
   }
 }

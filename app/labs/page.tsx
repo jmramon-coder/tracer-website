@@ -4,14 +4,10 @@ import Link from "next/link"
 import {
   ArrowRight,
   BrainCircuit,
-  CheckCircle2,
   Gauge,
-  GitBranch,
   Layers3,
-  Library,
   Network,
   Search,
-  SlidersHorizontal,
 } from "lucide-react"
 import { Footer } from "@/components/footer"
 import { Header } from "@/components/header"
@@ -32,11 +28,11 @@ const pipelineStages = [
     title: "Deep Search",
     titleFr: "Recherche approfondie",
     description:
-      "Coordinate web deep-search agents, source discovery, interaction IDs, and resumable evidence gathering.",
+      "Orchestrate targeted web agents to discover sources, preserve interaction context, and collect evidence that can be resumed and audited.",
     descriptionFr:
-      "Coordonnez les agents de recherche web, la découverte de sources, les identifiants d'interaction et la collecte de preuves reprenable.",
-    focus: "Agent swarm configuration",
-    focusFr: "Configuration d'essaims d'agents",
+      "Orchestrer des agents web ciblés pour découvrir les sources, préserver le contexte d'interaction et collecter des preuves reprenables et auditables.",
+    focus: "Evidence discovery",
+    focusFr: "Découverte des preuves",
   },
   {
     step: "02",
@@ -44,11 +40,11 @@ const pipelineStages = [
     title: "Synthetization",
     titleFr: "Synthétisation",
     description:
-      "Apply Tracer's in-house intelligence layer to turn raw findings into evidence, citations, uncertainty notes, and review guidance.",
+      "Apply Tracer's in-house intelligence layer to reconcile findings, citations, uncertainty notes, and institutional review context.",
     descriptionFr:
-      "Appliquez la couche d'intelligence interne de Tracer pour transformer les constats bruts en preuves, citations, notes d'incertitude et indications de revue.",
-    focus: "In-house synthesis",
-    focusFr: "Synthèse interne",
+      "Appliquer la couche d'intelligence interne de Tracer pour réconcilier constats, citations, notes d'incertitude et contexte de revue institutionnelle.",
+    focus: "Context synthesis",
+    focusFr: "Synthèse contextuelle",
   },
   {
     step: "03",
@@ -56,46 +52,11 @@ const pipelineStages = [
     title: "Rendering",
     titleFr: "Rendu",
     description:
-      "Render high-efficiency report cards, source maps, visual summaries, and PDF-ready outputs approved for production workflows.",
+      "Transform synthesized intelligence into report cards, source maps, visual summaries, and PDF-ready outputs for human review.",
     descriptionFr:
-      "Générez des fiches de rapport efficaces, cartes de sources, synthèses visuelles et sorties PDF approuvées pour la production.",
-    focus: "Data visualization output",
-    focusFr: "Sortie de visualisation",
-  },
-] as const
-
-const controlLayers = [
-  {
-    icon: SlidersHorizontal,
-    label: "Model routing",
-    labelFr: "Routage des modèles",
-    copy: "Route each workflow to current, top-tier model configurations as the frontier shifts.",
-    copyFr:
-      "Acheminez chaque flux vers des configurations de modèles actuelles et de premier plan lorsque la frontière évolue.",
-  },
-  {
-    icon: Library,
-    label: "Prompt library",
-    labelFr: "Bibliothèque de prompts",
-    copy: "Create, compare, and version prompts for individuals, organizations, synthesis, rendering, and new intelligence contexts.",
-    copyFr:
-      "Créez, comparez et versionnez les prompts pour les personnes, organisations, synthèses, rendus et nouveaux contextes d'intelligence.",
-  },
-  {
-    icon: GitBranch,
-    label: "Active brain",
-    labelFr: "Cerveau actif",
-    copy: "Publish the configuration that powers live systems while newer agents, prompts, and models are tested safely in Labs.",
-    copyFr:
-      "Publiez la configuration qui alimente les systèmes en direct pendant que de nouveaux agents, prompts et modèles sont testés dans Labs.",
-  },
-  {
-    icon: Gauge,
-    label: "Efficiency telemetry",
-    labelFr: "Télémétrie d'efficacité",
-    copy: "Measure elapsed time, usage, cost estimates, stage performance, and model fit so screening gets faster and sharper over time.",
-    copyFr:
-      "Mesurez le temps écoulé, l'usage, les coûts estimés, la performance des étapes et l'adéquation modèle pour rendre la vérification plus rapide et précise.",
+      "Transformer l'intelligence synthétisée en fiches de rapport, cartes de sources, synthèses visuelles et sorties PDF pour la revue humaine.",
+    focus: "Review output",
+    focusFr: "Sortie de revue",
   },
 ] as const
 
@@ -160,6 +121,14 @@ const deepSearchCapabilities = [
       "Concevez des prompts adaptés à l'entité, la juridiction, le domaine, le standard de preuve et le contexte de rapport.",
   },
   {
+    icon: Layers3,
+    title: "Intelligence sequence",
+    titleFr: "Séquence d'intelligence",
+    copy: "Move from discovery to synthesis to rendering in one accountable method for institutional review.",
+    copyFr:
+      "Passez de la découverte à la synthèse puis au rendu dans une méthode traçable pour la revue institutionnelle.",
+  },
+  {
     icon: Gauge,
     title: "High-efficiency intelligence",
     titleFr: "Intelligence haute efficacité",
@@ -170,28 +139,28 @@ const deepSearchCapabilities = [
 ] as const
 
 const modelFamilies = [
-  "OpenAI",
-  "Gemini",
-  "Anthropic",
-  "Claude",
-  "Copilot",
-  "Grok",
-  "Mistral AI",
-  "Perplexity",
-  "Meta Llama",
-  "Cohere",
-]
+  { label: "OpenAI", src: "/brand/model-logos/openai.svg" },
+  { label: "Gemini", src: "/brand/model-logos/gemini.svg" },
+  { label: "Anthropic", src: "/brand/model-logos/anthropic.svg" },
+  { label: "Claude", src: "/brand/model-logos/claude.svg" },
+  { label: "Copilot", src: "/brand/model-logos/copilot.svg" },
+  { label: "Grok", src: "/brand/model-logos/grok.svg" },
+  { label: "Mistral AI", src: "/brand/model-logos/mistral.svg" },
+  { label: "Perplexity", src: "/brand/model-logos/perplexity.svg" },
+  { label: "Meta Llama", src: "/brand/model-logos/meta.svg" },
+  { label: "Cohere", src: "/brand/model-logos/cohere.svg" },
+] as const
 
 export default function LabsPage() {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Header />
 
-      <section className="relative overflow-hidden bg-[#07101F] pt-28 text-white md:pt-32">
+      <section className="relative overflow-hidden bg-[#07101F] pt-24 text-white">
         <div className="absolute inset-0 bg-[linear-gradient(110deg,rgba(36,89,184,0.24),transparent_44%),linear-gradient(180deg,rgba(255,255,255,0.08),transparent_36%)]" />
         <div className="absolute inset-x-0 bottom-0 h-px bg-white/12" />
 
-        <div className="relative mx-auto grid min-h-[70svh] max-w-7xl gap-10 px-6 pb-12 sm:px-8 lg:grid-cols-[0.88fr_0.82fr] lg:items-end lg:px-12 xl:px-16">
+        <div className="relative mx-auto grid min-h-[62svh] max-w-7xl gap-10 px-6 pb-10 sm:px-8 lg:grid-cols-[0.88fr_0.82fr] lg:items-end lg:px-12 xl:px-16">
           <div className="max-w-4xl">
             <div className="flex items-center gap-3">
               <Image
@@ -249,18 +218,18 @@ export default function LabsPage() {
           <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
             <div className="lg:sticky lg:top-28">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                <LocalizedText en="Whole pipeline control" fr="Contrôle du pipeline complet" />
+                <LocalizedText en="How Tracer Labs works" fr="Comment Tracer Labs fonctionne" />
               </p>
               <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
                 <LocalizedText
-                  en="One control surface for search agents, model routing, and report output."
-                  fr="Une seule surface de contrôle pour les agents de recherche, le routage des modèles et les rapports."
+                  en="A research intelligence method from source discovery to rendered evidence."
+                  fr="Une méthode d'intelligence de recherche, de la découverte des sources aux preuves rendues."
                 />
               </h2>
               <p className="mt-6 text-base leading-7 text-muted-foreground">
                 <LocalizedText
-                  en="Labs gives operators a clean place to keep screening configurations current: source collection, synthesis, rendering, prompt versions, model choices, and usage telemetry all move together."
-                  fr="Labs donne aux opérateurs un espace propre pour garder les configurations de vérification à jour : collecte de sources, synthèse, rendu, versions de prompts, choix de modèles et télémétrie avancent ensemble."
+                  en="Tracer Labs is the discipline behind the platform: coordinated search agents gather evidence, in-house synthesis turns raw findings into reviewable context, and rendering converts that context into structured outputs institutions can inspect."
+                  fr="Tracer Labs est la méthode derrière la plateforme : des agents de recherche coordonnés rassemblent les preuves, la synthèse interne transforme les constats bruts en contexte révisable, puis le rendu convertit ce contexte en sorties structurées que les institutions peuvent inspecter."
                 />
               </p>
             </div>
@@ -272,27 +241,43 @@ export default function LabsPage() {
 
       <section className="overflow-hidden bg-background py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 xl:px-16">
-          <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                <LocalizedText en="Deep-search intelligence" fr="Intelligence de recherche approfondie" />
-              </p>
-              <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
-                <LocalizedText
-                  en="Agent swarms, deep prompts, and multi-model routing."
-                  fr="Essaims d'agents, prompts profonds et routage multi-modèles."
-                />
-              </h2>
-            </div>
-            <p className="max-w-2xl text-base leading-7 text-muted-foreground lg:justify-self-end">
+          <div className="mb-18 max-w-4xl md:mb-20">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#2459B8]">
+              <LocalizedText en="Tracer Labs vision" fr="Vision Tracer Labs" />
+            </p>
+            <h2 className="mt-4 text-5xl font-semibold tracking-tight md:text-6xl">
               <LocalizedText
-                en="Tracer Labs specializes in web deep search through agent swarm orchestration, contextual prompt engineering, and high-efficiency model routing, keeping screening workflows ready for the strongest intelligence models available to each task."
-                fr="Tracer Labs se spécialise dans la recherche web approfondie grâce à l'orchestration d'essaims d'agents, l'ingénierie de prompts contextuels et le routage efficace des modèles, afin de garder les flux de vérification prêts pour les meilleurs modèles d'intelligence adaptés à chaque tâche."
+                en="A configurable intelligence layer for evidence-heavy work."
+                fr="Une couche d'intelligence configurable pour les travaux riches en preuves."
+              />
+            </h2>
+            <p className="mt-6 max-w-3xl text-base leading-7 text-muted-foreground">
+              <LocalizedText
+                en="The same method that powers research security can extend to domains that need sourced web intelligence, coordinated agents, model-aware routing, and human-readable outputs."
+                fr="La même méthode qui alimente la sécurité de la recherche peut s'étendre aux domaines qui exigent de l'intelligence web sourcée, des agents coordonnés, un routage adapté aux modèles et des sorties lisibles par les équipes."
               />
             </p>
           </div>
 
-          <div className="mt-12 grid gap-4 md:grid-cols-3">
+          <div className="max-w-3xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+              <LocalizedText en="Deep-search intelligence" fr="Intelligence de recherche approfondie" />
+            </p>
+            <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
+              <LocalizedText
+                en="Agent swarms, deep prompts, and multi-model routing."
+                fr="Essaims d'agents, prompts profonds et routage multi-modèles."
+              />
+            </h2>
+            <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground">
+              <LocalizedText
+                en="Web deep search follows a controlled intelligence sequence: agents discover source-backed evidence, prompts target the review context, model routing selects the right intelligence layer, and reports render into clear institutional outputs."
+                fr="La recherche web approfondie suit une séquence d'intelligence contrôlée : les agents découvrent des preuves sourcées, les prompts ciblent le contexte de revue, le routage choisit la bonne couche d'intelligence et les rapports deviennent des sorties institutionnelles claires."
+              />
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {deepSearchCapabilities.map(({ icon: Icon, title, titleFr, copy, copyFr }) => (
               <article
                 key={title}
@@ -311,16 +296,23 @@ export default function LabsPage() {
             ))}
           </div>
 
-          <div className="relative mt-10 overflow-hidden border-y border-border py-5">
-            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-background to-transparent" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-background to-transparent" />
-            <div className="flex w-max animate-marquee items-center gap-3">
-              {[...modelFamilies, ...modelFamilies, ...modelFamilies].map((name, index) => (
+          <div className="relative mt-12 overflow-hidden py-6">
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-28 bg-gradient-to-r from-background to-transparent" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-28 bg-gradient-to-l from-background to-transparent" />
+            <div className="flex w-max animate-marquee items-center gap-14">
+              {[...modelFamilies, ...modelFamilies, ...modelFamilies].map(({ label, src }, index) => (
                 <span
-                  key={`${name}-${index}`}
-                  className="inline-flex h-11 items-center rounded-full border border-border bg-card px-5 text-sm font-semibold text-foreground shadow-sm"
+                  key={`${label}-${index}`}
+                  className="group inline-flex items-center gap-4 text-lg font-semibold tracking-tight text-muted-foreground transition-colors hover:text-[#2459B8]"
                 >
-                  {name}
+                  <Image
+                    src={src}
+                    alt=""
+                    width={72}
+                    height={72}
+                    className="h-16 w-16 shrink-0 object-contain opacity-70 transition-opacity group-hover:opacity-100 dark:invert"
+                  />
+                  <span>{label}</span>
                 </span>
               ))}
             </div>
@@ -330,60 +322,38 @@ export default function LabsPage() {
 
       <section className="bg-background py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 xl:px-16">
-          <div className="mb-16 flex flex-col gap-3 rounded-[24px] border border-border bg-card px-5 py-4 text-[#2459B8] shadow-sm sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center text-[#2459B8]">
-                <Network className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold tracking-tight">
-                  <LocalizedText en="Founding openings coming soon" fr="Places fondatrices bientôt disponibles" />
-                </p>
-                <p className="mt-1 text-xs text-muted-foreground">
-                  <LocalizedText
-                    en="A small early group will help shape the first Tracer Labs service integrations."
-                    fr="Un petit groupe initial aidera à façonner les premières intégrations Tracer Labs."
-                  />
-                </p>
-              </div>
-            </div>
-            <span className="w-fit rounded-full border border-[#2459B8]/25 bg-background px-3 py-1.5 text-xs font-semibold">
-              <LocalizedText en="Founding access" fr="Accès fondateur" />
-            </span>
-          </div>
-
-          <div className="grid gap-12 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
+          <div className="grid gap-14 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
             <div className="max-w-xl">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                <LocalizedText en="Agent configuration" fr="Configuration des agents" />
+                <LocalizedText en="Market extension" fr="Extension des marchés" />
               </p>
               <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
                 <LocalizedText
-                  en="A service layer for business intelligence agents."
-                  fr="Une couche de service pour agents d'intelligence d'affaires."
+                  en="Deep-search intelligence can move into new markets."
+                  fr="L'intelligence de recherche approfondie peut s'étendre à de nouveaux marchés."
                 />
               </h2>
               <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground">
                 <LocalizedText
-                  en="Tracer Labs can extend beyond research security into coordinated deep-search workflows for teams that need source-backed intelligence, repeatable analysis, and configurable agent behavior."
-                  fr="Tracer Labs peut s'étendre au-delà de la sécurité de la recherche vers des flux de recherche approfondie coordonnés pour les équipes qui ont besoin d'intelligence sourcée, d'analyse répétable et d'agents configurables."
+                  en="The vision is to take the same intelligence sequence—source discovery, contextual synthesis, model routing, and report generation—and adapt it to any domain where teams need source-backed decisions."
+                  fr="La vision est d'adapter la même séquence d'intelligence — découverte de sources, synthèse contextuelle, routage des modèles et génération de rapports — à tout domaine où les équipes ont besoin de décisions appuyées par des sources."
                 />
               </p>
             </div>
 
-            <div className="grid gap-3">
+            <div className="relative grid gap-0">
               {businessLines.map((item, index) => (
                 <article
                   key={item.title}
-                  className="group flex items-start gap-4 rounded-[22px] border border-border bg-card/80 px-5 py-5 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:border-[#2459B8]/28 hover:shadow-[var(--floating-shadow)] lg:animate-[labs-business-line_7s_ease-in-out_infinite]"
+                  className="group grid gap-4 border-b border-border py-6 last:border-b-0 sm:grid-cols-[3rem_1fr] lg:animate-[labs-business-line_7s_ease-in-out_infinite]"
                   style={{ animationDelay: `${index * 0.18}s` }}
                 >
-                  <div className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center text-[#2459B8]">
-                    <CheckCircle2 className="h-5 w-5" />
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#2459B8]/24 text-[#2459B8] transition-colors group-hover:bg-[#2459B8] group-hover:text-white">
+                    <span className="text-xs font-semibold tabular-nums">{String(index + 1).padStart(2, "0")}</span>
                   </div>
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                      <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                         <LocalizedText en={item.domain} fr={item.domainFr} />
                       </span>
                       <h3 className="text-base font-semibold tracking-tight">
@@ -410,33 +380,25 @@ export default function LabsPage() {
               </p>
               <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
                 <LocalizedText
-                  en="Configure the intelligence layer inside the systems you already run."
-                  fr="Configurez la couche d'intelligence dans les systèmes que vous utilisez déjà."
+                  en="An intelligence layer for the systems teams already run."
+                  fr="Une couche d'intelligence pour les systèmes que les équipes utilisent déjà."
                 />
               </h2>
-              <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground">
-                <LocalizedText
-                  en="As Labs matures, teams will be able to connect Tracer intelligence to case-management tools, grant workflows, vendor systems, and internal review queues while keeping prompts, models, and telemetry governed from one place."
-                  fr="À mesure que Labs évolue, les équipes pourront connecter l'intelligence Tracer aux outils de gestion de dossiers, flux de subventions, systèmes fournisseurs et files de revue internes, tout en gouvernant prompts, modèles et télémétrie au même endroit."
-                />
-              </p>
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-2">
-              {controlLayers.map(({ icon: Icon, label, labelFr, copy, copyFr }) => (
-                <article
-                  key={label}
-                  className="rounded-[22px] border border-border bg-card/80 p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#2459B8]/28 hover:shadow-[var(--floating-shadow)]"
-                >
-                  <Icon className="h-5 w-5 text-[#2459B8]" />
-                  <h3 className="mt-5 text-lg font-semibold tracking-tight">
-                    <LocalizedText en={label} fr={labelFr} />
-                  </h3>
-                  <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                    <LocalizedText en={copy} fr={copyFr} />
-                  </p>
-                </article>
-              ))}
+            <div className="max-w-3xl lg:pt-12">
+              <p className="text-xl leading-9 tracking-tight text-foreground md:text-2xl">
+                <LocalizedText
+                  en="Tracer aims to offer this intelligence layer to existing solutions that lack a proper lab environment to experiment, test, and push up-to-date model routing, efficient agent systems, and report generation into production."
+                  fr="Tracer vise à offrir cette couche d'intelligence aux solutions existantes qui n'ont pas de véritable environnement Labs pour expérimenter, tester et pousser en production le routage de modèles à jour, des systèmes d'agents efficaces et la génération de rapports."
+                />
+              </p>
+              <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground">
+                <LocalizedText
+                  en="Instead of every institution rebuilding that capability inside case tools, grant workflows, vendor review systems, or internal queues, Labs becomes the place where intelligence behavior is shaped, evaluated, governed, and kept current."
+                  fr="Plutôt que chaque institution reconstruise cette capacité dans ses outils de dossiers, flux de subventions, systèmes fournisseurs ou files de revue internes, Labs devient l'endroit où le comportement d'intelligence est conçu, évalué, gouverné et maintenu à jour."
+                />
+              </p>
             </div>
           </div>
         </div>
@@ -517,14 +479,14 @@ function PipelineControlPanel() {
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-            <LocalizedText en="Configuration path" fr="Parcours de configuration" />
+            <LocalizedText en="Intelligence sequence" fr="Séquence d'intelligence" />
           </p>
           <h3 className="mt-2 text-2xl font-semibold tracking-tight">
-            <LocalizedText en="Whole cycle control" fr="Contrôle du cycle complet" />
+            <LocalizedText en="From search to report" fr="De la recherche au rapport" />
           </h3>
         </div>
         <span className="w-fit rounded-full bg-[#2459B8]/10 px-3 py-1.5 text-xs font-semibold text-[#2459B8]">
-          <LocalizedText en="Always current" fr="Toujours à jour" />
+          <LocalizedText en="Model-aware" fr="Adapté aux modèles" />
         </span>
       </div>
 

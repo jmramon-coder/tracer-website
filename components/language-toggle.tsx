@@ -15,6 +15,11 @@ export function LanguageToggle({ className, tone = "default" }: LanguageTogglePr
   return (
     <button
       onClick={() => setLanguage(language === "en" ? "fr" : "en")}
+      aria-label={
+        language === "fr"
+          ? "Passer le site en anglais"
+          : "Switch the site to French"
+      }
       className={cn(
         "flex h-10 items-center gap-1 rounded-full border px-3.5 text-xs font-medium tracking-wide transition-all duration-200",
         isMedia

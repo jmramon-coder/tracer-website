@@ -1,4 +1,7 @@
+"use client"
+
 import Image from "next/image"
+import { useLanguage } from "@/lib/language-context"
 import { cn } from "@/lib/utils"
 
 type BrandLogoProps = {
@@ -16,6 +19,8 @@ export function BrandLogo({
   markClassName,
   textClassName,
 }: BrandLogoProps) {
+  const { language } = useLanguage()
+
   return (
     <div className={cn("flex items-center gap-2", className)}>
       {variant === "auto" ? (
@@ -53,11 +58,11 @@ export function BrandLogo({
       )}
       {showText && (
         <div className={cn("flex flex-col leading-none", textClassName)}>
-          <span className="text-sm font-semibold tracking-[0.14em] uppercase">
+          <span className="text-xs font-semibold uppercase tracking-[0.13em] sm:text-sm sm:tracking-[0.14em]">
             Tracer
           </span>
-          <span className="mt-1 text-[9px] font-medium uppercase tracking-[0.16em] opacity-70">
-            Research Security
+          <span className="mt-1 text-[7px] font-medium uppercase tracking-[0.14em] opacity-70 sm:text-[9px] sm:tracking-[0.16em]">
+            {language === "fr" ? "Sécurité de la recherche" : "Research Security"}
           </span>
         </div>
       )}

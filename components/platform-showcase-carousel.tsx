@@ -183,16 +183,14 @@ export function PlatformShowcaseCarousel() {
   return (
     <section className="overflow-hidden bg-card shadow-[var(--surface-shadow)]">
       <div className="mx-auto max-w-[1500px] px-6 py-20 md:px-8 md:py-28">
-        <div className="grid gap-8 lg:grid-cols-[0.82fr_0.82fr] lg:items-end">
-          <div>
+        <div className="max-w-4xl">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
               {content.eyebrow}
             </p>
             <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight md:text-5xl">
               {content.title}
             </h2>
-          </div>
-          <p className="max-w-2xl text-base leading-7 text-muted-foreground lg:justify-self-end">
+          <p className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground">
             {content.description}
           </p>
         </div>
@@ -290,7 +288,15 @@ export function PlatformShowcaseCarousel() {
                     <button
                       type="button"
                       onClick={() => setIsAutoPlaying((value) => !value)}
-                      aria-label={isAutoPlaying ? "Pause app screen loop" : "Start app screen loop"}
+                      aria-label={
+                        isAutoPlaying
+                          ? language === "fr"
+                            ? "Mettre en pause la boucle des écrans"
+                            : "Pause app screen loop"
+                          : language === "fr"
+                            ? "Démarrer la boucle des écrans"
+                            : "Start app screen loop"
+                      }
                       aria-pressed={isAutoPlaying}
                       className={cn(
                         "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border/60 transition-colors hover:bg-muted",

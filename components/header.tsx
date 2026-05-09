@@ -49,7 +49,7 @@ function NavItemMark({
         width={386}
         height={383}
         className={cn(
-          "h-4 w-4 origin-center object-contain",
+          "h-4 w-4 origin-center object-contain motion-safe:group-hover/labs:animate-[labs-disc-spin_1.2s_linear_infinite]",
           isSpinning && "animate-[labs-disc-spin_0.75s_linear_infinite]"
         )}
       />
@@ -124,7 +124,7 @@ export function Header() {
               <BrandLogo
                 variant={isOverMedia ? "white" : "auto"}
                 markClassName="h-7 w-8 md:h-8 md:w-9"
-                textClassName="hidden sm:flex"
+                textClassName="flex"
               />
             </Link>
 
@@ -139,6 +139,7 @@ export function Header() {
                   onClick={item.href === "/labs" ? triggerLabsSpin : undefined}
                   className={cn(
                     "inline-flex items-center gap-1.5 text-sm font-medium transition-colors",
+                    item.href === "/labs" && "group/labs",
                     isOverMedia
                       ? "text-white/74 hover:text-white"
                       : "text-foreground/72 hover:text-foreground"
@@ -159,6 +160,10 @@ export function Header() {
                 <ThemeToggle tone={isOverMedia ? "media" : "default"} />
                 <LanguageToggle tone={isOverMedia ? "media" : "default"} />
               </div>
+              <LanguageToggle
+                tone={isOverMedia ? "media" : "default"}
+                className="h-9 px-3 sm:hidden"
+              />
               <WaitlistButton
                 className="hidden h-10 border border-[#6F98F2]/40 bg-[#2459B8] px-4 text-xs tracking-wide text-white shadow-xl shadow-[#2459B8]/30 ring-1 ring-white/15 hover:-translate-y-0.5 hover:bg-[#1E4C9D] hover:shadow-[#2459B8]/45 sm:inline-flex md:text-sm"
               >
@@ -170,10 +175,10 @@ export function Header() {
                 aria-label={isMenuOpen ? labels.closeMenu : labels.openMenu}
                 aria-expanded={isMenuOpen}
                 className={cn(
-                  "inline-flex h-10 w-10 items-center justify-center rounded-2xl border backdrop-blur-xl transition-colors lg:hidden",
+                  "inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors lg:hidden",
                   isOverMedia
-                    ? "border-white/18 bg-white/12 text-white hover:bg-white/20"
-                    : "border-border/70 bg-card/70 text-foreground hover:bg-muted"
+                    ? "text-white hover:text-white/72"
+                    : "text-foreground hover:text-muted-foreground"
                 )}
               >
                 {isMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
@@ -206,6 +211,7 @@ export function Header() {
                     }}
                     className={cn(
                       "inline-flex items-center gap-2 rounded-2xl px-3 py-3 text-sm font-medium transition-colors",
+                      item.href === "/labs" && "group/labs",
                       isOverMedia
                         ? "text-white/72 hover:bg-white/10 hover:text-white"
                         : "text-foreground/72 hover:bg-card hover:text-foreground"
