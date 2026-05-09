@@ -143,7 +143,7 @@ export function Header() {
 
             <nav
               aria-label={labels.primaryNavigation}
-              className="hidden items-center gap-2 lg:flex"
+              className="hidden items-center gap-5 lg:flex"
             >
               {mainNav.map((item) => {
                 const isActive = isActiveNavItem(item.href)
@@ -155,15 +155,15 @@ export function Header() {
                     aria-current={isActive ? "page" : undefined}
                     onClick={item.href === "/labs" ? triggerLabsSpin : undefined}
                     className={cn(
-                      "inline-flex h-10 items-center gap-1.5 rounded-full px-3 text-sm font-medium transition-all duration-200",
+                      "relative inline-flex h-10 items-center gap-1.5 px-1 text-sm font-medium transition-colors duration-200 after:absolute after:left-1/2 after:bottom-0 after:h-[3px] after:w-7 after:-translate-x-1/2 after:rounded-full after:bg-[#2459B8] after:shadow-[0_0_14px_rgba(36,89,184,0.48)] after:transition-all after:duration-300",
                       item.href === "/labs" && "group/labs",
                       isActive
                         ? isOverMedia
-                          ? "border border-[#AFC7FF]/35 bg-[#2459B8]/32 text-white shadow-[0_10px_28px_rgba(36,89,184,0.26)]"
-                          : "border border-[#2459B8]/16 bg-[#EAF1FF] text-[#2459B8] shadow-[0_10px_24px_rgba(36,89,184,0.12)] dark:bg-[#2459B8]/20 dark:text-[#9DBBFF]"
+                          ? "text-white after:scale-x-100 after:opacity-100"
+                          : "text-foreground after:scale-x-100 after:opacity-100"
                         : isOverMedia
-                          ? "text-white/74 hover:bg-white/8 hover:text-white"
-                          : "text-foreground/72 hover:bg-[#2459B8]/[0.06] hover:text-foreground"
+                          ? "text-white/74 after:scale-x-0 after:opacity-0 hover:text-white"
+                          : "text-foreground/72 after:scale-x-0 after:opacity-0 hover:text-foreground"
                     )}
                   >
                     <NavItemMark
@@ -187,10 +187,27 @@ export function Header() {
                 className="h-9 px-3 sm:hidden"
               />
               <WaitlistButton
-                className="hidden h-10 border border-[#6F98F2]/40 bg-[#2459B8] px-4 text-xs tracking-wide text-white shadow-xl shadow-[#2459B8]/30 ring-1 ring-white/15 hover:-translate-y-0.5 hover:bg-[#1E4C9D] hover:shadow-[#2459B8]/45 sm:inline-flex md:text-sm"
+                showIcon={false}
+                className="hidden h-10 border border-[#6F98F2]/40 bg-[#2459B8] px-4 text-xs leading-none tracking-wide text-white shadow-xl shadow-[#2459B8]/30 ring-1 ring-white/15 hover:-translate-y-0.5 hover:bg-[#1E4C9D] hover:shadow-[#2459B8]/45 sm:inline-flex md:text-sm"
               >
                 {t.header.joinWaitlist}
               </WaitlistButton>
+              <a
+                href="https://www.app.tracersecurity.ca"
+                className={cn(
+                  "hidden h-10 items-center gap-2 rounded-full border px-4 text-xs font-medium leading-none tracking-wide shadow-xl transition-all duration-200 hover:-translate-y-0.5 lg:inline-flex md:text-sm",
+                  isOverMedia
+                    ? "border-white/22 bg-white/12 text-white shadow-black/15 backdrop-blur-xl hover:bg-white/18"
+                    : "border-border bg-card/80 text-foreground shadow-black/10 hover:border-[#2459B8]/24 hover:bg-card"
+                )}
+              >
+                <BrandLogo
+                  variant={isOverMedia ? "white" : "auto"}
+                  showText={false}
+                  markClassName="h-4 w-5"
+                />
+                <span>Tracer App</span>
+              </a>
               <button
                 type="button"
                 onClick={() => setIsMenuOpen((value) => !value)}
@@ -236,15 +253,15 @@ export function Header() {
                         setIsMenuOpen(false)
                       }}
                       className={cn(
-                        "inline-flex items-center gap-2 rounded-2xl px-3 py-3 text-sm font-medium transition-all duration-200",
+                        "relative inline-flex items-center gap-2 px-3 py-3 text-sm font-medium transition-colors duration-200 after:absolute after:bottom-1.5 after:left-3 after:h-[3px] after:w-7 after:rounded-full after:bg-[#2459B8] after:shadow-[0_0_14px_rgba(36,89,184,0.44)] after:transition-all after:duration-300",
                         item.href === "/labs" && "group/labs",
                         isActive
                           ? isOverMedia
-                            ? "border border-[#AFC7FF]/30 bg-[#2459B8]/30 text-white"
-                            : "border border-[#2459B8]/16 bg-[#EAF1FF] text-[#2459B8] dark:bg-[#2459B8]/20 dark:text-[#9DBBFF]"
+                            ? "text-white after:scale-x-100 after:opacity-100"
+                            : "text-foreground after:scale-x-100 after:opacity-100"
                           : isOverMedia
-                            ? "text-white/72 hover:bg-white/10 hover:text-white"
-                            : "text-foreground/72 hover:bg-card hover:text-foreground"
+                            ? "text-white/72 after:scale-x-0 after:opacity-0 hover:text-white"
+                            : "text-foreground/72 after:scale-x-0 after:opacity-0 hover:text-foreground"
                       )}
                     >
                       <NavItemMark
@@ -268,11 +285,29 @@ export function Header() {
                   <LanguageToggle tone={isOverMedia ? "media" : "default"} />
                 </div>
                 <WaitlistButton
-                  className="h-10 border border-[#6F98F2]/40 bg-[#2459B8] px-4 text-xs text-white shadow-xl shadow-[#2459B8]/30 ring-1 ring-white/15 hover:-translate-y-0.5 hover:bg-[#1E4C9D] hover:shadow-[#2459B8]/45"
+                  showIcon={false}
+                  className="h-10 border border-[#6F98F2]/40 bg-[#2459B8] px-4 text-xs leading-none text-white shadow-xl shadow-[#2459B8]/30 ring-1 ring-white/15 hover:-translate-y-0.5 hover:bg-[#1E4C9D] hover:shadow-[#2459B8]/45"
                 >
                   {t.header.joinWaitlist}
                 </WaitlistButton>
               </div>
+              <a
+                href="https://www.app.tracersecurity.ca"
+                onClick={() => setIsMenuOpen(false)}
+                className={cn(
+                  "mt-3 inline-flex h-11 w-full items-center justify-center gap-2 rounded-full border px-4 text-sm font-medium leading-none shadow-xl transition-all duration-200 hover:-translate-y-0.5",
+                  isOverMedia
+                    ? "border-white/22 bg-white/12 text-white shadow-black/15 backdrop-blur-xl hover:bg-white/18"
+                    : "border-border bg-card/80 text-foreground shadow-black/10 hover:border-[#2459B8]/24 hover:bg-card"
+                )}
+              >
+                <BrandLogo
+                  variant={isOverMedia ? "white" : "auto"}
+                  showText={false}
+                  markClassName="h-4 w-5"
+                />
+                <span>Tracer App</span>
+              </a>
             </div>
           </div>
         )}

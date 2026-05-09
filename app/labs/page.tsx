@@ -241,38 +241,22 @@ export default function LabsPage() {
 
       <section className="overflow-hidden bg-background py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 xl:px-16">
-          <div className="mb-18 max-w-4xl md:mb-20">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#2459B8]">
-              <LocalizedText en="Tracer Labs vision" fr="Vision Tracer Labs" />
-            </p>
-            <h2 className="mt-4 text-5xl font-semibold tracking-tight md:text-6xl">
+          <div className="grid gap-10 lg:grid-cols-[0.92fr_0.82fr] lg:items-end">
+            <div className="max-w-4xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#2459B8]">
+                <LocalizedText en="Tracer Labs vision" fr="Vision Tracer Labs" />
+              </p>
+              <h2 className="mt-4 text-5xl font-semibold tracking-tight md:text-6xl">
+                <LocalizedText
+                  en="A configurable intelligence layer for deep-search work."
+                  fr="Une couche d'intelligence configurable pour la recherche approfondie."
+                />
+              </h2>
+            </div>
+            <p className="max-w-2xl text-base leading-7 text-muted-foreground lg:justify-self-end">
               <LocalizedText
-                en="A configurable intelligence layer for evidence-heavy work."
-                fr="Une couche d'intelligence configurable pour les travaux riches en preuves."
-              />
-            </h2>
-            <p className="mt-6 max-w-3xl text-base leading-7 text-muted-foreground">
-              <LocalizedText
-                en="The same method that powers research security can extend to domains that need sourced web intelligence, coordinated agents, model-aware routing, and human-readable outputs."
-                fr="La même méthode qui alimente la sécurité de la recherche peut s'étendre aux domaines qui exigent de l'intelligence web sourcée, des agents coordonnés, un routage adapté aux modèles et des sorties lisibles par les équipes."
-              />
-            </p>
-          </div>
-
-          <div className="max-w-3xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-              <LocalizedText en="Deep-search intelligence" fr="Intelligence de recherche approfondie" />
-            </p>
-            <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
-              <LocalizedText
-                en="Agent swarms, deep prompts, and multi-model routing."
-                fr="Essaims d'agents, prompts profonds et routage multi-modèles."
-              />
-            </h2>
-            <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground">
-              <LocalizedText
-                en="Web deep search follows a controlled intelligence sequence: agents discover source-backed evidence, prompts target the review context, model routing selects the right intelligence layer, and reports render into clear institutional outputs."
-                fr="La recherche web approfondie suit une séquence d'intelligence contrôlée : les agents découvrent des preuves sourcées, les prompts ciblent le contexte de revue, le routage choisit la bonne couche d'intelligence et les rapports deviennent des sorties institutionnelles claires."
+                en="Tracer Labs brings the full intelligence sequence into one discipline: coordinated agent swarms discover source-backed evidence, deep prompts target the review context, model routing keeps the system current, and rendering turns findings into human-readable outputs. The method starts with research security and can extend to any evidence-heavy market."
+                fr="Tracer Labs rassemble toute la séquence d'intelligence dans une même méthode : des essaims d'agents coordonnés découvrent des preuves sourcées, des prompts profonds ciblent le contexte de revue, le routage des modèles garde le système à jour et le rendu transforme les constats en sorties lisibles. La méthode commence avec la sécurité de la recherche et peut s'étendre à tout marché riche en preuves."
               />
             </p>
           </div>
@@ -352,13 +336,13 @@ export default function LabsPage() {
                     <span className="text-xs font-semibold tabular-nums">{String(index + 1).padStart(2, "0")}</span>
                   </div>
                   <div className="min-w-0">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                        <LocalizedText en={item.domain} fr={item.domainFr} />
-                      </span>
+                    <div>
                       <h3 className="text-base font-semibold tracking-tight">
                         <LocalizedText en={item.title} fr={item.titleFr} />
                       </h3>
+                      <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                        <LocalizedText en={item.domain} fr={item.domainFr} />
+                      </span>
                     </div>
                     <p className="mt-2 text-sm leading-6 text-muted-foreground">
                       <LocalizedText en={item.copy} fr={item.copyFr} />

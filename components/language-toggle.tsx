@@ -21,7 +21,7 @@ export function LanguageToggle({ className, tone = "default" }: LanguageTogglePr
           : "Switch the site to French"
       }
       className={cn(
-        "flex h-10 items-center gap-1 rounded-full border px-3.5 text-xs font-medium tracking-wide transition-all duration-200",
+        "flex h-10 items-center gap-1 rounded-full border px-3.5 text-xs font-medium leading-none tracking-wide transition-all duration-200",
         isMedia
           ? "border-white/18 bg-white/12 text-white hover:bg-white/20"
           : "border-border/70 bg-card/70 text-foreground hover:bg-muted",

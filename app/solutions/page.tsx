@@ -50,12 +50,6 @@ export default function SolutionsPage() {
                 fr="Une tarification transparente pour les institutions de recherche canadiennes, appuyée par des flux efficaces et une intelligence de recherche approfondie de premier plan."
               />
             </p>
-            <p className="mt-4 max-w-3xl text-sm leading-6 text-white/58">
-              <LocalizedText
-                en="Early access is a 10-place special offer at $10k for 6 months, available until September 1, 2026. The institution plan is $20k/year, or $18k/year on a 2-year term, with 10 users included."
-                fr="L'accès anticipé est une offre spéciale limitée à 10 places à 10 k$ pour 6 mois, disponible jusqu'au 1er septembre 2026. Le plan institution est à 20 k$ par an, ou 18 k$ par an avec engagement de 2 ans, avec 10 utilisateurs inclus."
-              />
-            </p>
           </div>
 
           <div className="relative z-10 mt-10 flex flex-col items-center justify-center gap-4 lg:flex-row lg:items-center">
@@ -163,7 +157,7 @@ export default function SolutionsPage() {
               </article>
             ))}
           </div>
-          <p className="relative z-10 mx-auto mt-6 max-w-2xl text-center text-xs leading-5 text-white/52">
+          <p className="relative z-10 mx-auto mt-7 max-w-2xl text-center text-sm font-medium leading-6 text-white/64">
             <LocalizedText
               en="Pricing may evolve as Tracer expands its product surface, intelligence layer, and institutional support model."
               fr="Les tarifs peuvent évoluer à mesure que Tracer élargit sa surface produit, sa couche d'intelligence et son modèle d'accompagnement institutionnel."
@@ -174,15 +168,15 @@ export default function SolutionsPage() {
 
       <section className="relative isolate overflow-hidden rounded-t-[34px] bg-[#07101F] text-white">
         <Image
-          src="/brand/tracer-labs-image-2.png"
+          src="/brand/tracer-nature-bg.png"
           alt=""
           fill
           sizes="100vw"
           className="absolute inset-0 -z-30 h-full w-full object-cover object-center"
         />
-        <div className="absolute inset-0 -z-20 bg-[linear-gradient(90deg,rgba(0,0,0,0.82),rgba(0,0,0,0.52)_48%,rgba(0,0,0,0.14)_78%)]" />
-        <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(7,16,31,0)_0%,rgba(7,16,31,0.28)_38%,rgba(7,16,31,0.78)_64%,#07101F_84%,#050A14_100%)]" />
-        <div className="absolute inset-x-0 bottom-0 -z-10 h-[48%] bg-[radial-gradient(circle_at_18%_92%,rgba(36,89,184,0.56),transparent_34%),radial-gradient(circle_at_82%_100%,rgba(36,89,184,0.28),transparent_32%)]" />
+        <div className="absolute inset-0 -z-20 bg-[linear-gradient(90deg,rgba(0,0,0,0.62),rgba(0,0,0,0.28)_48%,rgba(0,0,0,0.18)_76%)]" />
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(7,16,31,0)_0%,rgba(7,16,31,0.24)_36%,rgba(7,16,31,0.82)_70%,#07101F_100%)]" />
+        <div className="absolute inset-x-0 bottom-0 -z-10 h-[52%] bg-[radial-gradient(circle_at_12%_92%,rgba(36,89,184,0.36),transparent_36%),radial-gradient(circle_at_82%_100%,rgba(10,72,48,0.34),transparent_32%)]" />
 
         <div className="relative mx-auto flex min-h-[620px] max-w-[1500px] items-end px-6 py-20 sm:px-8 lg:px-12 xl:px-16">
           <div className="max-w-3xl">

@@ -121,6 +121,7 @@ export default function PlatformPage() {
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.74),rgba(0,0,0,0.34)_54%,rgba(0,0,0,0.2))]" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-36 bg-[linear-gradient(180deg,rgba(0,0,0,0)_0%,rgba(0,0,0,0.18)_54%,rgba(0,0,0,0.52)_100%)] shadow-[inset_0_-30px_58px_rgba(0,0,0,0.48)]" />
 
         <div className="relative mx-auto grid min-h-[82svh] max-w-[1500px] gap-6 px-6 pb-12 pt-24 lg:grid-cols-[0.54fr_1.18fr] lg:items-end lg:px-10 xl:px-14">
           <div className="max-w-lg">
