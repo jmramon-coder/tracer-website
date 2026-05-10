@@ -142,9 +142,6 @@ async function upsertWaitlistContact(
   })
 
   if (!createResponse.error) {
-    if (segmentId) {
-      await addContactToSegment(resend, email, segmentId)
-    }
     return
   }
 
