@@ -14,7 +14,6 @@ import { Header } from "@/components/header"
 import { LocalizedText } from "@/components/localized-text"
 import { MapleLeaf } from "@/components/maple-leaf"
 import { WaitlistButton } from "@/components/waitlist-button"
-import { resourceCards } from "@/lib/site-data"
 
 export const metadata: Metadata = {
   title: "Company",
@@ -84,8 +83,6 @@ const footerNavLinks = [
   { href: "/platform", label: "Platform", labelFr: "Plateforme" },
   { href: "/labs", label: "Labs", labelFr: "Labs" },
   { href: "/solutions", label: "Solutions & Pricing", labelFr: "Solutions et tarifs" },
-  { href: "/resources", label: "Resources", labelFr: "Ressources" },
-  { href: "/company", label: "Company", labelFr: "Entreprise" },
 ] as const
 
 export default function CompanyPage() {
@@ -380,7 +377,7 @@ export default function CompanyPage() {
                 </p>
               </div>
 
-              <div className="grid gap-8 sm:grid-cols-3">
+              <div className="grid gap-8 sm:grid-cols-2">
                 <div>
                   <p className="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-white/82">
                     <LocalizedText en="Website" fr="Site" />
@@ -393,22 +390,6 @@ export default function CompanyPage() {
                         className="text-sm text-white/54 transition-colors hover:text-white"
                       >
                         <LocalizedText en={item.label} fr={item.labelFr} />
-                      </Link>
-                    ))}
-                  </nav>
-                </div>
-                <div>
-                  <p className="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-white/82">
-                    <LocalizedText en="Guides" fr="Guides" />
-                  </p>
-                  <nav className="grid gap-3">
-                    {resourceCards.map((item) => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        className="text-sm text-white/54 transition-colors hover:text-white"
-                      >
-                        <LocalizedText en={item.title} fr={item.titleFr} />
                       </Link>
                     ))}
                   </nav>
