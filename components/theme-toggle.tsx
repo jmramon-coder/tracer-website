@@ -1,5 +1,6 @@
 "use client"
 
+import { trackEvent } from "@/lib/analytics"
 import { useTheme } from "@/lib/theme-context"
 import { useLanguage } from "@/lib/language-context"
 import { cn } from "@/lib/utils"
@@ -14,6 +15,7 @@ export function ThemeToggle({ className, tone = "default" }: ThemeToggleProps) {
   const { theme, toggleTheme } = useTheme()
   const { language } = useLanguage()
   const isMedia = tone === "media"
+  const nextTheme = theme === "dark" ? "light" : "dark"
   const ariaLabel =
     theme === "dark"
       ? language === "fr"
@@ -23,10 +25,19 @@ export function ThemeToggle({ className, tone = "default" }: ThemeToggleProps) {
         ? "Passer au mode sombre"
         : "Switch to dark mode"
 
+  const handleClick = () => {
+    trackEvent("theme_change", {
+      from_theme: theme,
+      to_theme: nextTheme,
+      language,
+    })
+    toggleTheme()
+  }
+
   return (
     <button
       type="button"
-      onClick={toggleTheme}
+      onClick={handleClick}
       className={cn(
         "inline-flex h-10 w-10 items-center justify-center rounded-full border shadow-sm transition-all duration-200 active:scale-95",
         isMedia

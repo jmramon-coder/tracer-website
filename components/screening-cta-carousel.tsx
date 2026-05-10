@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import Image from "next/image"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import { WaitlistButton } from "@/components/waitlist-button"
+import { trackEvent } from "@/lib/analytics"
 import { useLanguage } from "@/lib/language-context"
 import { cn } from "@/lib/utils"
 
@@ -52,12 +53,28 @@ export function ScreeningCtaCarousel() {
     return () => window.clearInterval(timer)
   }, [])
 
+  const selectSlide = (
+    index: number,
+    controlType: "segment" | "previous" | "next"
+  ) => {
+    const slide = slides[index]
+
+    trackEvent("screening_cta_carousel_select", {
+      control_type: controlType,
+      slide_id: slide.id,
+      slide_label: isFrench ? slide.labelFr : slide.label,
+      slide_index: index + 1,
+      language,
+    })
+    setActiveIndex(index)
+  }
+
   const goToPrevious = () => {
-    setActiveIndex((index) => (index === 0 ? slides.length - 1 : index - 1))
+    selectSlide(activeIndex === 0 ? slides.length - 1 : activeIndex - 1, "previous")
   }
 
   const goToNext = () => {
-    setActiveIndex((index) => (index + 1) % slides.length)
+    selectSlide((activeIndex + 1) % slides.length, "next")
   }
 
   return (
@@ -89,7 +106,7 @@ export function ScreeningCtaCarousel() {
                     <button
                       key={slide.id}
                       type="button"
-                      onClick={() => setActiveIndex(index)}
+                      onClick={() => selectSlide(index, "segment")}
                       className={cn(
                         "rounded-full px-3 py-2 text-xs font-semibold transition-colors sm:px-4",
                         index === activeIndex
@@ -154,7 +171,10 @@ export function ScreeningCtaCarousel() {
                     height={478}
                     className="pointer-events-none h-auto w-40 -translate-y-[60px] -mb-[60px] opacity-95 drop-shadow-[0_24px_62px_rgba(0,0,0,0.48)] animate-[tracer-float_6s_ease-in-out_infinite] sm:w-48 lg:w-56 xl:w-60"
                   />
-                  <WaitlistButton className="mt-3 h-12 bg-[#2459B8] px-6 text-white shadow-xl shadow-[#2459B8]/25 hover:bg-[#1E4C9D]">
+                  <WaitlistButton
+                    trackingLocation={`screening_cta_${activeSlide.id}`}
+                    className="mt-3 h-12 bg-[#2459B8] px-6 text-white shadow-xl shadow-[#2459B8]/25 hover:bg-[#1E4C9D]"
+                  >
                     {isFrench ? "Rejoindre la liste" : "Join waitlist now"}
                   </WaitlistButton>
                   <p className="mt-4 max-w-xs text-sm leading-6 text-white/54 sm:text-center lg:text-right">

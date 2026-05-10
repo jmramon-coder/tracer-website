@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react"
 import { createPortal } from "react-dom"
 import NextImage from "next/image"
-import emailjs from "@emailjs/browser"
 import { Button } from "@/components/ui/button"
 import { X, ArrowRight, Check } from "lucide-react"
 import { Spinner } from "@/components/ui/spinner"
+import { trackEvent } from "@/lib/analytics"
 import { useLanguage } from "@/lib/language-context"
 
 const LAUNCH_DATE = new Date("2026-06-01T00:00:00")
@@ -32,10 +32,9 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
   })
   const { t, language } = useLanguage()
 
-  // Mount check for portal + initialize EmailJS
+  // Mount check for portal.
   useEffect(() => {
     setMounted(true)
-    emailjs.init({ publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY! })
   }, [])
 
   // Calculate countdown to launch day.
@@ -87,39 +86,42 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
     e.preventDefault()
     setIsSubmitting(true)
     setHasError(false)
-    const templateId = language === "fr"
-      ? process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_FR!
-      : process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_EN!
+
     try {
-      // Send email and log to Google Sheets in parallel
-      await Promise.all([
-        emailjs.send(
-          process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
-          templateId,
-          { user_email: email },
-          process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
-        ),
-        new Promise<void>((resolve) => {
-          const sheetUrl = process.env.NEXT_PUBLIC_GOOGLE_SHEET_URL || "https://script.google.com/macros/s/AKfycbxvwLaKhPrsZD0fsPIiK_ZClVgU_yr2qrt1LFBMDV7DjSQdypJwRDHoIk8zdG64ff6wMg/exec"
-          const params = new URLSearchParams({
-            timestamp: new Date().toISOString(),
-            email,
-            language,
-            consent: consent ? "Yes" : "No",
-          })
-          const img = new Image()
-          img.onload = () => resolve()
-          img.onerror = () => resolve()
-          img.src = `${sheetUrl}?${params.toString()}`
-        })
-      ])
+      const response = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          language,
+          consent,
+          source: "waitlist_modal",
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error("Waitlist submission failed")
+      }
+
+      trackEvent("generate_lead", {
+        method: "waitlist",
+        form_id: "waitlist_modal",
+        language,
+        consent_status: consent ? "accepted" : "not_accepted",
+      })
       setIsSubmitted(true)
       setTimeout(() => setHasAnimated(true), 1200)
       setTimeout(() => {
         onClose()
       }, 3500)
     } catch (err) {
-      console.error("EmailJS error:", err)
+      console.error("Waitlist submission error:", err)
+      trackEvent("waitlist_submit_error", {
+        form_id: "waitlist_modal",
+        language,
+      })
       setHasError(true)
     } finally {
       setIsSubmitting(false)

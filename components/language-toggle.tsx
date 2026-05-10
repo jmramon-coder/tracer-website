@@ -1,5 +1,6 @@
 "use client"
 
+import { trackEvent } from "@/lib/analytics"
 import { useLanguage } from "@/lib/language-context"
 import { cn } from "@/lib/utils"
 
@@ -11,10 +12,19 @@ type LanguageToggleProps = {
 export function LanguageToggle({ className, tone = "default" }: LanguageToggleProps) {
   const { language, setLanguage } = useLanguage()
   const isMedia = tone === "media"
+  const nextLanguage = language === "en" ? "fr" : "en"
+
+  const handleClick = () => {
+    trackEvent("language_change", {
+      from_language: language,
+      to_language: nextLanguage,
+    })
+    setLanguage(nextLanguage)
+  }
 
   return (
     <button
-      onClick={() => setLanguage(language === "en" ? "fr" : "en")}
+      onClick={handleClick}
       aria-label={
         language === "fr"
           ? "Passer le site en anglais"

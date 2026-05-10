@@ -9,7 +9,6 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@emailjs/browser": "^4.4.1",
     "@hookform/resolvers": "^3.9.1",
     "@lobehub/icons-static-svg": "^1.90.0",
     "@radix-ui/react-accordion": "1.2.12",
@@ -59,6 +58,7 @@
     "recharts": "2.15.0",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
+    "resend": "^6.12.3",
     "sonner": "^1.7.1",
     "tailwind-merge": "^3.3.1",
     "vaul": "^1.1.2",

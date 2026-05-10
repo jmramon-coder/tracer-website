@@ -10,6 +10,7 @@ import {
   ShieldCheck,
   UsersRound,
 } from "lucide-react"
+import { trackEvent } from "@/lib/analytics"
 import { useLanguage } from "@/lib/language-context"
 import { cn } from "@/lib/utils"
 
@@ -176,8 +177,26 @@ export function PlatformShowcaseCarousel() {
   }, [isAutoPlaying])
 
   const selectSlide = (index: number) => {
+    const slide = content.slides[index]
+
+    trackEvent("platform_showcase_select", {
+      slide_id: slideAssets[index].id,
+      slide_label: slide.label,
+      slide_index: index + 1,
+      language,
+    })
     setActiveIndex(index)
     setIsAutoPlaying(false)
+  }
+
+  const toggleAutoPlay = () => {
+    const nextState = isAutoPlaying ? "paused" : "started"
+
+    trackEvent("platform_showcase_autoplay_toggle", {
+      autoplay_state: nextState,
+      language,
+    })
+    setIsAutoPlaying((value) => !value)
   }
 
   return (
@@ -287,7 +306,7 @@ export function PlatformShowcaseCarousel() {
                     </div>
                     <button
                       type="button"
-                      onClick={() => setIsAutoPlaying((value) => !value)}
+                      onClick={toggleAutoPlay}
                       aria-label={
                         isAutoPlaying
                           ? language === "fr"
