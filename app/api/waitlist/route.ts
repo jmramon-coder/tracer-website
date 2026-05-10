@@ -6,6 +6,7 @@ import { getResendClient } from "@/lib/resend"
 export const runtime = "nodejs"
 
 const DEFAULT_FROM_EMAIL = "Tracer <info@tracersecurity.ca>"
+const DEFAULT_WAITLIST_SEGMENT_ID = "125a14ca-6551-4704-bece-120311b11d0b"
 
 const waitlistRequestSchema = z.object({
   email: z.string().trim().toLowerCase().email(),
@@ -44,7 +45,8 @@ export async function POST(request: Request) {
     const from = process.env.RESEND_FROM_EMAIL || DEFAULT_FROM_EMAIL
     const internalTo = process.env.RESEND_INTERNAL_TO
     const contactsEnabled = process.env.RESEND_CONTACTS_ENABLED === "true"
-    const waitlistSegmentId = process.env.RESEND_WAITLIST_SEGMENT_ID
+    const waitlistSegmentId =
+      process.env.RESEND_WAITLIST_SEGMENT_ID || DEFAULT_WAITLIST_SEGMENT_ID
 
     const submittedAt = new Date().toISOString()
     const contactProperties = {
