@@ -184,40 +184,56 @@ function buildConfirmationEmail({
   const copy =
     language === "fr"
       ? {
-          subject: "Vous êtes sur la liste d'attente Tracer",
+          lang: "fr",
+          subject: "Votre inscription à la liste d'attente Tracer est confirmée",
           preview:
             "Votre inscription est confirmée. Les nouvelles de lancement viendront de info@tracersecurity.ca.",
           brandTagline: "Sécurité de la recherche",
-          eyebrow: "Lancement le 1er juin 2026",
-          heading: "Vous êtes sur la liste.",
-          body:
+          headerTitle: "Votre inscription est confirmée",
+          headerSubtitle: "Lancement le 1er juin 2026.",
+          greeting: "Bonjour,",
+          paragraphs: [
             "Merci d'avoir rejoint la liste d'attente Tracer. Nous vous enverrons les nouvelles de lancement, les étapes d'accès anticipé et l'évolution du produit depuis info@tracersecurity.ca.",
+            "Tracer est conçu pour aider les institutions de recherche à mener des vérifications diligentes structurées, sourcées et auditables pour leurs partenariats de recherche.",
+            "Vous faites maintenant partie du premier groupe que nous tiendrons informé à mesure que l'accès anticipé s'ouvre.",
+          ],
           nextTitle: "La suite",
           nextSteps: [
             "Nous vous informerons lorsque Tracer ouvrira l'accès anticipé.",
             "Les premières institutions auront une intégration prioritaire et pourront orienter les flux de vérification.",
             "Vous pouvez répondre à ce courriel si un besoin de sécurité de la recherche mérite notre attention.",
           ],
+          ctaText: "Visiter le site Tracer",
+          ctaHref: "https://www.tracersecurity.ca",
+          signoff: "À bientôt,\nL'équipe Tracer",
           footer:
-            "Vous pouvez vous désabonner à tout moment en répondant à ce courriel.",
+            "Vous recevez ce courriel parce que vous avez demandé à rejoindre la liste d'attente de Tracer. Vous pouvez vous désabonner à tout moment en répondant à ce courriel.",
         }
       : {
+          lang: "en",
           subject: "You're on the Tracer waitlist",
           preview:
             "You're on the list. Launch and early access updates will come from info@tracersecurity.ca.",
           brandTagline: "Research Security",
-          eyebrow: "Launching June 1, 2026",
-          heading: "You're on the list.",
-          body:
+          headerTitle: "Your waitlist spot is confirmed",
+          headerSubtitle: "Launching June 1, 2026.",
+          greeting: "Hi,",
+          paragraphs: [
             "Thanks for joining the Tracer waitlist. We'll send launch updates, early access notes, and product progress from info@tracersecurity.ca.",
+            "Tracer is built to help research institutions run structured, source-backed, and auditable due diligence for research partnerships.",
+            "You're now part of the first group we'll keep informed as early access opens.",
+          ],
           nextTitle: "What happens next",
           nextSteps: [
             "We'll notify you when Tracer opens early access.",
             "Founding institutions get priority onboarding and direct input on screening workflows.",
             "You can reply to this email if there is a research security workflow you want us to understand.",
           ],
+          ctaText: "Visit Tracer",
+          ctaHref: "https://www.tracersecurity.ca",
+          signoff: "Best,\nThe Tracer team",
           footer:
-            "You can unsubscribe at any time by replying to this email.",
+            "You are receiving this email because you asked to join the Tracer waitlist. You can unsubscribe at any time by replying to this email.",
         }
 
   return {
@@ -227,25 +243,36 @@ function buildConfirmationEmail({
     subject: copy.subject,
     text: [
       "Tracer",
-      copy.eyebrow,
+      copy.headerSubtitle,
       "",
-      copy.heading,
+      copy.headerTitle,
       "",
-      copy.body,
+      copy.greeting,
       "",
+      ...copy.paragraphs.flatMap((paragraph) => [paragraph, ""]),
       copy.nextTitle,
       ...copy.nextSteps.map((step) => `- ${step}`),
+      "",
+      copy.ctaText,
+      copy.ctaHref,
+      "",
+      copy.signoff,
       "",
       copy.footer,
     ].join("\n"),
     html: renderEmailHtml({
+      lang: copy.lang,
       preview: copy.preview,
       brandTagline: copy.brandTagline,
-      eyebrow: copy.eyebrow,
-      heading: copy.heading,
-      body: escapeHtml(copy.body),
+      headerTitle: copy.headerTitle,
+      headerSubtitle: copy.headerSubtitle,
+      greeting: copy.greeting,
+      paragraphs: copy.paragraphs.map(escapeHtml),
       nextTitle: copy.nextTitle,
       nextSteps: copy.nextSteps,
+      ctaText: copy.ctaText,
+      ctaHref: copy.ctaHref,
+      signoff: copy.signoff,
       footer: copy.footer,
     }),
     tags: [
@@ -290,16 +317,17 @@ function buildInternalNotificationEmail({
       `Submitted at: ${submittedAt}`,
     ].join("\n"),
     html: renderEmailHtml({
+      lang: "en",
       preview: "A new visitor joined the Tracer waitlist.",
       brandTagline: "Research Security",
-      eyebrow: "Waitlist",
-      heading: "New waitlist signup",
-      body: [
+      headerTitle: "New waitlist signup",
+      headerSubtitle: "Internal notification",
+      paragraphs: [
         `<strong>Email:</strong> ${safeEmail}`,
         `<strong>Language:</strong> ${safeLanguage}`,
         `<strong>Source:</strong> ${safeSource}`,
         `<strong>Submitted at:</strong> ${safeSubmittedAt}`,
-      ].join("<br />"),
+      ],
       footer: "This notification was sent by the Tracer website waitlist form.",
     }),
     tags: [
@@ -311,67 +339,170 @@ function buildInternalNotificationEmail({
 }
 
 function renderEmailHtml({
+  lang,
   preview,
   brandTagline,
-  eyebrow,
-  heading,
-  body,
+  headerTitle,
+  headerSubtitle,
+  greeting,
+  paragraphs,
   nextTitle,
   nextSteps = [],
+  ctaText,
+  ctaHref,
+  signoff,
   footer,
 }: {
+  lang: string
   preview: string
   brandTagline: string
-  eyebrow: string
-  heading: string
-  body: string
+  headerTitle: string
+  headerSubtitle: string
+  greeting?: string
+  paragraphs: string[]
   nextTitle?: string
   nextSteps?: string[]
+  ctaText?: string
+  ctaHref?: string
+  signoff?: string
   footer: string
 }) {
-  return `<!doctype html>
-<html>
+  return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html dir="ltr" lang="${escapeHtml(lang)}">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta content="width=device-width" name="viewport" />
+    <link rel="preload" as="image" href="https://tracersecurity.ca/brand/tracer-logo-w-v1.png" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <meta content="telephone=no,address=no,email=no,date=no,url=no" name="format-detection" />
     <title>${escapeHtml(preview)}</title>
+    <style>
+      :root { color-scheme: light only; supported-color-schemes: light only; }
+      body, .force-light { background-color: #f6f6f5 !important; }
+      .container { margin-left: auto !important; margin-right: auto !important; }
+      .email-card, .content-pad { background-color: #ffffff !important; }
+      .header-pad { background-color: #17315c !important; background-image: linear-gradient(135deg,#17315c 0%,#1b3e75 58%,#2459b8 160%) !important; }
+      .footer-pad { background-color: #fbfbfa !important; }
+      .body-text { color: #333333 !important; }
+      .strong-text { color: #1d1d1f !important; }
+      .muted-text { color: #656565 !important; }
+      .brand-white { color: #ffffff !important; }
+      .brand-muted { color: #dbe6ff !important; }
+      .brand-link { color: #1d54b5 !important; }
+      @media screen and (max-width: 680px) {
+        .container { width: 100% !important; }
+        .outer-pad { padding: 22px 14px !important; }
+        .header-pad { padding: 24px 22px 22px !important; }
+        .content-pad { padding: 28px 22px 8px !important; }
+        .footer-pad { padding: 22px !important; }
+        .h1 { font-size: 28px !important; line-height: 34px !important; }
+        .brand-title { font-size: 16px !important; }
+        .brand-subtitle { font-size: 9px !important; }
+        .button { display: block !important; width: 100% !important; box-sizing: border-box !important; text-align: center !important; }
+      }
+      @media (prefers-color-scheme: dark) {
+        body, .force-light { background-color: #f6f6f5 !important; }
+        .email-card, .content-pad { background-color: #ffffff !important; }
+        .header-pad { background-color: #17315c !important; background-image: linear-gradient(135deg,#17315c 0%,#1b3e75 58%,#2459b8 160%) !important; }
+        .footer-pad { background-color: #fbfbfa !important; }
+        .body-text { color: #333333 !important; }
+        .strong-text { color: #1d1d1f !important; }
+        .muted-text { color: #656565 !important; }
+        .brand-white { color: #ffffff !important; }
+        .brand-muted { color: #dbe6ff !important; }
+        .brand-link { color: #1d54b5 !important; }
+      }
+    </style>
   </head>
-  <body style="margin:0;background:#11100e;color:#f8f7f3;font-family:Arial,Helvetica,sans-serif;">
-    <span style="display:none!important;opacity:0;color:transparent;height:0;width:0;overflow:hidden;">${escapeHtml(preview)}</span>
-    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:#11100e;padding:34px 16px;">
+  <body style="margin:0;background-color:#ffffff">
+    <div style="display:none;overflow:hidden;line-height:1px;opacity:0;max-height:0;max-width:0" data-skip-in-text="true">${escapeHtml(preview)}</div>
+    <table border="0" width="100%" cellpadding="0" cellspacing="0" role="presentation" align="center">
       <tr>
-        <td align="center">
-          <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="max-width:620px;background:#191816;border:1px solid #34312b;border-radius:24px;overflow:hidden;">
+        <td style="background-color:#ffffff">
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" class="force-light" style="width:100%;min-width:100%;background-color:#f6f6f5;text-align:center">
             <tr>
-              <td style="padding:32px 34px 10px;">
-                <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+              <td class="outer-pad" align="center" style="padding:34px 18px;text-align:center">
+                <table align="center" width="640" border="0" cellpadding="0" cellspacing="0" role="presentation" class="container email-card" style="width:640px;max-width:640px;border-collapse:separate;border-spacing:0;background-color:#ffffff;border:1px solid #e6e6e3;border-radius:18px;overflow:hidden;box-shadow:0 18px 50px rgba(17,24,39,0.08);text-align:left">
                   <tr>
-                    <td>
-                      <p style="margin:0;font-size:14px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#ffffff;">Tracer</p>
-                      <p style="margin:7px 0 0;font-size:9px;font-weight:600;letter-spacing:0.28em;text-transform:uppercase;color:#b9b4aa;">${escapeHtml(brandTagline)}</p>
+                    <td class="header-pad" style="padding:28px 32px 26px;background-color:#17315c;background-image:linear-gradient(135deg,#17315c 0%,#1b3e75 58%,#2459b8 160%)">
+                      <table width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation">
+                        <tr>
+                          <td align="left">
+                            <table border="0" cellpadding="0" cellspacing="0" role="presentation">
+                              <tr>
+                                <td style="padding-right:10px">
+                                  <img alt="Tracer" height="34" src="https://tracersecurity.ca/brand/tracer-logo-w-v1.png" style="display:block;outline:none;border:0;text-decoration:none;max-width:100%;width:38px;height:34px" width="38" />
+                                </td>
+                                <td>
+                                  <div class="brand-title brand-white" style="font-family:Inter,Arial,Helvetica,sans-serif;color:#ffffff;font-size:17px;line-height:18px;font-weight:700;letter-spacing:0;text-transform:uppercase">
+                                    <p style="margin:0;padding:0">Tracer</p>
+                                  </div>
+                                  <div class="brand-subtitle brand-muted" style="font-family:Inter,Arial,Helvetica,sans-serif;color:#dbe6ff;font-size:10px;line-height:13px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase">
+                                    <p style="margin:0;padding:0">${escapeHtml(brandTagline)}</p>
+                                  </div>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                      <table width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation">
+                        <tr>
+                          <td style="padding-top:34px">
+                            <h1 class="h1 brand-white" style="margin:0;padding:0;font-family:Inter,Arial,Helvetica,sans-serif;color:#ffffff;font-size:34px;line-height:40px;font-weight:650;letter-spacing:0">${escapeHtml(headerTitle)}</h1>
+                            <p class="brand-muted" style="margin:14px 0 0;padding:0;font-family:Inter,Arial,Helvetica,sans-serif;color:#dbe6ff;font-size:15px;line-height:24px;font-weight:400">${escapeHtml(headerSubtitle)}</p>
+                          </td>
+                        </tr>
+                      </table>
                     </td>
-                    <td align="right" style="vertical-align:top;">
-                      <span style="display:inline-block;border:1px solid #3b5fbc;background:#2459b8;color:#ffffff;border-radius:999px;padding:8px 12px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">${escapeHtml(eyebrow)}</span>
+                  </tr>
+                  <tr>
+                    <td class="content-pad" style="padding:34px 42px 10px;background-color:#ffffff">
+                      ${greeting ? `<p class="strong-text" style="margin:0 0 18px;padding:0;font-family:Inter,Arial,Helvetica,sans-serif;color:#1d1d1f;font-size:16px;line-height:26px">${escapeHtml(greeting)}</p>` : ""}
+                      ${renderBodyParagraphs(paragraphs)}
+                      ${renderNextSteps(nextTitle, nextSteps)}
+                      ${ctaText && ctaHref ? renderEmailButton(ctaText, ctaHref) : ""}
+                      ${signoff ? `<p class="strong-text" style="margin:0 0 28px;padding:0;font-family:Inter,Arial,Helvetica,sans-serif;color:#1d1d1f;font-size:16px;line-height:25px">${escapeHtml(signoff).replace(/\n/g, "<br />")}</p>` : ""}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="footer-pad" style="padding:24px 42px 30px;background-color:#fbfbfa;border-top:1px solid #e6e6e3">
+                      <p class="muted-text" style="margin:0;padding:0;font-family:Inter,Arial,Helvetica,sans-serif;color:#6f7378;font-size:12px;line-height:19px"><strong>TRACER Research Security</strong></p>
+                      <hr style="width:100%;border:none;border-color:transparent;border-top:1px solid #eaeaea;margin:16px 0" />
+                      <p class="muted-text" style="margin:0;padding:0;font-family:Inter,Arial,Helvetica,sans-serif;color:#8a8a8a;font-size:11px;line-height:18px">${escapeHtml(footer)}</p>
+                      <p class="muted-text" style="margin:12px 0 0;padding:0;font-family:Inter,Arial,Helvetica,sans-serif;color:#8a8a8a;font-size:11px;line-height:18px">Tracer Research Security Inc.</p>
                     </td>
                   </tr>
                 </table>
               </td>
             </tr>
-            <tr>
-              <td style="padding:28px 34px 34px;">
-                <h1 style="margin:0 0 18px;font-size:34px;line-height:1.12;letter-spacing:-0.01em;color:#f8f7f3;">${escapeHtml(heading)}</h1>
-                <p style="margin:0;font-size:16px;line-height:1.7;color:#d8d3ca;">${body}</p>
-                ${renderNextSteps(nextTitle, nextSteps)}
-                <p style="margin:28px 0 0;border-top:1px solid #34312b;padding-top:18px;font-size:12px;line-height:1.6;color:#928c82;">${escapeHtml(footer)}</p>
-              </td>
-            </tr>
           </table>
-          <p style="margin:18px 0 0;font-size:11px;line-height:1.5;color:#777168;">Tracer Research Security · tracersecurity.ca</p>
         </td>
       </tr>
     </table>
   </body>
 </html>`
+}
+
+function renderBodyParagraphs(paragraphs: string[]) {
+  return paragraphs
+    .map(
+      (paragraph) =>
+        `<p class="body-text" style="margin:0 0 18px;padding:0;font-family:Inter,Arial,Helvetica,sans-serif;color:#333333;font-size:16px;line-height:26px">${paragraph}</p>`
+    )
+    .join("")
+}
+
+function renderEmailButton(text: string, href: string) {
+  return `
+                      <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="margin:4px 0 28px;padding:0">
+                        <tr>
+                          <td align="center" style="border-radius:999px">
+                            <a class="button" href="${escapeHtml(href)}" rel="noopener noreferrer nofollow" style="color:#ffffff;text-decoration:none;display:inline-block;padding:13px 22px;font-family:Inter,Arial,Helvetica,sans-serif;font-size:14px;line-height:18px;font-weight:700;border-radius:999px;background-color:#1d54b5" target="_blank">${escapeHtml(text)}</a>
+                          </td>
+                        </tr>
+                      </table>`
 }
 
 function renderNextSteps(title?: string, steps: string[] = []) {
@@ -380,19 +511,19 @@ function renderNextSteps(title?: string, steps: string[] = []) {
   }
 
   return `
-                <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin-top:28px;border:1px solid #2f467a;background:#15203a;border-radius:18px;">
-                  <tr>
-                    <td style="padding:22px;">
-                      <p style="margin:0 0 12px;font-size:12px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#8fb0ff;">${escapeHtml(title)}</p>
+                      <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin:6px 0 24px;border:1px solid #e6e6e3;background:#fbfbfa;border-radius:14px;">
+                        <tr>
+                          <td style="padding:20px 22px;">
+                            <p class="strong-text" style="margin:0 0 12px;padding:0;font-family:Inter,Arial,Helvetica,sans-serif;color:#1d1d1f;font-size:13px;line-height:18px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase">${escapeHtml(title)}</p>
                       ${steps
                         .map(
                           (step) =>
-                            `<p style="margin:0 0 10px;font-size:14px;line-height:1.6;color:#eef2ff;">• ${escapeHtml(step)}</p>`
+                            `<p class="body-text" style="margin:0 0 10px;padding:0;font-family:Inter,Arial,Helvetica,sans-serif;color:#333333;font-size:14px;line-height:22px;">• ${escapeHtml(step)}</p>`
                         )
                         .join("")}
-                    </td>
-                  </tr>
-                </table>`
+                          </td>
+                        </tr>
+                      </table>`
 }
 
 function escapeHtml(value: string) {
