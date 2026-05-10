@@ -18,6 +18,8 @@ interface WaitlistModalProps {
 
 export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
   const [mounted, setMounted] = useState(false)
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
   const [email, setEmail] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -94,6 +96,8 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          firstName,
+          lastName,
           email,
           language,
           consent,
@@ -148,7 +152,7 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
 
       {/* Modal content */}
       <div
-        className="relative z-10 mx-6 w-full max-w-xl animate-in rounded-[28px] border border-border bg-card p-6 text-card-foreground shadow-[var(--modal-shadow)] fade-in zoom-in-95 duration-300 md:p-10"
+        className="relative z-10 mx-6 max-h-[calc(100vh-2rem)] w-full max-w-xl animate-in overflow-y-auto rounded-[28px] border border-border bg-card p-6 text-card-foreground shadow-[var(--modal-shadow)] fade-in zoom-in-95 duration-300 md:p-10"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header with logo centered */}
@@ -207,12 +211,36 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
 
               {/* Email form */}
               <form onSubmit={handleSubmit} className="space-y-3 md:space-y-6">
+                <div className="grid gap-3 md:grid-cols-2">
+                  <input
+                    type="text"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    placeholder={language === "fr" ? "Prénom" : "First name"}
+                    aria-label={language === "fr" ? "Prénom" : "First name"}
+                    autoComplete="given-name"
+                    required
+                    className="h-12 w-full rounded-2xl border border-input bg-background px-5 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-ring focus:outline-none"
+                  />
+                  <input
+                    type="text"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    placeholder={language === "fr" ? "Nom" : "Last name"}
+                    aria-label={language === "fr" ? "Nom" : "Last name"}
+                    autoComplete="family-name"
+                    required
+                    className="h-12 w-full rounded-2xl border border-input bg-background px-5 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-ring focus:outline-none"
+                  />
+                </div>
                 <div className="relative">
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder={t.waitlist.emailPlaceholder}
+                    aria-label={t.waitlist.emailPlaceholder}
+                    autoComplete="email"
                     required
                     className="h-12 w-full rounded-2xl border border-input bg-background px-5 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-ring focus:outline-none"
                   />

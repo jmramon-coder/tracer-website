@@ -7,16 +7,10 @@ export const runtime = "nodejs"
 
 const DEFAULT_FROM_EMAIL = "Tracer <info@tracersecurity.ca>"
 const DEFAULT_WAITLIST_SEGMENT_ID = "125a14ca-6551-4704-bece-120311b11d0b"
-const WAITLIST_CONTACT_PROPERTIES = [
-  { key: "language", type: "string", fallbackValue: "en" },
-  { key: "source", type: "string", fallbackValue: "waitlist_modal" },
-  { key: "consent", type: "string", fallbackValue: "true" },
-  { key: "submitted_at", type: "string", fallbackValue: "" },
-] as const
-
-let waitlistContactPropertiesPromise: Promise<void> | null = null
 
 const waitlistRequestSchema = z.object({
+  firstName: z.string().trim().min(1).max(80),
+  lastName: z.string().trim().min(1).max(80),
   email: z.string().trim().toLowerCase().email(),
   language: z.enum(["en", "fr"]),
   consent: z.literal(true),
@@ -64,64 +58,77 @@ export async function POST(request: Request) {
       submitted_at: submittedAt,
     }
 
-    const [contactResult, internalNotificationResult, confirmationResult] =
-      await Promise.all([
-        contactsEnabled
-          ? captureWaitlistStep(
-              "contact_upsert",
-              ensureWaitlistContactProperties(resend).then(() =>
-                upsertWaitlistContact(
-                  resend,
-                  payload.email,
-                  contactProperties,
-                  waitlistSegmentId
-                )
-              )
-            )
-          : Promise.resolve(skipWaitlistStep("contact_upsert")),
-        captureWaitlistStep(
-          "internal_notification",
-          internalTo
-            ? sendResendEmail(
-                resend,
-                buildInternalNotificationEmail({
-                  email: payload.email,
-                  from,
-                  to: internalTo,
-                  language: payload.language,
-                  source: payload.source,
-                  submittedAt,
-                })
-              )
-            : Promise.reject(new Error("Missing RESEND_INTERNAL_TO"))
-        ),
-        captureWaitlistStep(
-          "confirmation_email",
-          sendResendEmail(
-            resend,
-            buildConfirmationEmail({
-              email: payload.email,
-              from,
-              replyTo: internalTo || from,
-              language: payload.language,
-              source: payload.source,
-            })
-          )
-        ),
-      ])
+    if (contactsEnabled) {
+      const contactResult = await captureWaitlistStep(
+        "contact_upsert",
+        upsertWaitlistContact({
+          resend,
+          email: payload.email,
+          firstName: payload.firstName,
+          lastName: payload.lastName,
+          properties: contactProperties,
+          segmentId: waitlistSegmentId,
+        })
+      )
 
-    for (const result of [
-      contactResult,
-      internalNotificationResult,
-      confirmationResult,
-    ]) {
-      if (!result.ok && !("skipped" in result)) {
-        console.warn(`Waitlist ${result.step} failed:`, result.error)
+      if (!contactResult.ok) {
+        console.warn(
+          `Waitlist ${contactResult.step} failed:`,
+          contactResult.error
+        )
+        throw new Error("Waitlist contact capture failed")
       }
     }
 
-    if (contactsEnabled && !contactResult.ok) {
-      throw new Error("Waitlist contact capture failed")
+    const confirmationResult = await captureWaitlistStep(
+      "confirmation_email",
+      sendResendEmailWithRetry(
+        resend,
+        buildConfirmationEmail({
+          email: payload.email,
+          firstName: payload.firstName,
+          from,
+          replyTo: internalTo || from,
+          language: payload.language,
+          source: payload.source,
+        })
+      )
+    )
+
+    if (!confirmationResult.ok) {
+      console.warn(
+        `Waitlist ${confirmationResult.step} failed:`,
+        confirmationResult.error
+      )
+      throw new Error("Waitlist confirmation email failed")
+    }
+
+    await sleep(250)
+
+    const internalNotificationResult = await captureWaitlistStep(
+      "internal_notification",
+      internalTo
+        ? sendResendEmailWithRetry(
+            resend,
+            buildInternalNotificationEmail({
+              email: payload.email,
+              firstName: payload.firstName,
+              lastName: payload.lastName,
+              from,
+              to: internalTo,
+              language: payload.language,
+              source: payload.source,
+              submittedAt,
+            })
+          )
+        : Promise.reject(new Error("Missing RESEND_INTERNAL_TO"))
+    )
+
+    if (!internalNotificationResult.ok) {
+      console.warn(
+        `Waitlist ${internalNotificationResult.step} failed:`,
+        internalNotificationResult.error
+      )
     }
 
     if (!contactsEnabled && !internalNotificationResult.ok) {
@@ -138,14 +145,25 @@ export async function POST(request: Request) {
   }
 }
 
-async function upsertWaitlistContact(
-  resend: ResendClient,
-  email: string,
-  properties: Record<string, string>,
+async function upsertWaitlistContact({
+  resend,
+  email,
+  firstName,
+  lastName,
+  properties,
+  segmentId,
+}: {
+  resend: ResendClient
+  email: string
+  firstName: string
+  lastName: string
+  properties: Record<string, string>
   segmentId?: string
-) {
+}) {
   const createResponse = await resend.contacts.create({
     email,
+    firstName,
+    lastName,
     unsubscribed: false,
     properties,
     segments: segmentId ? [{ id: segmentId }] : undefined,
@@ -163,6 +181,8 @@ async function upsertWaitlistContact(
 
   const updateResponse = await resend.contacts.update({
     email,
+    firstName,
+    lastName,
     unsubscribed: false,
     properties,
   })
@@ -199,49 +219,6 @@ async function addContactToSegment(
   }
 }
 
-function ensureWaitlistContactProperties(resend: ResendClient) {
-  waitlistContactPropertiesPromise ??= createMissingWaitlistContactProperties(
-    resend
-  ).catch((error) => {
-    waitlistContactPropertiesPromise = null
-    throw error
-  })
-
-  return waitlistContactPropertiesPromise
-}
-
-async function createMissingWaitlistContactProperties(resend: ResendClient) {
-  const listResponse = await resend.contactProperties.list({ limit: 100 })
-
-  if (listResponse.error) {
-    throw new Error(
-      `Resend contact properties list failed: ${formatResendError(
-        listResponse.error
-      )}`
-    )
-  }
-
-  const existingKeys = new Set(
-    listResponse.data?.data.map((property) => property.key) ?? []
-  )
-
-  await Promise.all(
-    WAITLIST_CONTACT_PROPERTIES.filter(
-      (property) => !existingKeys.has(property.key)
-    ).map(async (property) => {
-      const createResponse = await resend.contactProperties.create(property)
-
-      if (createResponse.error && !isAlreadyExistsError(createResponse.error)) {
-        throw new Error(
-          `Resend contact property create failed: ${formatResendError(
-            createResponse.error
-          )}`
-        )
-      }
-    })
-  )
-}
-
 async function sendResendEmail(
   resend: ResendClient,
   options: CreateEmailOptions
@@ -250,6 +227,25 @@ async function sendResendEmail(
 
   if (response.error) {
     throw new Error(`Resend email failed: ${formatResendError(response.error)}`)
+  }
+}
+
+async function sendResendEmailWithRetry(
+  resend: ResendClient,
+  options: CreateEmailOptions
+) {
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      await sendResendEmail(resend, options)
+      return
+    } catch (error) {
+      if (isRateLimitException(error) && attempt < 2) {
+        await sleep((attempt + 1) * 1000)
+        continue
+      }
+
+      throw error
+    }
   }
 }
 
@@ -262,18 +258,16 @@ async function captureWaitlistStep(step: string, promise: Promise<void>) {
   }
 }
 
-function skipWaitlistStep(step: string) {
-  return { ok: false, step, skipped: true } as const
-}
-
 function buildConfirmationEmail({
   email,
+  firstName,
   from,
   replyTo,
   language,
   source,
 }: {
   email: string
+  firstName: string
   from: string
   replyTo: string
   language: WaitlistRequest["language"]
@@ -289,7 +283,7 @@ function buildConfirmationEmail({
           brandTagline: "Sécurité de la recherche",
           headerTitle: "Votre inscription est confirmée",
           headerSubtitle: "Lancement le 1er juin 2026.",
-          greeting: "Bonjour,",
+          greeting: `Bonjour ${firstName},`,
           paragraphs: [
             "Merci d'avoir rejoint la liste d'attente Tracer. Nous vous enverrons les nouvelles de lancement, les étapes d'accès anticipé et l'évolution du produit depuis info@tracersecurity.ca.",
             "Tracer est conçu pour aider les institutions de recherche à mener des vérifications diligentes structurées, sourcées et auditables pour leurs partenariats de recherche.",
@@ -315,7 +309,7 @@ function buildConfirmationEmail({
           brandTagline: "Research Security",
           headerTitle: "Your waitlist spot is confirmed",
           headerSubtitle: "Launching June 1, 2026.",
-          greeting: "Hi,",
+          greeting: `Hi ${firstName},`,
           paragraphs: [
             "Thanks for joining the Tracer waitlist. We'll send launch updates, early access notes, and product progress from info@tracersecurity.ca.",
             "Tracer is built to help research institutions run structured, source-backed, and auditable due diligence for research partnerships.",
@@ -383,6 +377,8 @@ function buildConfirmationEmail({
 
 function buildInternalNotificationEmail({
   email,
+  firstName,
+  lastName,
   from,
   to,
   language,
@@ -390,6 +386,8 @@ function buildInternalNotificationEmail({
   submittedAt,
 }: {
   email: string
+  firstName: string
+  lastName: string
   from: string
   to: string
   language: WaitlistRequest["language"]
@@ -397,6 +395,8 @@ function buildInternalNotificationEmail({
   submittedAt: string
 }): CreateEmailOptions {
   const safeEmail = escapeHtml(email)
+  const safeFirstName = escapeHtml(firstName)
+  const safeLastName = escapeHtml(lastName)
   const safeLanguage = escapeHtml(language)
   const safeSource = escapeHtml(source)
   const safeSubmittedAt = escapeHtml(submittedAt)
@@ -409,6 +409,7 @@ function buildInternalNotificationEmail({
     text: [
       "New Tracer waitlist signup",
       "",
+      `Name: ${firstName} ${lastName}`,
       `Email: ${email}`,
       `Language: ${language}`,
       `Source: ${source}`,
@@ -421,6 +422,7 @@ function buildInternalNotificationEmail({
       headerTitle: "New waitlist signup",
       headerSubtitle: "Internal notification",
       paragraphs: [
+        `<strong>Name:</strong> ${safeFirstName} ${safeLastName}`,
         `<strong>Email:</strong> ${safeEmail}`,
         `<strong>Language:</strong> ${safeLanguage}`,
         `<strong>Source:</strong> ${safeSource}`,
@@ -650,6 +652,14 @@ function isAlreadyExistsError(error: ErrorResponse) {
   )
 }
 
+function isRateLimitException(error: unknown) {
+  return error instanceof Error && error.message.includes("429")
+}
+
 function formatResendError(error: ErrorResponse) {
   return `${error.name}: ${error.message}`
+}
+
+function sleep(milliseconds: number) {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds))
 }
