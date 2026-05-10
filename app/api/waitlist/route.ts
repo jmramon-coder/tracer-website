@@ -7,6 +7,14 @@ export const runtime = "nodejs"
 
 const DEFAULT_FROM_EMAIL = "Tracer <info@tracersecurity.ca>"
 const DEFAULT_WAITLIST_SEGMENT_ID = "125a14ca-6551-4704-bece-120311b11d0b"
+const WAITLIST_CONTACT_PROPERTIES = [
+  { key: "language", type: "string", fallbackValue: "en" },
+  { key: "source", type: "string", fallbackValue: "waitlist_modal" },
+  { key: "consent", type: "string", fallbackValue: "true" },
+  { key: "submitted_at", type: "string", fallbackValue: "" },
+] as const
+
+let waitlistContactPropertiesPromise: Promise<void> | null = null
 
 const waitlistRequestSchema = z.object({
   email: z.string().trim().toLowerCase().email(),
@@ -61,11 +69,13 @@ export async function POST(request: Request) {
         contactsEnabled
           ? captureWaitlistStep(
               "contact_upsert",
-              upsertWaitlistContact(
-                resend,
-                payload.email,
-                contactProperties,
-                waitlistSegmentId
+              ensureWaitlistContactProperties(resend).then(() =>
+                upsertWaitlistContact(
+                  resend,
+                  payload.email,
+                  contactProperties,
+                  waitlistSegmentId
+                )
               )
             )
           : Promise.resolve(skipWaitlistStep("contact_upsert")),
@@ -145,6 +155,12 @@ async function upsertWaitlistContact(
     return
   }
 
+  if (!isAlreadyExistsError(createResponse.error)) {
+    throw new Error(
+      `Resend contact create failed: ${formatResendError(createResponse.error)}`
+    )
+  }
+
   const updateResponse = await resend.contacts.update({
     email,
     unsubscribed: false,
@@ -173,10 +189,57 @@ async function addContactToSegment(
   })
 
   if (response.error) {
+    if (isAlreadyExistsError(response.error)) {
+      return
+    }
+
     throw new Error(
       `Resend segment add failed: ${formatResendError(response.error)}`
     )
   }
+}
+
+function ensureWaitlistContactProperties(resend: ResendClient) {
+  waitlistContactPropertiesPromise ??= createMissingWaitlistContactProperties(
+    resend
+  ).catch((error) => {
+    waitlistContactPropertiesPromise = null
+    throw error
+  })
+
+  return waitlistContactPropertiesPromise
+}
+
+async function createMissingWaitlistContactProperties(resend: ResendClient) {
+  const listResponse = await resend.contactProperties.list({ limit: 100 })
+
+  if (listResponse.error) {
+    throw new Error(
+      `Resend contact properties list failed: ${formatResendError(
+        listResponse.error
+      )}`
+    )
+  }
+
+  const existingKeys = new Set(
+    listResponse.data?.data.map((property) => property.key) ?? []
+  )
+
+  await Promise.all(
+    WAITLIST_CONTACT_PROPERTIES.filter(
+      (property) => !existingKeys.has(property.key)
+    ).map(async (property) => {
+      const createResponse = await resend.contactProperties.create(property)
+
+      if (createResponse.error && !isAlreadyExistsError(createResponse.error)) {
+        throw new Error(
+          `Resend contact property create failed: ${formatResendError(
+            createResponse.error
+          )}`
+        )
+      }
+    })
+  )
 }
 
 async function sendResendEmail(
@@ -573,6 +636,18 @@ function escapeHtml(value: string) {
 function toResendTagValue(value: string) {
   const normalized = value.replace(/[^A-Za-z0-9_-]/g, "_").slice(0, 256)
   return normalized || "unspecified"
+}
+
+function isAlreadyExistsError(error: ErrorResponse) {
+  const message = error.message.toLowerCase()
+
+  return (
+    error.statusCode === 409 ||
+    message.includes("already exists") ||
+    message.includes("already exist") ||
+    message.includes("already been") ||
+    message.includes("duplicate")
+  )
 }
 
 function formatResendError(error: ErrorResponse) {
