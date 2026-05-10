@@ -16,7 +16,7 @@ import {
 
 export const mainNav = [
   { href: "/platform", label: "Platform" },
-  { href: "/solutions", label: "Solutions & Pricing" },
+  { href: "/solutions", label: "Pricing" },
   { href: "/labs", label: "Labs" },
 ]
 
@@ -345,25 +345,21 @@ export const pricingPlans = [
     nameFr: "Accès anticipé",
     price: "$10k / 6 months",
     priceFr: "10 k$ / 6 mois",
-    note: "10 places for the founding cohort",
-    noteFr: "10 places pour la cohorte fondatrice",
+    note: "Open to our first 10 institutional partners",
+    noteFr: "Ouvert à nos 10 premiers partenaires institutionnels",
     deal: "Special offer until September 1, 2026",
     dealFr: "Offre spéciale jusqu'au 1er septembre 2026",
-    description:
-      "For a small founding group that wants to validate Tracer with real screening work and shape the product early.",
-    descriptionFr:
-      "Pour un petit groupe fondateur qui veut valider Tracer sur de vrais flux de vérification et orienter le produit tôt.",
     cta: "Get more info",
     ctaFr: "En savoir plus",
     features: [
-      "Limited founding cohort of 10 places",
-      "Core individual screening workflow",
+      "10 founding partnerships",
+      "Core screening capabilities",
       "Personalized guidance and onboarding",
       "Priority setup for early research security teams",
     ],
     featuresFr: [
-      "Cohorte fondatrice limitée à 10 places",
-      "Flux central de vérification individuelle",
+      "10 partenariats fondateurs",
+      "Capacités centrales de vérification",
       "Accompagnement et intégration personnalisés",
       "Mise en place prioritaire pour les premières équipes de sécurité de la recherche",
     ],
@@ -373,24 +369,18 @@ export const pricingPlans = [
     nameFr: "Institution",
     price: "$20k / year",
     priceFr: "20 k$ / an",
-    note: "$18k / year with a 2-year term, 10 users included",
-    noteFr: "18 k$ / an avec engagement de 2 ans, 10 utilisateurs inclus",
-    description:
-      "For universities ready to standardize research security review across teams while preserving human RSO review.",
-    descriptionFr:
-      "Pour les universités prêtes à standardiser la revue de sécurité de la recherche tout en préservant la révision humaine.",
+    note: "$18k / year with a 2-year term",
+    noteFr: "18 k$ / an avec engagement de 2 ans",
     cta: "Request access",
     ctaFr: "Demander l'accès",
     featured: true,
     features: [
-      "10 users included",
       "Shared workspace for research security teams",
       "Multi-source screening and source-backed synthesis",
       "Export-ready reports with citations",
       "Bilingual workflow and audit trail",
     ],
     featuresFr: [
-      "10 utilisateurs inclus",
       "Espace partagé pour les équipes de sécurité de la recherche",
       "Vérification multi-source et synthèse sourcée",
       "Rapports exportables avec citations",
@@ -403,21 +393,21 @@ export const pricingPlans = [
     price: "Custom",
     priceFr: "Sur mesure",
     description:
-      "For agencies, networks, and large teams that need personalized deep search based on Tracer's intelligence layer.",
+      "For agencies, networks, and large teams that need screening tailored to their workflow — built on Tracer's intelligence layer.",
     descriptionFr:
-      "Pour les agences, réseaux et grandes équipes qui ont besoin d'une recherche approfondie personnalisée basée sur la couche d'intelligence de Tracer.",
+      "Pour les agences, réseaux et grandes équipes qui ont besoin d'une vérification adaptée à leur flux de travail — construite sur la couche d'intelligence de Tracer.",
     cta: "Talk to us",
     ctaFr: "Nous parler",
     features: [
-      "Personalized deep-search workflows",
-      "Custom models and targeted query strategy",
-      "Unlimited users for large operating needs",
+      "Custom screening pipelines",
+      "Tailored model routing and search strategy",
+      "Unlimited users",
       "Advanced reporting, governance, and support",
     ],
     featuresFr: [
-      "Flux de recherche approfondie personnalisés",
-      "Modèles sur mesure et stratégie de requêtes ciblées",
-      "Utilisateurs illimités pour les grands besoins opérationnels",
+      "Pipelines de vérification sur mesure",
+      "Routage de modèles et stratégie de recherche adaptés",
+      "Utilisateurs illimités",
       "Rapports, gouvernance et soutien avancés",
     ],
   },

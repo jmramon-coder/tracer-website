@@ -82,7 +82,7 @@ const operatingPrinciples = [
 const footerNavLinks = [
   { href: "/platform", label: "Platform", labelFr: "Plateforme" },
   { href: "/labs", label: "Labs", labelFr: "Labs" },
-  { href: "/solutions", label: "Solutions & Pricing", labelFr: "Solutions et tarifs" },
+  { href: "/solutions", label: "Pricing", labelFr: "Tarifs" },
 ] as const
 
 export default function CompanyPage() {

@@ -11,7 +11,7 @@ export const translations = {
       nav: {
         platform: "Platform",
         labs: "Labs",
-        solutions: "Solutions & Pricing",
+        solutions: "Pricing",
         pricing: "Pricing",
         resources: "Resources",
         company: "Company",
@@ -212,7 +212,7 @@ export const translations = {
       nav: {
         platform: "Plateforme",
         labs: "Labs",
-        solutions: "Solutions et tarifs",
+        solutions: "Tarifs",
         pricing: "Tarifs",
         resources: "Ressources",
         company: "Entreprise",

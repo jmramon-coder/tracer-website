@@ -75,6 +75,7 @@ export function Header() {
     openMenu: language === "fr" ? "Ouvrir le menu" : "Open menu",
     closeMenu: language === "fr" ? "Fermer le menu" : "Close menu",
   }
+  const showTracerAppButton = false
   const isActiveNavItem = (href: string) =>
     pathname === href ||
     (href === "/platform" && pathname === "/") ||
@@ -231,23 +232,25 @@ export function Header() {
               >
                 {t.header.joinWaitlist}
               </WaitlistButton>
-              <a
-                href="https://www.app.tracersecurity.ca"
-                onClick={() => handleTracerAppClick("header")}
-                className={cn(
-                  "hidden h-10 items-center gap-2 rounded-full border px-4 text-xs font-medium leading-none tracking-wide shadow-xl transition-all duration-200 hover:-translate-y-0.5 lg:inline-flex md:text-sm",
-                  isOverMedia
-                    ? "border-white/22 bg-white/12 text-white shadow-black/15 backdrop-blur-xl hover:bg-white/18"
-                    : "border-border bg-card/80 text-foreground shadow-black/10 hover:border-[#2459B8]/24 hover:bg-card"
-                )}
-              >
-                <BrandLogo
-                  variant={isOverMedia ? "white" : "auto"}
-                  showText={false}
-                  markClassName="h-4 w-5"
-                />
-                <span>Tracer App</span>
-              </a>
+              {showTracerAppButton ? (
+                <a
+                  href="https://www.app.tracersecurity.ca"
+                  onClick={() => handleTracerAppClick("header")}
+                  className={cn(
+                    "hidden h-10 items-center gap-2 rounded-full border px-4 text-xs font-medium leading-none tracking-wide shadow-xl transition-all duration-200 hover:-translate-y-0.5 lg:inline-flex md:text-sm",
+                    isOverMedia
+                      ? "border-white/22 bg-white/12 text-white shadow-black/15 backdrop-blur-xl hover:bg-white/18"
+                      : "border-border bg-card/80 text-foreground shadow-black/10 hover:border-[#2459B8]/24 hover:bg-card"
+                  )}
+                >
+                  <BrandLogo
+                    variant={isOverMedia ? "white" : "auto"}
+                    showText={false}
+                    markClassName="h-4 w-5"
+                  />
+                  <span>Tracer App</span>
+                </a>
+              ) : null}
               <button
                 type="button"
                 onClick={handleMobileMenuToggle}
@@ -330,26 +333,28 @@ export function Header() {
                   {t.header.joinWaitlist}
                 </WaitlistButton>
               </div>
-              <a
-                href="https://www.app.tracersecurity.ca"
-                onClick={() => {
-                  handleTracerAppClick("mobile_menu")
-                  setIsMenuOpen(false)
-                }}
-                className={cn(
-                  "mt-3 inline-flex h-11 w-full items-center justify-center gap-2 rounded-full border px-4 text-sm font-medium leading-none shadow-xl transition-all duration-200 hover:-translate-y-0.5",
-                  isOverMedia
-                    ? "border-white/22 bg-white/12 text-white shadow-black/15 backdrop-blur-xl hover:bg-white/18"
-                    : "border-border bg-card/80 text-foreground shadow-black/10 hover:border-[#2459B8]/24 hover:bg-card"
-                )}
-              >
-                <BrandLogo
-                  variant={isOverMedia ? "white" : "auto"}
-                  showText={false}
-                  markClassName="h-4 w-5"
-                />
-                <span>Tracer App</span>
-              </a>
+              {showTracerAppButton ? (
+                <a
+                  href="https://www.app.tracersecurity.ca"
+                  onClick={() => {
+                    handleTracerAppClick("mobile_menu")
+                    setIsMenuOpen(false)
+                  }}
+                  className={cn(
+                    "mt-3 inline-flex h-11 w-full items-center justify-center gap-2 rounded-full border px-4 text-sm font-medium leading-none shadow-xl transition-all duration-200 hover:-translate-y-0.5",
+                    isOverMedia
+                      ? "border-white/22 bg-white/12 text-white shadow-black/15 backdrop-blur-xl hover:bg-white/18"
+                      : "border-border bg-card/80 text-foreground shadow-black/10 hover:border-[#2459B8]/24 hover:bg-card"
+                  )}
+                >
+                  <BrandLogo
+                    variant={isOverMedia ? "white" : "auto"}
+                    showText={false}
+                    markClassName="h-4 w-5"
+                  />
+                  <span>Tracer App</span>
+                </a>
+              ) : null}
             </div>
           </div>
         )}

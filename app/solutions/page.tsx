@@ -11,15 +11,42 @@ import { WaitlistButton } from "@/components/waitlist-button"
 import { pricingPlans } from "@/lib/site-data"
 
 export const metadata: Metadata = {
-  title: "Solutions & Pricing",
+  title: "Pricing",
   description:
-    "Solutions and pricing for Tracer, a research security due diligence platform with structured screening workflows and Tracer Labs intelligence configuration.",
+    "Transparent pricing for Tracer, a research security due diligence platform with efficient screening workflows and top-of-market deep web intelligence.",
 }
 
 const footerNavLinks = [
   { href: "/platform", label: "Platform", labelFr: "Plateforme" },
   { href: "/labs", label: "Labs", labelFr: "Labs" },
-  { href: "/solutions", label: "Solutions & Pricing", labelFr: "Solutions et tarifs" },
+  { href: "/solutions", label: "Pricing", labelFr: "Tarifs" },
+] as const
+
+const planIncludes = [
+  {
+    title: "Full audit trail",
+    titleFr: "Piste d'audit complète",
+    body: "Every finding cited, every search step logged, every report exportable",
+    bodyFr: "Chaque constat cité, chaque étape de recherche journalisée, chaque rapport exportable",
+  },
+  {
+    title: "Bilingual workflow",
+    titleFr: "Flux bilingue",
+    body: "English and French throughout",
+    bodyFr: "Anglais et français partout",
+  },
+  {
+    title: "Direct access to the team",
+    titleFr: "Accès direct à l'équipe",
+    body: "No tiered support queues during early access",
+    bodyFr: "Aucune file de soutien par niveau pendant l'accès anticipé",
+  },
+  {
+    title: "Canadian data infrastructure",
+    titleFr: "Infrastructure de données canadienne",
+    body: "All screening runs and case data hosted in Canada",
+    bodyFr: "Toutes les vérifications et données de dossiers hébergées au Canada",
+  },
 ] as const
 
 export default function SolutionsPage() {
@@ -38,14 +65,14 @@ export default function SolutionsPage() {
             </p>
             <h1 className="mt-5 max-w-5xl text-5xl font-semibold leading-[0.96] tracking-tight md:text-7xl">
               <LocalizedText
-                en="Research security made accessible and efficient."
-                fr="La sécurité de la recherche rendue accessible et efficace."
+                en="Research security made accessible"
+                fr="La sécurité de la recherche rendue accessible"
               />
             </h1>
             <p className="mt-7 max-w-3xl text-lg leading-8 text-muted-foreground">
               <LocalizedText
-                en="Transparent pricing for Canadian research institutions, backed by efficient workflows and top-of-market deep-search intelligence."
-                fr="Une tarification transparente pour les institutions de recherche canadiennes, appuyée par des flux efficaces et une intelligence de recherche approfondie de premier plan."
+                en="Pricing that fits university budgets, backed by efficient workflows and top-of-market deep web intelligence."
+                fr="Une tarification adaptée aux budgets universitaires, appuyée par des flux efficaces et une intelligence de recherche web approfondie de premier plan."
               />
             </p>
           </div>
@@ -86,20 +113,24 @@ export default function SolutionsPage() {
                   </h3>
                   {"note" in plan && (
                     <p
-                      className={`mt-2 text-sm font-medium ${
-                        plan.featured ? "text-white/82" : "text-muted-foreground"
+                      className={`mt-2 w-fit rounded-full px-3 py-1.5 font-semibold ${
+                        plan.featured
+                          ? "bg-white/14 text-base text-white ring-1 ring-white/20"
+                          : "bg-[#2459B8]/[0.07] text-sm text-[#2459B8]"
                       }`}
                     >
                       <LocalizedText en={plan.note} fr={plan.noteFr} />
                     </p>
                   )}
-                  <p
-                    className={`mt-4 text-sm leading-6 ${
-                      plan.featured ? "text-white/72" : "text-muted-foreground"
-                    }`}
-                  >
-                    <LocalizedText en={plan.description} fr={plan.descriptionFr} />
-                  </p>
+                  {"description" in plan && plan.description ? (
+                    <p
+                      className={`mt-4 text-sm leading-6 ${
+                        plan.featured ? "text-white/72" : "text-muted-foreground"
+                      }`}
+                    >
+                      <LocalizedText en={plan.description} fr={plan.descriptionFr} />
+                    </p>
+                  ) : null}
                   <ul className="mt-7 grid gap-3">
                     {plan.features.map((feature, index) => (
                       <li key={feature} className="flex items-start gap-3 text-sm">
@@ -156,6 +187,36 @@ export default function SolutionsPage() {
                 </div>
               </article>
             ))}
+          </div>
+          <div className="relative z-10 mx-auto mt-12 max-w-5xl rounded-[24px] border border-border bg-card p-5 shadow-sm md:p-6">
+            <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+              <p className="text-2xl font-semibold tracking-tight">
+                <LocalizedText en="What every plan includes" fr="Ce que chaque plan inclut" />
+              </p>
+              <p className="max-w-lg text-sm leading-6 text-muted-foreground">
+                <LocalizedText
+                  en="Core infrastructure stays consistent across access levels."
+                  fr="L'infrastructure centrale reste cohérente à tous les niveaux d'accès."
+                />
+              </p>
+            </div>
+            <div className="mt-6 grid gap-3 md:grid-cols-2">
+              {planIncludes.map((item) => (
+                <div key={item.title} className="rounded-[18px] bg-muted/45 p-4">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#2459B8]" />
+                    <div>
+                      <p className="text-sm font-semibold text-foreground">
+                        <LocalizedText en={item.title} fr={item.titleFr} />
+                      </p>
+                      <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                        <LocalizedText en={item.body} fr={item.bodyFr} />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
           <p className="relative z-10 mx-auto mt-7 max-w-2xl text-center text-sm font-medium leading-6 text-muted-foreground">
             <LocalizedText

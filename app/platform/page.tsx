@@ -370,23 +370,23 @@ function HeroCardDeck() {
             <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_176px] sm:items-start">
               <div>
                 <p className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#6F6F68]">
-                  <LocalizedText en="Tracer · Research security due diligence" fr="Tracer · Diligence de sécurité de la recherche" />
+                  <LocalizedText en="Tracer · Research security" fr="Tracer · Sécurité de la recherche" />
                 </p>
                 <h2 className="mt-2 text-2xl font-semibold leading-[1.16] tracking-tight sm:text-[30px]">
-                  Mara Vellin
+                  Li Wei
                 </h2>
                 <p className="mt-2 max-w-md text-[11px] leading-5 text-[#6F6F68]">
                   <LocalizedText
-                    en="Helios Materials Lab · Applied photonics · Montreal, Canada"
-                    fr="Helios Materials Lab · Photonique appliquée · Montréal, Canada"
+                    en="Harbin Institute of Technology · China"
+                    fr="Harbin Institute of Technology · Chine"
                   />
                 </p>
                 <div className="mt-3 flex flex-wrap gap-1.5">
                   {[
-                    ["Applied photonics", "Photonique appliquée"],
-                    ["Energy storage", "Stockage énergétique"],
-                    ["Materials engineering", "Génie des matériaux"],
-                    ["Synthetic profile", "Profil synthétique"],
+                    ["Google Scholar", "Google Scholar"],
+                    ["ORCID", "ORCID"],
+                    ["Materials science", "Science des matériaux"],
+                    ["Institutional affiliation", "Affiliation institutionnelle"],
                   ].map(([en, fr]) => (
                     <ReportTag key={en}>
                       <LocalizedText en={en} fr={fr} />
@@ -396,14 +396,11 @@ function HeroCardDeck() {
               </div>
 
               <div className="rounded-[12px] bg-white/75 p-3 shadow-[inset_0_0_0_1px_rgba(29,29,31,0.045)]">
-                <p className="font-mono text-[8.5px] font-semibold uppercase tracking-[0.14em] text-[#6F6F68]">
-                  <LocalizedText en="Verdict matrix" fr="Matrice de verdicts" />
-                </p>
-                <div className="mt-2 grid gap-1.5">
+                <div className="grid gap-1.5">
                   {[
-                    ["Sanctions", "Clear", "good"],
+                    ["Sanctions", "Review", "bad"],
                     ["Affiliation", "Review", "bad"],
-                    ["Academic net.", "Review", "bad"],
+                    ["Academic network", "Review", "bad"],
                     ["Funding ties", "Clear", "good"],
                   ].map(([code, verdict, tone]) => (
                     <div key={code} className="flex items-center justify-between gap-3">
@@ -429,7 +426,7 @@ function HeroCardDeck() {
               {[
                 ["42", "Publications", "Publications"],
                 ["18", "H-index", "Indice h"],
-                ["10", "Sources", "Sources"],
+                ["10", "Citations", "Citations"],
               ].map(([value, label, labelFr]) => (
                 <div key={label} className="border-r border-[#ECECE8] px-3 py-2 last:border-r-0">
                   <p className="font-mono text-lg leading-none text-[#1D1D1F]">{value}</p>
@@ -448,7 +445,7 @@ function HeroCardDeck() {
                   Affiliation
                 </span>
                 <h3 className="text-[18px] font-semibold tracking-tight">
-                  <LocalizedText en="Institutional affiliation" fr="Affiliation institutionnelle" />
+                  <LocalizedText en="Primary Affiliation" fr="Affiliation principale" />
                 </h3>
               </div>
               <ReportVerdict tone="bad">
@@ -457,17 +454,15 @@ function HeroCardDeck() {
             </div>
             <p className="mt-3 max-w-xl px-4 text-[12.5px] leading-[1.62] text-[#3F3F3A] sm:px-5">
               <LocalizedText
-                en="Synthetic institutional profile with citation handling, affiliation context, collaboration signals, and human review notes."
-                fr="Profil institutionnel synthétique avec citations, contexte d'affiliation, signaux de collaboration et notes de revue humaine."
+                en="Harbin Institute of Technology (HIT) is a designated institution of concern on the Canadian NRO List and US BIS Entity List, formally identified as one of the Seven Sons of National Defense with deep structural ties to the Chinese military-industrial complex."
+                fr="Le Harbin Institute of Technology (HIT) est une institution désignée comme préoccupante sur la liste NRO canadienne et la liste Entity List du BIS américain, formellement identifié comme l'un des Seven Sons of National Defense avec des liens structurels profonds avec le complexe militaro-industriel chinois."
               />{" "}
               <sup className="font-mono text-[9px] text-[#175CD3]">1</sup>
             </p>
             <div className="mt-4 grid grid-cols-2 gap-2 px-4 pb-4 sm:px-5">
               {[
-                ["Legal name", "Nom légal", "Mara Vellin", "Mara Vellin"],
-                ["Screening scope", "Portée", "Individual + partner context", "Personne + contexte partenaire"],
-                ["Report status", "Statut", "Human review ready", "Prêt pour revue humaine"],
-                ["Audit trail", "Audit", "Synthetic sources saved", "Sources synthétiques sauvegardées"],
+                ["Legal name", "Nom légal", "Li Wei", "Li Wei"],
+                ["Primary affiliation", "Affiliation principale", "Harbin Institute of Technology", "Harbin Institute of Technology"],
               ].map(([label, labelFr, value, valueFr]) => (
                 <div key={label} className="rounded-[10px] bg-white px-3 py-2 shadow-[inset_0_0_0_1px_rgba(29,29,31,0.055)]">
                   <p className="font-mono text-[8.5px] font-semibold uppercase tracking-[0.12em] text-[#6F6F68]">
@@ -490,7 +485,7 @@ function HeroCardDeck() {
 function ReportExample() {
   return (
     <div className="overflow-hidden rounded-[16px] border border-[#F0F0EC] bg-white text-[#1D1D1F] shadow-[0_18px_46px_rgba(15,23,42,0.07)]">
-      <div className="grid gap-5 border-b border-[#F0F0EC] bg-[#FAFAF8] px-5 py-5 text-[#1D1D1F] sm:grid-cols-[minmax(0,1fr)_178px]">
+      <div className="grid gap-5 border-b border-[#F0F0EC] bg-[#F6F6F4] px-5 py-5 text-[#1D1D1F] sm:grid-cols-[minmax(0,1fr)_178px]">
         <div>
           <div className="flex items-center gap-2">
             <FileText className="h-3.5 w-3.5 text-[#6F6F68]" />
@@ -499,12 +494,12 @@ function ReportExample() {
             </p>
           </div>
           <h3 className="mt-3 text-[30px] font-semibold leading-[1.16] tracking-tight">
-            Reza Kamali
+            Asterion Applied Photonics Institute
           </h3>
           <p className="mt-2 text-[12.5px] leading-[1.62] text-[#6F6F68]">
             <LocalizedText
-              en="Navid University · Aerospace Engineering · Scholar confirmed"
-              fr="Université Navid · Génie aérospatial · Chercheur confirmé"
+              en="Synthetic organization · Advanced photonics · Partner institution"
+              fr="Organisation synthétique · Photonique avancée · Institution partenaire"
             />
           </p>
         </div>
@@ -540,9 +535,9 @@ function ReportExample() {
       <div className="border-b border-[#F1F1EE] px-5 py-4">
         <div className="flex flex-wrap gap-2">
           {[
-            ["89 publications", "89 publications"],
-            ["h-index 24", "indice h 24"],
-            ["ORCID verified", "ORCID vérifié"],
+            ["Registry verified", "Registre vérifié"],
+            ["Parent entity mapped", "Entité mère cartographiée"],
+            ["Partner network checked", "Réseau partenaire vérifié"],
           ].map(([en, fr]) => (
             <ReportTag key={en}>
               <LocalizedText en={en} fr={fr} />
@@ -551,8 +546,8 @@ function ReportExample() {
         </div>
         <div className="mt-4 grid overflow-hidden rounded-[10px] border border-[#ECECE8] sm:grid-cols-3">
           {[
-            ["1", "Designation match", "Désignation trouvée"],
-            ["9", "Lists cleared", "Listes sans signal"],
+            ["1", "Entity match", "Correspondance entité"],
+            ["6", "Lists cleared", "Listes sans signal"],
             ["4", "Source citations", "Citations sources"],
           ].map(([value, label, labelFr]) => (
             <div key={label} className="border-b border-[#ECECE8] px-4 py-3 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
@@ -594,8 +589,8 @@ function ReportExample() {
             [
               "List name",
               "Nom de la liste",
-              "US Department of Commerce, Bureau of Industry and Security - Entity List (Supplement No. 4 to Part 744)",
-              "US Department of Commerce, Bureau of Industry and Security - Entity List (Supplement No. 4 to Part 744)",
+              "US Department of Commerce, Bureau of Industry and Security - Entity List (synthetic organization example)",
+              "US Department of Commerce, Bureau of Industry and Security - Entity List (exemple d'organisation synthétique)",
             ],
             [
               "Administering body",
@@ -606,15 +601,15 @@ function ReportExample() {
             [
               "Legal basis",
               "Base juridique",
-              "Export Administration Regulations (EAR), 15 C.F.R. Parts 730-774 - End-User Review Committee determination",
-              "Export Administration Regulations (EAR), 15 C.F.R. Parts 730-774 - détermination de l'End-User Review Committee",
+              "Export Administration Regulations (EAR), 15 C.F.R. Parts 730-774 - end-user review and entity-screening basis",
+              "Export Administration Regulations (EAR), 15 C.F.R. Parts 730-774 - base d'examen d'utilisateur final et de vérification d'entité",
             ],
-            ["Designation date", "Date de désignation", "June 17, 2024", "17 juin 2024"],
+            ["Review date", "Date de revue", "June 17, 2026", "17 juin 2026"],
             [
               "Stated reason",
               "Motif déclaré",
-              "Acting contrary to the national security and foreign policy interests of the United States by acquiring and attempting to acquire US-origin items in support of the People's Liberation Army modernization, including hypersonic research and advanced semiconductor fabrication.",
-              "Agissements contraires aux intérêts de sécurité nationale et de politique étrangère des États-Unis par l'acquisition ou la tentative d'acquisition d'articles d'origine américaine au soutien de la modernisation de l'Armée populaire de libération, notamment la recherche hypersonique et la fabrication avancée de semi-conducteurs.",
+              "Synthetic registry record indicates a similarly named institute linked to controlled photonics components and export-sensitive research infrastructure. Human review is required to verify whether the subject entity, parent organization, or supervisory authority is the same party.",
+              "Un enregistrement de registre synthétique indique un institut au nom similaire lié à des composantes photoniques contrôlées et à une infrastructure de recherche sensible à l'exportation. Une revue humaine est requise pour vérifier si l'entité, l'organisation mère ou l'autorité de supervision correspond à la même partie.",
             ],
           ].map(([label, labelFr, value, valueFr], index) => (
             <div
