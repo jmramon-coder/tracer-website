@@ -6,6 +6,7 @@ import { getResendClient } from "@/lib/resend"
 export const runtime = "nodejs"
 
 const DEFAULT_FROM_EMAIL = "Tracer <info@tracersecurity.ca>"
+const DEFAULT_WAITLIST_SEGMENT_ID = "125a14ca-6551-4704-bece-120311b11d0b"
 
 const waitlistRequestSchema = z.object({
   email: z.string().trim().toLowerCase().email(),
@@ -44,6 +45,8 @@ export async function POST(request: Request) {
     const from = process.env.RESEND_FROM_EMAIL || DEFAULT_FROM_EMAIL
     const internalTo = process.env.RESEND_INTERNAL_TO
     const contactsEnabled = process.env.RESEND_CONTACTS_ENABLED === "true"
+    const waitlistSegmentId =
+      process.env.RESEND_WAITLIST_SEGMENT_ID || DEFAULT_WAITLIST_SEGMENT_ID
 
     const submittedAt = new Date().toISOString()
     const contactProperties = {
@@ -58,7 +61,12 @@ export async function POST(request: Request) {
         contactsEnabled
           ? captureWaitlistStep(
               "contact_upsert",
-              upsertWaitlistContact(resend, payload.email, contactProperties)
+              upsertWaitlistContact(
+                resend,
+                payload.email,
+                contactProperties,
+                waitlistSegmentId
+              )
             )
           : Promise.resolve(skipWaitlistStep("contact_upsert")),
         captureWaitlistStep(
@@ -102,7 +110,11 @@ export async function POST(request: Request) {
       }
     }
 
-    if (!contactResult.ok && !internalNotificationResult.ok) {
+    if (contactsEnabled && !contactResult.ok) {
+      throw new Error("Waitlist contact capture failed")
+    }
+
+    if (!contactsEnabled && !internalNotificationResult.ok) {
       throw new Error("Waitlist capture failed")
     }
 
@@ -119,12 +131,14 @@ export async function POST(request: Request) {
 async function upsertWaitlistContact(
   resend: ResendClient,
   email: string,
-  properties: Record<string, string>
+  properties: Record<string, string>,
+  segmentId?: string
 ) {
   const createResponse = await resend.contacts.create({
     email,
     unsubscribed: false,
     properties,
+    segments: segmentId ? [{ id: segmentId }] : undefined,
   })
 
   if (!createResponse.error) {
@@ -140,6 +154,27 @@ async function upsertWaitlistContact(
   if (updateResponse.error) {
     throw new Error(
       `Resend contact upsert failed: ${formatResendError(updateResponse.error)}`
+    )
+  }
+
+  if (segmentId) {
+    await addContactToSegment(resend, email, segmentId)
+  }
+}
+
+async function addContactToSegment(
+  resend: ResendClient,
+  email: string,
+  segmentId: string
+) {
+  const response = await resend.contacts.segments.add({
+    email,
+    segmentId,
+  })
+
+  if (response.error) {
+    throw new Error(
+      `Resend segment add failed: ${formatResendError(response.error)}`
     )
   }
 }
