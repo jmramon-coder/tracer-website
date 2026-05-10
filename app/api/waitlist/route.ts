@@ -110,7 +110,11 @@ export async function POST(request: Request) {
       }
     }
 
-    if (!contactResult.ok && !internalNotificationResult.ok) {
+    if (contactsEnabled && !contactResult.ok) {
+      throw new Error("Waitlist contact capture failed")
+    }
+
+    if (!contactsEnabled && !internalNotificationResult.ok) {
       throw new Error("Waitlist capture failed")
     }
 
