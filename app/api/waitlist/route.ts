@@ -184,20 +184,38 @@ function buildConfirmationEmail({
   const copy =
     language === "fr"
       ? {
-          subject: "Vous etes sur la liste d'attente Tracer",
-          preview: "Merci d'avoir rejoint la liste d'attente Tracer.",
-          heading: "Vous etes sur la liste.",
+          subject: "Vous êtes sur la liste d'attente Tracer",
+          preview:
+            "Votre inscription est confirmée. Les nouvelles de lancement viendront de info@tracersecurity.ca.",
+          brandTagline: "Sécurité de la recherche",
+          eyebrow: "Lancement le 1er juin 2026",
+          heading: "Vous êtes sur la liste.",
           body:
-            "Merci d'avoir rejoint la liste d'attente Tracer. Nous vous informerons du lancement et des prochaines etapes d'acces anticipe.",
+            "Merci d'avoir rejoint la liste d'attente Tracer. Nous vous enverrons les nouvelles de lancement, les étapes d'accès anticipé et l'évolution du produit depuis info@tracersecurity.ca.",
+          nextTitle: "La suite",
+          nextSteps: [
+            "Nous vous informerons lorsque Tracer ouvrira l'accès anticipé.",
+            "Les premières institutions auront une intégration prioritaire et pourront orienter les flux de vérification.",
+            "Vous pouvez répondre à ce courriel si un besoin de sécurité de la recherche mérite notre attention.",
+          ],
           footer:
-            "Vous pouvez vous desabonner a tout moment en repondant a ce courriel.",
+            "Vous pouvez vous désabonner à tout moment en répondant à ce courriel.",
         }
       : {
           subject: "You're on the Tracer waitlist",
-          preview: "Thanks for joining the Tracer waitlist.",
+          preview:
+            "You're on the list. Launch and early access updates will come from info@tracersecurity.ca.",
+          brandTagline: "Research Security",
+          eyebrow: "Launching June 1, 2026",
           heading: "You're on the list.",
           body:
-            "Thanks for joining the Tracer waitlist. We'll notify you about launch updates and early access next steps.",
+            "Thanks for joining the Tracer waitlist. We'll send launch updates, early access notes, and product progress from info@tracersecurity.ca.",
+          nextTitle: "What happens next",
+          nextSteps: [
+            "We'll notify you when Tracer opens early access.",
+            "Founding institutions get priority onboarding and direct input on screening workflows.",
+            "You can reply to this email if there is a research security workflow you want us to understand.",
+          ],
           footer:
             "You can unsubscribe at any time by replying to this email.",
         }
@@ -207,11 +225,27 @@ function buildConfirmationEmail({
     to: email,
     replyTo,
     subject: copy.subject,
-    text: `${copy.heading}\n\n${copy.body}\n\n${copy.footer}`,
+    text: [
+      "Tracer",
+      copy.eyebrow,
+      "",
+      copy.heading,
+      "",
+      copy.body,
+      "",
+      copy.nextTitle,
+      ...copy.nextSteps.map((step) => `- ${step}`),
+      "",
+      copy.footer,
+    ].join("\n"),
     html: renderEmailHtml({
       preview: copy.preview,
+      brandTagline: copy.brandTagline,
+      eyebrow: copy.eyebrow,
       heading: copy.heading,
-      body: copy.body,
+      body: escapeHtml(copy.body),
+      nextTitle: copy.nextTitle,
+      nextSteps: copy.nextSteps,
       footer: copy.footer,
     }),
     tags: [
@@ -257,6 +291,8 @@ function buildInternalNotificationEmail({
     ].join("\n"),
     html: renderEmailHtml({
       preview: "A new visitor joined the Tracer waitlist.",
+      brandTagline: "Research Security",
+      eyebrow: "Waitlist",
       heading: "New waitlist signup",
       body: [
         `<strong>Email:</strong> ${safeEmail}`,
@@ -276,13 +312,21 @@ function buildInternalNotificationEmail({
 
 function renderEmailHtml({
   preview,
+  brandTagline,
+  eyebrow,
   heading,
   body,
+  nextTitle,
+  nextSteps = [],
   footer,
 }: {
   preview: string
+  brandTagline: string
+  eyebrow: string
   heading: string
   body: string
+  nextTitle?: string
+  nextSteps?: string[]
   footer: string
 }) {
   return `<!doctype html>
@@ -292,26 +336,63 @@ function renderEmailHtml({
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>${escapeHtml(preview)}</title>
   </head>
-  <body style="margin:0;background:#f6f7f9;color:#111827;font-family:Arial,Helvetica,sans-serif;">
+  <body style="margin:0;background:#11100e;color:#f8f7f3;font-family:Arial,Helvetica,sans-serif;">
     <span style="display:none!important;opacity:0;color:transparent;height:0;width:0;overflow:hidden;">${escapeHtml(preview)}</span>
-    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:#f6f7f9;padding:32px 16px;">
+    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:#11100e;padding:34px 16px;">
       <tr>
         <td align="center">
-          <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="max-width:560px;background:#ffffff;border:1px solid #e5e7eb;border-radius:16px;">
+          <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="max-width:620px;background:#191816;border:1px solid #34312b;border-radius:24px;overflow:hidden;">
             <tr>
-              <td style="padding:32px;">
-                <p style="margin:0 0 18px;font-size:12px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#2459b8;">Tracer</p>
-                <h1 style="margin:0 0 16px;font-size:28px;line-height:1.2;color:#111827;">${escapeHtml(heading)}</h1>
-                <p style="margin:0 0 24px;font-size:16px;line-height:1.6;color:#374151;">${body}</p>
-                <p style="margin:0;font-size:13px;line-height:1.5;color:#6b7280;">${escapeHtml(footer)}</p>
+              <td style="padding:32px 34px 10px;">
+                <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td>
+                      <p style="margin:0;font-size:14px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#ffffff;">Tracer</p>
+                      <p style="margin:7px 0 0;font-size:9px;font-weight:600;letter-spacing:0.28em;text-transform:uppercase;color:#b9b4aa;">${escapeHtml(brandTagline)}</p>
+                    </td>
+                    <td align="right" style="vertical-align:top;">
+                      <span style="display:inline-block;border:1px solid #3b5fbc;background:#2459b8;color:#ffffff;border-radius:999px;padding:8px 12px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">${escapeHtml(eyebrow)}</span>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:28px 34px 34px;">
+                <h1 style="margin:0 0 18px;font-size:34px;line-height:1.12;letter-spacing:-0.01em;color:#f8f7f3;">${escapeHtml(heading)}</h1>
+                <p style="margin:0;font-size:16px;line-height:1.7;color:#d8d3ca;">${body}</p>
+                ${renderNextSteps(nextTitle, nextSteps)}
+                <p style="margin:28px 0 0;border-top:1px solid #34312b;padding-top:18px;font-size:12px;line-height:1.6;color:#928c82;">${escapeHtml(footer)}</p>
               </td>
             </tr>
           </table>
+          <p style="margin:18px 0 0;font-size:11px;line-height:1.5;color:#777168;">Tracer Research Security · tracersecurity.ca</p>
         </td>
       </tr>
     </table>
   </body>
 </html>`
+}
+
+function renderNextSteps(title?: string, steps: string[] = []) {
+  if (!title || steps.length === 0) {
+    return ""
+  }
+
+  return `
+                <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin-top:28px;border:1px solid #2f467a;background:#15203a;border-radius:18px;">
+                  <tr>
+                    <td style="padding:22px;">
+                      <p style="margin:0 0 12px;font-size:12px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#8fb0ff;">${escapeHtml(title)}</p>
+                      ${steps
+                        .map(
+                          (step) =>
+                            `<p style="margin:0 0 10px;font-size:14px;line-height:1.6;color:#eef2ff;">• ${escapeHtml(step)}</p>`
+                        )
+                        .join("")}
+                    </td>
+                  </tr>
+                </table>`
 }
 
 function escapeHtml(value: string) {
