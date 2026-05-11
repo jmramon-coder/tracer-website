@@ -14,14 +14,12 @@ const slides = [
     label: "Individual",
     labelFr: "Individu",
     title: "Screen individuals",
-    titleFr: "Vérifier des personnes",
+    titleFr: "Vérifier des individus",
     description:
-      "Submit a name. Tracer returns a full file: institutional affiliation, co-author network, funding history, sanctions status, foreign ties, legal record, and adverse media, each with its own verdict and source trail for RSO review.",
+      "Submit a name. Tracer returns a full file: institutional affiliation, co-author network, funding history, sanctions status, foreign ties, legal record, and adverse media, each with its own verdict and source trail ready for analyst review.",
     descriptionFr:
-      "Soumettez un nom. Tracer retourne un dossier complet : affiliation institutionnelle, réseau de coauteurs, historique de financement, statut de sanctions, liens étrangers, dossier juridique et médias défavorables, chacun avec son verdict et sa piste de sources pour la revue RSO.",
+      "Soumettez le nom d'un individu. TRACER produit un dossier complet : affiliation institutionnelle, réseau de co-auteurs, historique de financement, statut de sanctions, liens étrangers, antécédents judiciaires et couverture médiatique défavorable — chaque volet accompagné de son verdict et de sa piste de sources, prêt à la révision par un analyste.",
     image: "/brand/screen-individuals.png",
-    metrics: ["Identity resolved", "Academic network mapped", "Cited report ready"],
-    metricsFr: ["Identité résolue", "Réseau académique cartographié", "Rapport cité prêt"],
   },
   {
     id: "organization",
@@ -30,12 +28,10 @@ const slides = [
     title: "Screen organizations",
     titleFr: "Vérifier des organisations",
     description:
-      "Submit an institution. Tracer returns a full file: legal structure and governance chain, sanctions screening across the entity and its supervisory authority, partner and vendor network, export control exposure, legal record, and adverse media, each with its own verdict and source trail for RSO review.",
+      "Submit an institution. Tracer returns a full file: legal structure and governance chain, sanctions screening across the entity and its supervisory authority, partner and vendor network, export control exposure, legal record, and adverse media, each with its own verdict and source trail ready for analyst review.",
     descriptionFr:
-      "Soumettez une institution. Tracer retourne un dossier complet : structure juridique et chaîne de gouvernance, vérification des sanctions sur l'entité et son autorité de supervision, réseau de partenaires et fournisseurs, exposition au contrôle des exportations, dossier juridique et médias défavorables, chacun avec son verdict et sa piste de sources pour la revue RSO.",
+      "Soumettez le nom d'une organisation. TRACER produit un dossier complet : structure juridique et chaîne de gouvernance, vérification des listes de sanctions, réseau de partenaires et de fournisseurs, exposition aux contrôles à l'exportation, antécédents judiciaires et couverture médiatique défavorable — chaque volet accompagné de son verdict et de sa piste de sources, prêt à la révision par un analyste.",
     image: "/brand/screening-organizations.png",
-    metrics: ["Registry context", "Affiliations surfaced", "Audit trail preserved"],
-    metricsFr: ["Contexte de registre", "Affiliations révélées", "Piste d'audit préservée"],
   },
 ] as const
 
@@ -151,16 +147,6 @@ export function ScreeningCtaCarousel() {
                     {isFrench ? activeSlide.descriptionFr : activeSlide.description}
                   </p>
 
-                  <div className="mt-8 flex flex-wrap gap-2">
-                    {(isFrench ? activeSlide.metricsFr : activeSlide.metrics).map((metric) => (
-                      <span
-                        key={metric}
-                        className="rounded-full border border-white/16 bg-white/10 px-3 py-1.5 text-xs font-medium text-white/72 backdrop-blur-xl"
-                      >
-                        {metric}
-                      </span>
-                    ))}
-                  </div>
                 </div>
 
                 <div className="flex flex-col items-start justify-end sm:items-center lg:items-end">
@@ -177,11 +163,6 @@ export function ScreeningCtaCarousel() {
                   >
                     {isFrench ? "Rejoindre la liste" : "Join waitlist now"}
                   </WaitlistButton>
-                  <p className="mt-4 max-w-xs text-sm leading-6 text-white/54 sm:text-center lg:text-right">
-                    {isFrench
-                      ? "Accès anticipé pour les équipes de sécurité de la recherche, bureaux de subventions et responsables de revue institutionnelle."
-                      : "Early access for research security teams, grant offices, and institutional review leaders."}
-                  </p>
                 </div>
               </div>
             </div>

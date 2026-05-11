@@ -31,7 +31,7 @@ const planIncludes = [
   },
   {
     title: "Bilingual workflow",
-    titleFr: "Flux bilingue",
+    titleFr: "Plateforme bilingue",
     body: "English and French throughout",
     bodyFr: "Anglais et français partout",
   },
@@ -59,20 +59,20 @@ export default function SolutionsPage() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(36,89,184,0.12),transparent_38%),linear-gradient(180deg,rgba(255,255,255,0.72),transparent_44%)] dark:bg-[radial-gradient(circle_at_50%_0%,rgba(36,89,184,0.18),transparent_38%),linear-gradient(180deg,rgba(255,255,255,0.04),transparent_44%)]" />
         <div className="absolute inset-x-0 bottom-0 h-px bg-border" />
         <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 xl:px-16">
-          <div className="relative z-10 max-w-4xl">
+          <div className="relative z-10 mx-auto max-w-4xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#2459B8]">
               <LocalizedText en="Transparent pricing" fr="Tarification transparente" />
             </p>
-            <h1 className="mt-5 max-w-5xl text-5xl font-semibold leading-[0.96] tracking-tight md:text-7xl">
+            <h1 className="mx-auto mt-5 max-w-5xl text-5xl font-semibold leading-[0.96] tracking-tight md:text-7xl">
               <LocalizedText
                 en="Research security made accessible"
-                fr="La sécurité de la recherche rendue accessible"
+                fr="La sécurité de la recherche, à la portée de toutes les institutions"
               />
             </h1>
-            <p className="mt-7 max-w-3xl text-lg leading-8 text-muted-foreground">
+            <p className="mx-auto mt-7 max-w-3xl text-lg leading-8 text-muted-foreground">
               <LocalizedText
                 en="Pricing that fits university budgets, backed by efficient workflows and top-of-market deep web intelligence."
-                fr="Une tarification adaptée aux budgets universitaires, appuyée par des flux efficaces et une intelligence de recherche web approfondie de premier plan."
+                fr="Des tarifs adaptés aux universités, une rigueur sans compromis."
               />
             </p>
           </div>
@@ -189,15 +189,9 @@ export default function SolutionsPage() {
             ))}
           </div>
           <div className="relative z-10 mx-auto mt-12 max-w-5xl rounded-[24px] border border-border bg-card p-5 shadow-sm md:p-6">
-            <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+            <div>
               <p className="text-2xl font-semibold tracking-tight">
                 <LocalizedText en="What every plan includes" fr="Ce que chaque plan inclut" />
-              </p>
-              <p className="max-w-lg text-sm leading-6 text-muted-foreground">
-                <LocalizedText
-                  en="Core infrastructure stays consistent across access levels."
-                  fr="L'infrastructure centrale reste cohérente à tous les niveaux d'accès."
-                />
               </p>
             </div>
             <div className="mt-6 grid gap-3 md:grid-cols-2">
@@ -221,7 +215,7 @@ export default function SolutionsPage() {
           <p className="relative z-10 mx-auto mt-7 max-w-2xl text-center text-sm font-medium leading-6 text-muted-foreground">
             <LocalizedText
               en="Pricing may evolve as Tracer expands its product surface, intelligence layer, and institutional support model."
-              fr="Les tarifs peuvent évoluer à mesure que Tracer élargit sa surface produit, sa couche d'intelligence et son modèle d'accompagnement institutionnel."
+              fr="Les tarifs peuvent évoluer à mesure que Tracer développe de nouvelles fonctionnalités."
             />
           </p>
         </div>
@@ -238,38 +232,6 @@ export default function SolutionsPage() {
         <div className="absolute inset-0 -z-20 bg-[linear-gradient(90deg,rgba(0,0,0,0.62),rgba(0,0,0,0.28)_48%,rgba(0,0,0,0.18)_76%)]" />
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(7,16,31,0)_0%,rgba(7,16,31,0.24)_36%,rgba(7,16,31,0.82)_70%,#07101F_100%)]" />
         <div className="absolute inset-x-0 bottom-0 -z-10 h-[52%] bg-[radial-gradient(circle_at_12%_92%,rgba(36,89,184,0.36),transparent_36%),radial-gradient(circle_at_82%_100%,rgba(10,72,48,0.34),transparent_32%)]" />
-
-        <div className="relative mx-auto flex min-h-[620px] max-w-[1500px] items-end px-6 py-20 sm:px-8 lg:px-12 xl:px-16">
-          <div className="max-w-3xl">
-            <div className="flex items-center gap-3">
-              <BrandLogo
-                variant="white"
-                markClassName="h-9 w-10"
-                textClassName="text-white"
-              />
-            </div>
-            <h2 className="mt-8 text-4xl font-semibold tracking-tight md:text-6xl">
-              <LocalizedText
-                en="Help shape the product around real research security work."
-                fr="Aidez à façonner le produit autour du vrai travail de sécurité de la recherche."
-              />
-            </h2>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-white/72">
-              <LocalizedText
-                en="Institutions that request more information will be invited to discuss product priorities, screening workflows, report design, and the operating details that make Tracer useful for research security teams."
-                fr="Les institutions qui demandent plus d'information seront invitées à discuter des priorités produit, des flux de vérification, de la conception des rapports et des détails opérationnels qui rendent Tracer utile aux équipes de sécurité de la recherche."
-              />
-            </p>
-            <WaitlistButton
-              className="mt-9 h-12 bg-[#2459B8] px-6 text-white shadow-xl shadow-[#2459B8]/30 ring-1 ring-white/15 hover:-translate-y-0.5 hover:bg-[#1E4C9D]"
-              showIcon
-              trackingLocation="solutions_bottom_cta"
-              trackingLabel="Get more info"
-            >
-              <LocalizedText en="Get more info" fr="En savoir plus" />
-            </WaitlistButton>
-          </div>
-        </div>
 
         <footer className="relative border-t border-white/10">
           <div className="mx-auto max-w-7xl px-6 py-14 sm:px-8 md:py-20 lg:px-12 xl:px-16">
@@ -336,16 +298,6 @@ export default function SolutionsPage() {
                       className="text-sm text-white/54 transition-colors hover:text-white"
                     >
                       <LocalizedText en="Privacy Policy" fr="Politique de confidentialité" />
-                    </TrackedLink>
-                    <TrackedLink
-                      href="/blog"
-                      trackingParams={{
-                        navigation_type: "solutions_footer_legal",
-                        link_text: "Blog",
-                      }}
-                      className="text-sm text-white/54 transition-colors hover:text-white"
-                    >
-                      <LocalizedText en="Blog" fr="Blogue" />
                     </TrackedLink>
                   </nav>
                 </div>

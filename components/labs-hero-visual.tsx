@@ -93,19 +93,19 @@ export function LabsHeroVisual() {
         <div ref={reportRef} className="absolute inset-x-5 bottom-5 will-change-transform">
           <div className="rounded-[24px] border border-white/14 bg-black/28 p-5 backdrop-blur-2xl">
             <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/46">
-              <LocalizedText en="Intelligence layer" fr="Couche d'intelligence" />
+              <LocalizedText en="Intelligence layer" fr="Systèmes personnalisés" />
             </p>
             <h2 className="mt-2 text-2xl font-semibold tracking-tight text-white">
               <LocalizedText
                 en="Model-aware screening operations."
-                fr="Opérations de vérification adaptées aux modèles."
+                fr="Un processus de vérification adapté à vos besoins."
               />
             </h2>
             <div className="mt-4 flex flex-wrap gap-2">
               {[
                 ["Agent orchestration", "Orchestration d'agents"],
-                ["In-house synthesis", "Synthèse interne"],
-                ["Report rendering", "Rendu de rapports"],
+                ["In-house synthesis", "Synthèse"],
+                ["Report rendering", "Visualisation"],
               ].map(([en, fr]) => (
                 <span
                   key={en}

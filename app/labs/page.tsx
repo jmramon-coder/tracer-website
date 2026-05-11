@@ -28,9 +28,9 @@ const shapingLayers = [
     title: "Search depth",
     titleFr: "Profondeur de recherche",
     copy:
-      "We tune how aggressively Tracer searches across sources, languages, and registries for each screening type, and adjust as new frameworks and lists emerge.",
+      "We tune how deeply Tracer searches across sources, languages, and registries for each screening type, and adjust as new frameworks and lists emerge.",
     copyFr:
-      "Nous réglons l'intensité avec laquelle Tracer recherche dans les sources, langues et registres pour chaque type de vérification, puis nous l'ajustons lorsque de nouveaux cadres et listes apparaissent.",
+      "Nous réglons la profondeur avec laquelle Tracer recherche dans les sources, langues et registres pour chaque type de vérification, puis nous l'ajustons lorsque de nouveaux cadres et listes apparaissent.",
   },
   {
     icon: FileText,
@@ -39,12 +39,12 @@ const shapingLayers = [
     copy:
       "We shape what findings appear in a report, how they're grouped, and how each verdict is presented for analyst review.",
     copyFr:
-      "Nous déterminons les constats qui apparaissent dans un rapport, leur regroupement et la présentation de chaque verdict pour la revue des analystes.",
+      "Nous déterminons les constats qui apparaissent dans un rapport, leur regroupement et la présentation de chaque verdict pour faciliter l'analyse des résultats.",
   },
   {
     icon: Gauge,
     title: "Model routing",
-    titleFr: "Routage des modèles",
+    titleFr: "Déploiement des modèles",
     copy:
       "We choose which AI model handles each step of the pipeline and update those choices as better systems become available.",
     copyFr:
@@ -59,9 +59,9 @@ const pipelineStages = [
     title: "Discover",
     titleFr: "Découvrir",
     description:
-      "Multiple search agents look across registries, sanctions lists, news, and academic databases in parallel.",
+      "Multiple specialized agents search across corporate registries, sanctions lists, news outlets, legal records, and academic databases in parallel.",
     descriptionFr:
-      "Plusieurs agents de recherche consultent en parallèle les registres, listes de sanctions, actualités et bases académiques.",
+      "Plusieurs agents spécialisés recherchent en parallèle dans les registres d'entreprises, les listes de sanctions, les médias, les dossiers juridiques et les bases académiques.",
   },
   {
     step: "02",
@@ -77,11 +77,11 @@ const pipelineStages = [
     step: "03",
     icon: Layers3,
     title: "Render",
-    titleFr: "Rendre",
+    titleFr: "Présenter",
     description:
       "The result becomes a structured report: verdicts, citations, signal cards, ready for analyst review.",
     descriptionFr:
-      "Le résultat devient un rapport structuré : verdicts, citations et cartes de signaux, prêt pour la revue des analystes.",
+      "Le résultat devient un rapport structuré : verdicts, citations et indicateurs de risque, prêts pour l'analyse de vos experts.",
   },
 ] as const
 
@@ -104,8 +104,8 @@ const futureDirections = [
     titleFr: "Vérification des fournisseurs",
   },
   {
-    title: "Grant and partnership review",
-    titleFr: "Revue de subventions et partenariats",
+    title: "Grant, partnership, and donor review",
+    titleFr: "Revue de subventions, partenariats et donateurs",
   },
   {
     title: "Sanctions and exposure monitoring",
@@ -161,7 +161,7 @@ export default function LabsPage() {
             <p className="mt-6 max-w-2xl text-base leading-7 text-white/72">
               <LocalizedText
                 en="Labs is where we tune how Tracer works: what it searches, how findings come together, and how reports read. It's our internal workspace for keeping the platform current as research security frameworks and AI models evolve."
-                fr="Labs est l'endroit où nous réglons le fonctionnement de Tracer : ce qu'il recherche, la façon dont les constats se rassemblent et la manière dont les rapports se lisent. C'est notre espace interne pour garder la plateforme à jour à mesure que les cadres de sécurité de la recherche et les modèles d'IA évoluent."
+                fr="Labs est l'endroit où nous réglons le fonctionnement de Tracer : ce qu'il recherche, la façon dont les constats convergent et la manière dont les rapports s'affichent. C'est notre espace interne pour garder la plateforme à jour à mesure que les cadres de sécurité de la recherche et les modèles d'IA évoluent."
               />
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -181,7 +181,7 @@ export default function LabsPage() {
             copy={
               <LocalizedText
                 en="Labs keeps the product precise without making the experience feel technical. The work happens behind the scenes so analysts can focus on review."
-                fr="Labs garde le produit précis sans rendre l'expérience technique. Le travail se fait en arrière-plan pour que les analystes se concentrent sur la revue."
+                fr="Labs garde le produit précis sans rendre l'expérience technique. Le travail se fait en arrière-plan pour que vos experts se concentrent sur l'analyse."
               />
             }
           />
@@ -215,7 +215,7 @@ export default function LabsPage() {
               <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
                 <LocalizedText
                   en="Three stages, one workflow."
-                  fr="Trois étapes, un seul flux."
+                  fr="Trois étapes, un seul système adapté à vos besoins."
                 />
               </h2>
               <p className="mt-6 text-base leading-7 text-muted-foreground">
@@ -235,11 +235,11 @@ export default function LabsPage() {
         <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 xl:px-16">
           <SectionHeader
             eyebrow={<LocalizedText en="Model coverage" fr="Couverture des modèles" />}
-            title={<LocalizedText en="Models change. Tracer keeps up." fr="Les modèles changent. Tracer suit." />}
+            title={<LocalizedText en="Models change. Tracer keeps up." fr="Les modèles changent. Tracer s'adapte." />}
             copy={
               <LocalizedText
                 en="We route each step of the pipeline to the model best suited for the task and update that routing as frontier systems improve. The platform doesn't get locked into a single provider, and clients don't pay the cost of that drift."
-                fr="Nous dirigeons chaque étape du pipeline vers le modèle le mieux adapté à la tâche et mettons ce routage à jour lorsque les systèmes de pointe s'améliorent. La plateforme ne reste pas bloquée chez un seul fournisseur, et les clients ne paient pas le coût de cette dérive."
+                fr="Nous connectons chaque étape du pipeline vers le modèle le mieux adapté à la tâche et mettons cet arrimage à jour lorsque les systèmes de pointe s'améliorent. Tracer s'adapte constamment, et les utilisateurs en profitent."
               />
             }
           />
@@ -258,7 +258,7 @@ export default function LabsPage() {
                     alt=""
                     width={72}
                     height={72}
-                    className="h-16 w-16 shrink-0 object-contain opacity-70 transition-opacity group-hover:opacity-100 dark:invert"
+                    className="h-16 w-16 shrink-0 object-contain opacity-70 transition-[filter,opacity] group-hover:opacity-100 group-hover:[filter:brightness(0)_saturate(100%)_invert(31%)_sepia(84%)_saturate(1648%)_hue-rotate(207deg)_brightness(91%)_contrast(92%)] dark:invert dark:group-hover:invert-0"
                   />
                   <span>{label}</span>
                 </span>
@@ -284,7 +284,7 @@ export default function LabsPage() {
               <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground">
                 <LocalizedText
                   en="The same workflow, source discovery, synthesis, structured reporting, extends to any review where evidence and traceability matter. Research security is where Tracer started; Labs is where the next applications take shape."
-                  fr="Le même flux, découverte de sources, synthèse et rapports structurés, s'étend à toute revue où les preuves et la traçabilité comptent. La sécurité de la recherche est le point de départ de Tracer; Labs est l'endroit où les prochaines applications prennent forme."
+                  fr="Le même flux, découverte de sources, synthèse et rapports structurés, s'étend à toute investigation où les preuves et la traçabilité comptent. La sécurité de la recherche est le point de départ de Tracer; Labs est l'endroit où les prochaines applications prennent forme."
                 />
               </p>
             </div>
@@ -351,14 +351,14 @@ export default function LabsPage() {
               </div>
               <h2 className="mt-8 max-w-3xl text-4xl font-semibold tracking-tight md:text-5xl">
                 <LocalizedText
-                  en="Have a screening need we don't ship out of the box?"
-                  fr="Vous avez un besoin de vérification que nous n'offrons pas encore?"
+                  en="Have a custom screening need?"
+                  fr="Vous avez des besoins de vérification personnalisés?"
                 />
               </h2>
               <p className="mt-5 max-w-2xl text-base leading-7 text-white/68">
                 <LocalizedText
-                  en="Every institution screens differently. Tell us what you're working on and we'll see what Labs can build for you."
-                  fr="Chaque institution vérifie différemment. Dites-nous sur quoi vous travaillez et nous verrons ce que Labs peut bâtir pour vous."
+                  en="Every institution screens differently. Tell us what you're working on and we'll build it for you."
+                  fr="Chaque institution a ses propres besoins. Dites-nous quels sont les vôtres et nous bâtirons la solution adaptée à vos processus de vérification."
                 />
               </p>
               <div className="mt-9">
@@ -398,7 +398,7 @@ function PipelineControlPanel() {
           <LocalizedText en="Workflow" fr="Flux de travail" />
         </p>
         <h3 className="mt-2 text-2xl font-semibold tracking-tight">
-          <LocalizedText en="Three stages, one workflow" fr="Trois étapes, un seul flux" />
+          <LocalizedText en="Three stages, one workflow" fr="Trois étapes, un seul système adapté à vos besoins" />
         </h3>
       </div>
 

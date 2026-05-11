@@ -2,7 +2,6 @@ import type { Metadata } from "next"
 import type { ReactNode } from "react"
 import Image from "next/image"
 import {
-  ArrowRight,
   Database,
   Download,
   FileCheck,
@@ -17,7 +16,6 @@ import { Header } from "@/components/header"
 import { LocalizedText } from "@/components/localized-text"
 import { PlatformShowcaseCarousel } from "@/components/platform-showcase-carousel"
 import { ScreeningCtaCarousel } from "@/components/screening-cta-carousel"
-import { TrackedLink } from "@/components/tracked-link"
 import { WaitlistButton } from "@/components/waitlist-button"
 import { platformModules } from "@/lib/site-data"
 
@@ -28,11 +26,11 @@ export const metadata: Metadata = {
 }
 
 const heroWords = [
-  ["partnerships", "partenariats"],
-  ["collaborations", "collaborations"],
-  ["affiliations", "affiliations"],
-  ["networks", "réseaux"],
-  ["risks", "risques"],
+  ["partnerships", "Partenariats"],
+  ["collaborations", "Collaborations"],
+  ["affiliations", "Affiliations"],
+  ["networks", "Réseaux"],
+  ["risks", "Risque"],
 ] as const
 
 const signalCards = [
@@ -41,7 +39,7 @@ const signalCards = [
     title: "Sanctions & designations",
     titleFr: "Sanctions et désignations",
     description: "NRO, Canadian, US, EU, UK, UN and other international lists.",
-    descriptionFr: "Listes NRO, canadiennes, américaines, européennes, britanniques, onusiennes et autres listes internationales.",
+    descriptionFr: "Listes ORN, canadiennes, américaines, européennes, britanniques, onusiennes et autres listes internationales.",
   },
   {
     icon: Server,
@@ -59,7 +57,7 @@ const signalCards = [
     description:
       "Co-author clusters, flagged collaborations, joint publications, and institutional ties across designation lists.",
     descriptionFr:
-      "Groupes de coauteurs, collaborations signalées, publications conjointes et liens institutionnels dans les listes de désignation.",
+      "Réseaux de co-auteurs, collaborations signalées, publications conjointes et liens institutionnels préoccupants.",
   },
   {
     icon: Database,
@@ -86,7 +84,7 @@ const signalCards = [
     description:
       "Professional and financial misconduct, research integrity findings, reputational concerns.",
     descriptionFr:
-      "Inconduite professionnelle et financière, constats d'intégrité en recherche et préoccupations réputationnelles.",
+      "Inconduite professionnelle et financière, intégrité en recherche et préoccupations réputationnelles.",
   },
 ]
 
@@ -107,16 +105,16 @@ const canadaCards = [
     description:
       "Built around the review evidence required by the National Security Guidelines for Research Partnerships.",
     descriptionFr:
-      "Conçu autour des preuves de revue exigées par les Lignes directrices sur la sécurité nationale pour les partenariats de recherche.",
+      "Conçu autour des formulaires exigés par les Lignes directrices sur la sécurité nationale pour les partenariats de recherche.",
   },
 ]
 
 const coAuthors = [
-  { name: "Dariush Farhadi", institution: "Longhua Institute of Technology", list: "NRO", papers: 8, last: 2026 },
-  { name: "Saeed Noori", institution: "Longhua Institute of Technology", list: "NRO", papers: 6, last: 2025 },
-  { name: "Yun Zhao", institution: "Longhua Institute of Technology", list: "NRO", papers: 4, last: 2024 },
-  { name: "Jun Li", institution: "Mingshan University", list: "BIS", papers: 5, last: 2024 },
-  { name: "Hao Wang", institution: "Mingshan University", list: "BIS", papers: 3, last: 2023 },
+  { name: "Dariush Farhadi", institution: "Longhua Institute of Technology", list: "NRO", listFr: "ORN", papers: 8, last: 2026 },
+  { name: "Saeed Noori", institution: "Longhua Institute of Technology", list: "NRO", listFr: "ORN", papers: 6, last: 2025 },
+  { name: "Yun Zhao", institution: "Longhua Institute of Technology", list: "NRO", listFr: "ORN", papers: 4, last: 2024 },
+  { name: "Jun Li", institution: "Mingshan University", list: "BIS", listFr: "BIS", papers: 5, last: 2024 },
+  { name: "Hao Wang", institution: "Mingshan University", list: "BIS", listFr: "BIS", papers: 3, last: 2023 },
 ]
 
 const timeline = [
@@ -148,16 +146,16 @@ export default function PlatformPage() {
         <div className="relative mx-auto grid min-h-[82svh] max-w-[1500px] gap-6 px-6 pb-12 pt-24 lg:grid-cols-[0.54fr_1.18fr] lg:items-end lg:px-10 xl:px-14">
           <div className="max-w-lg">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-hero-foreground/65">
-              <LocalizedText en="Clear the path to great science" fr="Ouvrez la voie à une science d'excellence" />
+              <LocalizedText en="Clear the path to great science" fr="Collaborez en toute confiance, faites avancer la science" />
             </p>
             <h1 className="mt-5 max-w-xl text-5xl font-semibold leading-[0.96] tracking-tight sm:text-6xl lg:text-[4rem]">
-              <LocalizedText en="Screen partners in minutes." fr="Vérifiez vos partenaires en quelques minutes." />
+              <LocalizedText en="Screen partners in minutes." fr="Vérifiez vos partenaires de recherche en quelques minutes." />
             </h1>
-            <div className="mt-6 flex flex-wrap gap-2">
+            <div className="mt-6 flex flex-wrap gap-1.5 lg:flex-nowrap">
               {heroWords.map(([en, fr]) => (
                 <span
                   key={en}
-                  className="rounded-full border border-hero-foreground/20 px-3 py-1 text-sm text-hero-foreground/75"
+                  className="whitespace-nowrap rounded-full border border-hero-foreground/20 px-2.5 py-1 text-xs text-hero-foreground/75 xl:px-3 xl:text-sm"
                 >
                   <LocalizedText en={en} fr={fr} />
                 </span>
@@ -171,23 +169,13 @@ export default function PlatformPage() {
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <WaitlistButton
+                showIcon={false}
                 trackingLocation="platform_hero"
                 trackingLabel="Request access"
                 className="h-12 bg-hero-foreground px-6 text-hero shadow-xl shadow-black/20 hover:bg-hero-foreground/90"
               >
                 <LocalizedText en="Request access" fr="Demander l'accès" />
               </WaitlistButton>
-              <TrackedLink
-                href="#brief"
-                trackingParams={{
-                  navigation_type: "platform_hero_anchor",
-                  link_text: "View the brief",
-                }}
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-hero-foreground/25 px-6 text-sm font-medium text-hero-foreground transition-colors hover:bg-hero-foreground/10"
-              >
-                <LocalizedText en="View the brief" fr="Voir la note" />
-                <ArrowRight className="h-4 w-4" />
-              </TrackedLink>
             </div>
           </div>
 
@@ -204,13 +192,13 @@ export default function PlatformPage() {
             title={
               <LocalizedText
                 en="Two screening pipelines, one workflow."
-                fr="Deux pipelines de vérification, un seul flux."
+                fr="Deux modules, une seule méthodologie."
               />
             }
             copy={
               <LocalizedText
                 en="Whether you're vetting an individual researcher or a partner institution, Tracer applies the same evidence standards, audit trail, and report structure, so analysts can review consistent files regardless of subject."
-                fr="Que vous vérifiiez une personne chercheuse ou une institution partenaire, Tracer applique les mêmes standards de preuve, la même piste d'audit et la même structure de rapport afin que les analystes révisent des dossiers cohérents, peu importe le sujet."
+                fr="Que vous examiniez une personne chercheuse ou une institution partenaire, TRACER applique les mêmes standards de preuve, la même piste d'audit et la même structure de rapport — pour que vos analystes traitent des dossiers cohérents, quel que soit le sujet."
               />
             }
           />
@@ -250,12 +238,17 @@ export default function PlatformPage() {
       <section id="brief" className="bg-background py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-6">
           <SectionIntro
-            eyebrow={<LocalizedText en="The output" fr="Le résultat" />}
-            title={<LocalizedText en="A brief your leadership trusts." fr="Une note que votre direction peut approuver." />}
+            eyebrow={<LocalizedText en="The output" fr="Le rapport" />}
+            title={<LocalizedText en="A brief your leadership trusts." fr="Un rapport fiable pour soutenir la prise de décision." />}
             copy={
               <LocalizedText
-                en="Structured findings with full citations and clear risk signals. Ready when your decision-makers are."
-                fr="Des constats structurés, des citations complètes et des signaux clairs. Prêt lorsque vos décideurs le sont."
+                en={
+                  <>
+                    Structured findings with full citations and clear risk signals. Ready when your{" "}
+                    <span className="whitespace-nowrap">decision-makers are.</span>
+                  </>
+                }
+                fr="Des constats structurés, des citations complètes et des signaux clairs."
               />
             }
           />
@@ -285,7 +278,7 @@ export default function PlatformPage() {
                       {[1, 2, 3].includes(index) ? (
                         <LocalizedText en="Review" fr="Révision" />
                       ) : (
-                        <LocalizedText en="Clear" fr="Clair" />
+                        <LocalizedText en="Clear" fr="RAS" />
                       )}
                     </ReportVerdict>
                   </div>
@@ -306,13 +299,13 @@ export default function PlatformPage() {
               <h2 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">
                 <LocalizedText
                   en="See who a researcher works with, and which collaborators are affiliated with designated institutions."
-                  fr="Voyez avec qui une personne chercheuse travaille, et quels collaborateurs sont affiliés à des institutions désignées."
+                  fr="Cartographiez les collaborateurs d'une personne chercheuse et les institutions désignées qu'ils représentent."
                 />
               </h2>
               <p className="mt-6 text-base leading-7 text-muted-foreground">
                 <LocalizedText
                   en="Tracer maps co-authors by country and institution, flags every collaboration tied to a sanctions or research security list, and shows paper counts and collaboration periods so analysts can judge depth, not just presence."
-                  fr="Tracer cartographie les coauteurs par pays et institution, signale chaque collaboration liée à une liste de sanctions ou de sécurité de la recherche, et affiche le nombre d'articles et les périodes de collaboration afin que les analystes évaluent la profondeur du lien, pas seulement sa présence."
+                fr="Tracer cartographie les co-auteurs par pays et institution, signale chaque collaboration liée à une liste de sanctions ou de sécurité de la recherche, et affiche le nombre d'articles et les périodes de collaboration afin que les analystes évaluent la profondeur du lien, pas seulement sa présence."
                 />
               </p>
             </div>
@@ -366,8 +359,8 @@ function HeroCardDeck() {
         <div className="absolute inset-0 translate-x-5 translate-y-5 rotate-2 rounded-[16px] border border-[#ECECE8] bg-[#FAFAF9] shadow-[0_16px_34px_rgba(15,23,42,0.16)]" />
         <div className="absolute inset-0 -translate-x-3 translate-y-3 -rotate-1 rounded-[16px] border border-[#ECECE8] bg-white shadow-[0_10px_24px_rgba(15,23,42,0.12)]" />
         <article className="relative flex h-full flex-col overflow-hidden rounded-[16px] border-x border-b border-[#ECECE8] bg-white text-[#1D1D1F] shadow-[0_24px_70px_rgba(15,23,42,0.22)]">
-          <div className="border-b border-[#ECECE8] bg-[#F6F6F4] px-4 py-4 text-[#1D1D1F] sm:px-5 sm:py-5">
-            <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_176px] sm:items-start">
+          <div className="border-b border-[#ECECE8] bg-[#F6F6F4] px-4 py-6 text-[#1D1D1F] sm:px-5 sm:py-7">
+            <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_224px] sm:items-center">
               <div>
                 <p className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#6F6F68]">
                   <LocalizedText en="Tracer · Research security" fr="Tracer · Sécurité de la recherche" />
@@ -377,39 +370,43 @@ function HeroCardDeck() {
                 </h2>
                 <p className="mt-2 max-w-md text-[11px] leading-5 text-[#6F6F68]">
                   <LocalizedText
-                    en="Harbin Institute of Technology · China"
-                    fr="Harbin Institute of Technology · Chine"
+                    en="Harbin Institute of Science and Engineering · China"
+                    fr="Harbin Institute of Science and Engineering · Chine"
                   />
                 </p>
                 <div className="mt-3 flex flex-wrap gap-1.5">
-                  {[
-                    ["Google Scholar", "Google Scholar"],
-                    ["ORCID", "ORCID"],
-                    ["Materials science", "Science des matériaux"],
-                    ["Institutional affiliation", "Affiliation institutionnelle"],
-                  ].map(([en, fr]) => (
-                    <ReportTag key={en}>
-                      <LocalizedText en={en} fr={fr} />
-                    </ReportTag>
-                  ))}
+                  <ReportTag>
+                    <LocalizedText en="Google Scholar" fr="Google Scholar" />
+                  </ReportTag>
+                  <ReportTag>
+                    <LocalizedText en="ORCID" fr="ORCID" />
+                  </ReportTag>
+                  <ReportTag>
+                    <LocalizedText en="Materials Science" fr="Science des matériaux" />
+                  </ReportTag>
                 </div>
               </div>
 
               <div className="rounded-[12px] bg-white/75 p-3 shadow-[inset_0_0_0_1px_rgba(29,29,31,0.045)]">
                 <div className="grid gap-1.5">
                   {[
-                    ["Sanctions", "Review", "bad"],
-                    ["Affiliation", "Review", "bad"],
-                    ["Academic network", "Review", "bad"],
-                    ["Funding ties", "Clear", "good"],
-                  ].map(([code, verdict, tone]) => (
+                    ["Primary affiliation", "Affiliation principale", "Review", "bad"],
+                    ["Co-authors", "Co-auteurs", "Review", "bad"],
+                    ["Funding", "Financement", "Clear", "good"],
+                    ["Sanctions", "Sanctions", "Review", "bad"],
+                    ["Foreign ties", "Liens étrangers", "Review", "bad"],
+                    ["Legal", "Légal", "Clear", "good"],
+                    ["Adverse media", "Médias", "Clear", "good"],
+                  ].map(([code, codeFr, verdict, tone]) => (
                     <div key={code} className="flex items-center justify-between gap-3">
-                      <span className="font-mono text-[10px] text-[#1D1D1F]">{code}</span>
+                      <span className="whitespace-nowrap font-mono text-[10px] text-[#1D1D1F]">
+                        <LocalizedText en={code} fr={codeFr} />
+                      </span>
                       <ReportVerdict tone={tone as "good" | "warn" | "bad"}>
                         {verdict === "Review" ? (
                           <LocalizedText en="Review" fr="Révision" />
                         ) : verdict === "Clear" ? (
-                          <LocalizedText en="Clear" fr="Clair" />
+                          <LocalizedText en="Clear" fr="RAS" />
                         ) : (
                           <LocalizedText en="Review" fr="Révision" />
                         )}
@@ -426,7 +423,7 @@ function HeroCardDeck() {
               {[
                 ["42", "Publications", "Publications"],
                 ["18", "H-index", "Indice h"],
-                ["10", "Citations", "Citations"],
+                ["108", "Citations", "Citations"],
               ].map(([value, label, labelFr]) => (
                 <div key={label} className="border-r border-[#ECECE8] px-3 py-2 last:border-r-0">
                   <p className="font-mono text-lg leading-none text-[#1D1D1F]">{value}</p>
@@ -438,13 +435,13 @@ function HeroCardDeck() {
             </div>
           </div>
 
-          <section className="flex-1 bg-[#FAFAF8] text-[#1d1d1f]">
+          <section className="flex-1 bg-white text-[#1d1d1f]">
             <div className="flex items-center justify-between gap-4 border-b border-[#ECECE8] px-4 py-3 sm:px-5">
-              <div className="flex items-center gap-3">
+              <div className="grid gap-1">
                 <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-[#175CD3]">
                   Affiliation
                 </span>
-                <h3 className="text-[18px] font-semibold tracking-tight">
+                <h3 className="text-[16px] font-semibold tracking-tight">
                   <LocalizedText en="Primary Affiliation" fr="Affiliation principale" />
                 </h3>
               </div>
@@ -454,15 +451,15 @@ function HeroCardDeck() {
             </div>
             <p className="mt-3 max-w-xl px-4 text-[12.5px] leading-[1.62] text-[#3F3F3A] sm:px-5">
               <LocalizedText
-                en="Harbin Institute of Technology (HIT) is a designated institution of concern on the Canadian NRO List and US BIS Entity List, formally identified as one of the Seven Sons of National Defense with deep structural ties to the Chinese military-industrial complex."
-                fr="Le Harbin Institute of Technology (HIT) est une institution désignée comme préoccupante sur la liste NRO canadienne et la liste Entity List du BIS américain, formellement identifié comme l'un des Seven Sons of National Defense avec des liens structurels profonds avec le complexe militaro-industriel chinois."
+                en="Harbin Institute of Science and Engineering (HISE) is a synthetic institution of concern modeled on Canadian NRO List and US BIS Entity List patterns, formally flagged in this demo as having structural ties to a military-industrial research network."
+                fr="Le Harbin Institute of Science and Engineering (HISE) est une institution synthétique préoccupante inspirée des schémas de la liste ORN canadienne et de la liste Entity List du BIS américain, signalée dans cette démonstration comme ayant des liens structurels avec un réseau de recherche militaro-industriel."
               />{" "}
               <sup className="font-mono text-[9px] text-[#175CD3]">1</sup>
             </p>
             <div className="mt-4 grid grid-cols-2 gap-2 px-4 pb-4 sm:px-5">
               {[
                 ["Legal name", "Nom légal", "Li Wei", "Li Wei"],
-                ["Primary affiliation", "Affiliation principale", "Harbin Institute of Technology", "Harbin Institute of Technology"],
+                ["Primary affiliation", "Affiliation principale", "Harbin Institute of Science and Engineering", "Harbin Institute of Science and Engineering"],
               ].map(([label, labelFr, value, valueFr]) => (
                 <div key={label} className="rounded-[10px] bg-white px-3 py-2 shadow-[inset_0_0_0_1px_rgba(29,29,31,0.055)]">
                   <p className="font-mono text-[8.5px] font-semibold uppercase tracking-[0.12em] text-[#6F6F68]">
@@ -490,7 +487,7 @@ function ReportExample() {
           <div className="flex items-center gap-2">
             <FileText className="h-3.5 w-3.5 text-[#6F6F68]" />
             <p className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#6F6F68]">
-              <LocalizedText en="Research Security Brief" fr="Note de sécurité de la recherche" />
+              <LocalizedText en="Research Security Brief" fr="Rapport – Sécurité de la recherche" />
             </p>
           </div>
           <h3 className="mt-3 text-[30px] font-semibold leading-[1.16] tracking-tight">
@@ -498,34 +495,31 @@ function ReportExample() {
           </h3>
           <p className="mt-2 text-[12.5px] leading-[1.62] text-[#6F6F68]">
             <LocalizedText
-              en="Synthetic organization · Advanced photonics · Partner institution"
-              fr="Organisation synthétique · Photonique avancée · Institution partenaire"
+              en="Synthetic organization · Advanced photonics · Laboratory"
+              fr="Organisation synthétique · Photonique avancée · Laboratoire"
             />
           </p>
         </div>
 
-        <div className="rounded-[12px] bg-white/80 p-3 shadow-[inset_0_0_0_1px_rgba(29,29,31,0.045)]">
-          <div className="flex items-start justify-between gap-3">
-            <p className="font-mono text-[8.5px] font-semibold uppercase tracking-[0.12em] text-[#6F6F68]">
-              <LocalizedText en="Verdict" fr="Verdict" />
-            </p>
+        <div className="flex min-h-[88px] flex-col items-end justify-between">
+          <div className="flex items-start justify-end gap-3">
             <ReportVerdict tone="bad">
               <LocalizedText en="Review" fr="Révision" />
             </ReportVerdict>
           </div>
-          <div className="mt-4 grid grid-cols-2 gap-3">
+          <div className="grid w-full grid-cols-2 gap-2 rounded-[9px] bg-white px-2.5 py-2 shadow-[inset_0_0_0_1px_rgba(29,29,31,0.035)]">
             <div>
               <p className="font-mono text-[8px] font-semibold uppercase tracking-[0.12em] text-[#8A8A83]">
                 <LocalizedText en="Sources" fr="Sources" />
               </p>
-              <p className="mt-1 font-mono text-[11px] font-semibold text-[#1D1D1F]">10</p>
+              <p className="mt-0.5 font-mono text-[11px] font-semibold text-[#1D1D1F]">58</p>
             </div>
             <div>
               <p className="font-mono text-[8px] font-semibold uppercase tracking-[0.12em] text-[#8A8A83]">
                 <LocalizedText en="Elapsed" fr="Durée" />
               </p>
-              <p className="mt-1 font-mono text-[11px] font-semibold text-[#1D1D1F]">
-                <LocalizedText en="4m 12s" fr="4 min 12 s" />
+              <p className="mt-0.5 font-mono text-[11px] font-semibold text-[#1D1D1F]">
+                <LocalizedText en="9m 12s" fr="9 min 12 s" />
               </p>
             </div>
           </div>
@@ -546,9 +540,9 @@ function ReportExample() {
         </div>
         <div className="mt-4 grid overflow-hidden rounded-[10px] border border-[#ECECE8] sm:grid-cols-3">
           {[
-            ["1", "Entity match", "Correspondance entité"],
-            ["6", "Lists cleared", "Listes sans signal"],
-            ["4", "Source citations", "Citations sources"],
+            ["1", "Entity match", "Correspondance"],
+            ["15+", "Lists cleared", "Listes sans correspondance"],
+            ["27", "Sources", "Sources"],
           ].map(([value, label, labelFr]) => (
             <div key={label} className="border-b border-[#ECECE8] px-4 py-3 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
               <p className="font-mono text-xl leading-none text-[#1D1D1F]">{value}</p>
@@ -564,7 +558,7 @@ function ReportExample() {
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-[#175CD3]">
-              02
+              01
             </span>
             <h3 className="text-[18px] font-semibold tracking-tight">
               <LocalizedText en="Sanctions" fr="Sanctions" />
@@ -578,7 +572,7 @@ function ReportExample() {
         <div className="mt-4 overflow-hidden rounded-[12px] border border-[#F1C7C2] bg-[#FDECEA]/55">
           <div className="flex items-center justify-between gap-4 border-b border-[#F1C7C2] px-4 py-3">
             <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-[#A83227]">
-              <LocalizedText en="BIS Entity List" fr="Liste des entités BIS" />
+              <LocalizedText en="BIS Entity List" fr="BIS Entity List" />
             </p>
             <ReportVerdict tone="bad">
               <LocalizedText en="Match" fr="Signal" />
@@ -589,8 +583,8 @@ function ReportExample() {
             [
               "List name",
               "Nom de la liste",
-              "US Department of Commerce, Bureau of Industry and Security - Entity List (synthetic organization example)",
-              "US Department of Commerce, Bureau of Industry and Security - Entity List (exemple d'organisation synthétique)",
+              "US Department of Commerce, Bureau of Industry and Security - Entity List",
+              "US Department of Commerce, Bureau of Industry and Security - Entity List",
             ],
             [
               "Administering body",
@@ -602,14 +596,14 @@ function ReportExample() {
               "Legal basis",
               "Base juridique",
               "Export Administration Regulations (EAR), 15 C.F.R. Parts 730-774 - end-user review and entity-screening basis",
-              "Export Administration Regulations (EAR), 15 C.F.R. Parts 730-774 - base d'examen d'utilisateur final et de vérification d'entité",
+              "Export Administration Regulations (EAR), 15 C.F.R. Parts 730-774",
             ],
             ["Review date", "Date de revue", "June 17, 2026", "17 juin 2026"],
             [
               "Stated reason",
               "Motif déclaré",
-              "Synthetic registry record indicates a similarly named institute linked to controlled photonics components and export-sensitive research infrastructure. Human review is required to verify whether the subject entity, parent organization, or supervisory authority is the same party.",
-              "Un enregistrement de registre synthétique indique un institut au nom similaire lié à des composantes photoniques contrôlées et à une infrastructure de recherche sensible à l'exportation. Une revue humaine est requise pour vérifier si l'entité, l'organisation mère ou l'autorité de supervision correspond à la même partie.",
+              "Registry record indicates a similarly named institute linked to controlled photonics components and export-sensitive research infrastructure. Human review is required to verify whether the subject entity, parent organization, or supervisory authority is the same party.",
+              "Une vérification de la BIS Entity List a relevé un institut au nom similaire lié à des composantes photoniques contrôlées et à une infrastructure de recherche sensible à l'exportation. Une confirmation humaine est requise pour vérifier si l'organisation correspond à la même entité désignée.",
             ],
           ].map(([label, labelFr, value, valueFr], index) => (
             <div
@@ -629,20 +623,22 @@ function ReportExample() {
 
         <div className="mt-3 overflow-hidden rounded-[12px] border border-[#ECECE8]">
           {[
-            "Canada NRO List",
-            "Canada Autonomous Sanctions",
-            "OFAC SDN List",
-            "EU Consolidated Sanctions",
-            "UK Consolidated Sanctions",
-            "UN Security Council Consolidated",
-          ].map((item) => (
+            ["Canada NRO List", "Liste ORN Canada"],
+            ["Canada Autonomous Sanctions", "Sanctions autonomes canadiennes"],
+            ["OFAC SDN List", "Liste OFAC SDN"],
+            ["EU Consolidated Sanctions", "Sanctions consolidées UE"],
+            ["UK Consolidated Sanctions", "Sanctions consolidées R.-U."],
+            ["UN Security Council Consolidated", "Conseil de sécurité de l'ONU"],
+          ].map(([item, itemFr]) => (
             <div
               key={item}
               className="flex items-center justify-between gap-4 border-b border-[#ECECE8] bg-white px-4 py-2.5 last:border-b-0"
             >
-              <p className="font-mono text-[10px] font-semibold text-[#1D1D1F]">{item}</p>
+              <p className="font-mono text-[10px] font-semibold text-[#1D1D1F]">
+                <LocalizedText en={item} fr={itemFr} />
+              </p>
               <ReportVerdict tone="good">
-                <LocalizedText en="Clear" fr="Clair" />
+                <LocalizedText en="Clear" fr="RAS" />
               </ReportVerdict>
             </div>
           ))}
@@ -652,8 +648,8 @@ function ReportExample() {
       <div className="flex flex-col gap-3 bg-[#FAFAF9] px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
         <span className="font-mono text-[10px] text-[#6F6F68]">
           <LocalizedText
-            en="27 Mar 2026 · 10 sources · 4 min 12 sec"
-            fr="27 mars 2026 · 10 sources · 4 min 12 s"
+            en="27 Mar 2026 · 58 sources · 4 min 12 sec"
+            fr="27 mars 2026 · 58 sources · 4 min 12 s"
           />
         </span>
         <span className="inline-flex items-center gap-2 text-xs font-semibold text-[#1D1D1F]">
@@ -676,10 +672,19 @@ function NetworkExample() {
             </p>
             <h3 className="mt-3 text-[18px] font-semibold tracking-tight text-[#1D1D1F]">
               <LocalizedText
-                en="Individual risk profile."
-                fr="Profil de risque individuel."
+                en="Li Wei"
+                fr="Li Wei"
               />
             </h3>
+            <p className="mt-1 text-[12.5px] leading-[1.62] text-[#6F6F68]">
+              <LocalizedText
+                en="Harbin Institute of Science and Engineering - China"
+                fr="Harbin Institute of Science and Engineering - Chine"
+              />
+            </p>
+            <p className="mt-1 text-[12.5px] leading-[1.62] text-[#6F6F68]">
+              <LocalizedText en="Materials Science" fr="Science des matériaux" />
+            </p>
           </div>
           <ReportVerdict tone="bad">
             <LocalizedText en="7 flags" fr="7 signaux" />
@@ -688,7 +693,7 @@ function NetworkExample() {
         <p className="mt-4 max-w-2xl text-[12.5px] leading-[1.62] text-[#6F6F68]">
           <LocalizedText
             en="89 publications analyzed from 2016 to 2026. 23 publications, or 26%, involve co-authors at flagged institutions."
-            fr="89 publications analysées de 2016 à 2026. 23 publications, soit 26 %, impliquent des coauteurs affiliés à des institutions signalées."
+            fr="202 publications analysées de 2016 à 2026. 46 publications (26 %) impliquent des co-auteurs affiliés à des institutions signalées."
           />
         </p>
       </div>
@@ -747,7 +752,7 @@ function NetworkExample() {
                 <td className="px-[10px] py-2">{row.institution}</td>
                 <td className="px-[10px] py-2">
                   <span className="rounded-full bg-[#F5F5F3] px-2 py-0.5 font-mono text-[9px] font-medium text-[#5F5F58]">
-                    {row.list}
+                    <LocalizedText en={row.list} fr={row.listFr} />
                   </span>
                 </td>
                 <td className="px-[10px] py-2 text-right">{row.papers}</td>
@@ -776,12 +781,6 @@ function NetworkExample() {
             </div>
           ))}
         </div>
-        <p className="mt-4 text-[11px] italic text-[#6F6F68]">
-          <LocalizedText
-            en="Coverage note: screening limited to OpenAlex and Google Scholar."
-            fr="Note de couverture : vérification limitée à OpenAlex et Google Scholar."
-          />
-        </p>
       </div>
     </div>
   )

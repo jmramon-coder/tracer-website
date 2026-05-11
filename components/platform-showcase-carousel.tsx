@@ -101,9 +101,9 @@ const copy = {
   },
   fr: {
     eyebrow: "Experience plateforme",
-    title: "Un espace de travail pour la diligence raisonnable en sécurité de la recherche.",
+    title: "La plateforme",
     description:
-      "Tracer aide les universités à vérifier leurs partenaires de recherche sur tout le spectre des risques de sécurité afin que la grande science avance avec confiance.",
+      "Un espace de travail pour les vérifications diligentes en sécurité de la recherche. Tracer aide les universités à vérifier leurs partenaires de recherche sur tout le spectre des risques de sécurité afin que la science puisse progresser avec confiance.",
     slides: [
       {
         label: "Accueil",
@@ -142,16 +142,16 @@ const copy = {
       },
       {
         label: "Constance",
-        title: "Chaque sortie.",
+        title: "Chaque résultat.",
         detail: "Le même standard.",
       },
       {
         label: "Collaboration",
-        title: "Ouvrez la voie",
-        detail: "à une science d'excellence.",
+        title: "Collaborez en toute confiance,",
+        detail: "faites avancer la science.",
       },
       {
-        label: "Sortie",
+        label: "Rapport",
         title: "Prêt à exporter.",
         detail: "Prêt pour l'audit.",
       },
@@ -163,8 +163,9 @@ const copy = {
 export function PlatformShowcaseCarousel() {
   const { language } = useLanguage()
   const [activeIndex, setActiveIndex] = useState(0)
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  const [isAutoPlaying, setIsAutoPlaying] = useState(false)
   const content = copy[language]
+  const showShowcaseControls = false
 
   useEffect(() => {
     if (!isAutoPlaying) return
@@ -216,9 +217,9 @@ export function PlatformShowcaseCarousel() {
 
         <div className="mt-12 animate-[platform-showcase-rise_900ms_ease-out_both] md:mt-16">
           <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_214px] lg:items-center xl:grid-cols-[minmax(0,1fr)_228px]">
-            <div className="relative">
-              <div className="relative overflow-hidden rounded-[30px] border border-border/80 bg-background p-2 shadow-[0_46px_130px_rgba(15,23,42,0.18)] md:p-3 dark:shadow-[0_46px_130px_rgba(0,0,0,0.44)]">
-                <div className="relative aspect-[1911/927] overflow-hidden rounded-[24px] bg-surface-subtle">
+            <div className="relative w-[150vw] max-w-none md:w-auto">
+              <div className="relative overflow-hidden rounded-[24px] border border-border/80 bg-background p-2 shadow-[0_46px_130px_rgba(15,23,42,0.18)] md:rounded-[26px] md:p-3 dark:shadow-[0_46px_130px_rgba(0,0,0,0.44)]">
+                <div className="relative aspect-[1911/927] overflow-hidden rounded-[18px] bg-surface-subtle md:rounded-[20px]">
                   {slideAssets.map((asset, index) => {
                     const slide = content.slides[index]
 
@@ -274,10 +275,11 @@ export function PlatformShowcaseCarousel() {
                       </div>
                     )
                   })}
-                  <div className="pointer-events-none absolute inset-0 rounded-[24px] ring-1 ring-inset ring-white/35 dark:ring-white/12" />
+                  <div className="pointer-events-none absolute inset-0 rounded-[18px] ring-1 ring-inset ring-white/35 md:rounded-[20px] dark:ring-white/12" />
                 </div>
               </div>
 
+              {showShowcaseControls ? (
               <div className="relative z-20 mt-5 flex justify-center px-4">
                 <div className="inline-flex max-w-full rounded-full border border-border/80 bg-card/90 p-2 shadow-[var(--floating-shadow)] backdrop-blur-2xl">
                   <div className="flex max-w-full items-center gap-2">
@@ -341,6 +343,7 @@ export function PlatformShowcaseCarousel() {
                   </div>
                 </div>
               </div>
+              ) : null}
             </div>
 
             <aside className="grid gap-3 lg:-mt-14 xl:-mt-16">

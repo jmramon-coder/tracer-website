@@ -225,13 +225,13 @@ export const solutions = [
 export const platformModules = [
   {
     title: "Screen individuals",
-    titleFr: "Vérifier des personnes",
+    titleFr: "Vérifier des individus",
     status: "Active path",
     statusFr: "Parcours actif",
     description:
-      "Submit a name. Tracer returns a full file: institutional affiliation, co-author network, funding history, sanctions status, foreign ties, legal record, and adverse media, each with its own verdict and source trail for RSO review.",
+      "Submit a name. Tracer returns a full file: institutional affiliation, co-author network, funding history, sanctions status, foreign ties, legal record, and adverse media, each with its own verdict and source trail ready for analyst review.",
     descriptionFr:
-      "Soumettez un nom. Tracer retourne un dossier complet : affiliation institutionnelle, réseau de coauteurs, historique de financement, statut de sanctions, liens étrangers, dossier juridique et médias défavorables, chacun avec son verdict et sa piste de sources pour la revue RSO.",
+      "Soumettez le nom d'un individu. TRACER produit un dossier complet : affiliation institutionnelle, réseau de co-auteurs, historique de financement, statut de sanctions, liens étrangers, antécédents judiciaires et couverture médiatique défavorable — chaque volet accompagné de son verdict et de sa piste de sources, prêt à la révision par un analyste.",
     image: "/brand/screen-individuals.png",
   },
   {
@@ -240,9 +240,9 @@ export const platformModules = [
     status: "Staged",
     statusFr: "En préparation",
     description:
-      "Submit an institution. Tracer returns a full file: legal structure and governance chain, sanctions screening across the entity and its supervisory authority, partner and vendor network, export control exposure, legal record, and adverse media, each with its own verdict and source trail for RSO review.",
+      "Submit an institution. Tracer returns a full file: legal structure and governance chain, sanctions screening across the entity and its supervisory authority, partner and vendor network, export control exposure, legal record, and adverse media, each with its own verdict and source trail ready for analyst review.",
     descriptionFr:
-      "Soumettez une institution. Tracer retourne un dossier complet : structure juridique et chaîne de gouvernance, vérification des sanctions sur l'entité et son autorité de supervision, réseau de partenaires et fournisseurs, exposition au contrôle des exportations, dossier juridique et médias défavorables, chacun avec son verdict et sa piste de sources pour la revue RSO.",
+      "Soumettez le nom d'une organisation. TRACER produit un dossier complet : structure juridique et chaîne de gouvernance, vérification des listes de sanctions, réseau de partenaires et de fournisseurs, exposition aux contrôles à l'exportation, antécédents judiciaires et couverture médiatique défavorable — chaque volet accompagné de son verdict et de sa piste de sources, prêt à la révision par un analyste.",
     image: "/brand/screening-organizations.png",
   },
 ]
@@ -343,23 +343,23 @@ export const pricingPlans = [
   {
     name: "Early Access",
     nameFr: "Accès anticipé",
-    price: "$10k / 6 months",
-    priceFr: "10 k$ / 6 mois",
+    price: "10,000$ / 6 months",
+    priceFr: "10 000 $ / 6 mois",
     note: "Open to our first 10 institutional partners",
     noteFr: "Ouvert à nos 10 premiers partenaires institutionnels",
     deal: "Special offer until September 1, 2026",
-    dealFr: "Offre spéciale jusqu'au 1er septembre 2026",
+    dealFr: "En vigueur jusqu'au 1er septembre 2026",
     cta: "Get more info",
     ctaFr: "En savoir plus",
     features: [
-      "10 founding partnerships",
-      "Core screening capabilities",
+      "Short commitment trial period",
+      "Advanced screening capabilities across dozens of risk indicators",
       "Personalized guidance and onboarding",
       "Priority setup for early research security teams",
     ],
     featuresFr: [
-      "10 partenariats fondateurs",
-      "Capacités centrales de vérification",
+      "Période d'essai à engagement court",
+      "Capacités avancées de vérification sur des dizaines d'indicateurs de risque",
       "Accompagnement et intégration personnalisés",
       "Mise en place prioritaire pour les premières équipes de sécurité de la recherche",
     ],
@@ -367,37 +367,37 @@ export const pricingPlans = [
   {
     name: "Institution",
     nameFr: "Institution",
-    price: "$20k / year",
-    priceFr: "20 k$ / an",
-    note: "$18k / year with a 2-year term",
-    noteFr: "18 k$ / an avec engagement de 2 ans",
+    price: "20,000$ / year",
+    priceFr: "20 000 $ / an",
+    note: "18,000$ / year with a 2-year term",
+    noteFr: "18 000 $ / an avec engagement de 2 ans",
     cta: "Request access",
     ctaFr: "Demander l'accès",
     featured: true,
     features: [
       "Shared workspace for research security teams",
-      "Multi-source screening and source-backed synthesis",
-      "Export-ready reports with citations",
-      "Bilingual workflow and audit trail",
+      "Advanced screening capabilities across dozens of risk indicators",
+      "Personalized guidance and onboarding",
+      "Priority setup for early research security teams",
     ],
     featuresFr: [
       "Espace partagé pour les équipes de sécurité de la recherche",
-      "Vérification multi-source et synthèse sourcée",
-      "Rapports exportables avec citations",
-      "Flux bilingue et piste d'audit",
+      "Capacités avancées de vérification sur des dizaines d'indicateurs de risque",
+      "Accompagnement et intégration personnalisés",
+      "Mise en place prioritaire pour les premières équipes de sécurité de la recherche",
     ],
   },
   {
     name: "Custom Intelligence",
-    nameFr: "Intelligence sur mesure",
+    nameFr: "Systèmes sur mesure",
     price: "Custom",
     priceFr: "Sur mesure",
     description:
       "For agencies, networks, and large teams that need screening tailored to their workflow — built on Tracer's intelligence layer.",
     descriptionFr:
-      "Pour les agences, réseaux et grandes équipes qui ont besoin d'une vérification adaptée à leur flux de travail — construite sur la couche d'intelligence de Tracer.",
-    cta: "Talk to us",
-    ctaFr: "Nous parler",
+      "Pour les agences, réseaux et grandes équipes qui ont besoin d'une vérification adaptée à leur flux de travail.",
+    cta: "Contact us",
+    ctaFr: "Contactez-nous",
     features: [
       "Custom screening pipelines",
       "Tailored model routing and search strategy",
@@ -554,11 +554,11 @@ export const assuranceItems = [
 ]
 
 export const signalRows = [
-  { label: "Sanctions and restricted entities", labelFr: "Sanctions et entités restreintes", status: "Clear", statusFr: "Clair", tone: "good" },
+  { label: "Sanctions and restricted entities", labelFr: "Sanctions et entités restreintes", status: "Clear", statusFr: "RAS", tone: "good" },
   { label: "Named research organizations", labelFr: "Organisations de recherche nommées", status: "Review", statusFr: "Révision", tone: "warn" },
   { label: "Co-publication network", labelFr: "Réseau de co-publication", status: "Mapped", statusFr: "Cartographié", tone: "neutral" },
   { label: "Corporate structure", labelFr: "Structure corporative", status: "Flag", statusFr: "Signal", tone: "bad" },
-  { label: "Adverse media and legal records", labelFr: "Médias défavorables et dossiers juridiques", status: "Clear", statusFr: "Clair", tone: "good" },
+  { label: "Adverse media and legal records", labelFr: "Médias défavorables et dossiers juridiques", status: "Clear", statusFr: "RAS", tone: "good" },
 ]
 
 export const checklist = [

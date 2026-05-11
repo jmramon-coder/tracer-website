@@ -78,13 +78,6 @@ export function Footer() {
                 >
                   {t.footer.privacy}
                 </Link>
-                <Link
-                  href="/blog"
-                  onClick={() => trackFooterNavigation("/blog", language === "fr" ? "Blogue" : "Blog")}
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  {language === "fr" ? "Blogue" : "Blog"}
-                </Link>
               </nav>
             </div>
           </div>
