@@ -44,8 +44,14 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: '/icon.svg',
+        url: '/icon-light.svg',
         type: 'image/svg+xml',
+        media: '(prefers-color-scheme: light)',
+      },
+      {
+        url: '/icon-dark.svg',
+        type: 'image/svg+xml',
+        media: '(prefers-color-scheme: dark)',
       },
       {
         url: '/icon-light-32x32.png',
@@ -58,6 +64,10 @@ export const metadata: Metadata = {
         sizes: '32x32',
         type: 'image/png',
         media: '(prefers-color-scheme: dark)',
+      },
+      {
+        url: '/icon.svg',
+        type: 'image/svg+xml',
       },
       {
         url: '/icon-32x32.png',
