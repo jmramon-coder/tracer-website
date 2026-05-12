@@ -1,4 +1,3 @@
-import type { Metadata } from "next"
 import Image from "next/image"
 import {
   ArrowUpRight,
@@ -14,12 +13,14 @@ import { LocalizedText } from "@/components/localized-text"
 import { MapleLeaf } from "@/components/maple-leaf"
 import { TrackedLink } from "@/components/tracked-link"
 import { WaitlistButton } from "@/components/waitlist-button"
+import { createMetadata } from "@/lib/metadata"
 
-export const metadata: Metadata = {
+export const metadata = createMetadata({
   title: "Company",
   description:
     "Tracer is building quiet, professional research security due diligence software for Canadian research institutions.",
-}
+  path: "/company",
+})
 
 const visionCards = [
   {

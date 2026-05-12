@@ -1,11 +1,12 @@
-"use client"
+import { redirect } from "next/navigation"
+import { createMetadata } from "@/lib/metadata"
 
-import { useEffect } from "react"
+export const metadata = createMetadata({
+  title: "Pricing",
+  path: "/solutions",
+  noIndex: true,
+})
 
 export default function PricingPage() {
-  useEffect(() => {
-    window.location.replace("/solutions#pricing")
-  }, [])
-
-  return null
+  redirect("/solutions#pricing")
 }

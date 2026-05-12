@@ -1,4 +1,3 @@
-import type { Metadata } from "next"
 import Image from "next/image"
 import { CheckCircle2 } from "lucide-react"
 import { BrandLogo } from "@/components/brand-logo"
@@ -8,13 +7,15 @@ import { LocalizedText } from "@/components/localized-text"
 import { MapleLeaf } from "@/components/maple-leaf"
 import { TrackedLink } from "@/components/tracked-link"
 import { WaitlistButton } from "@/components/waitlist-button"
+import { createMetadata } from "@/lib/metadata"
 import { pricingPlans } from "@/lib/site-data"
 
-export const metadata: Metadata = {
+export const metadata = createMetadata({
   title: "Pricing",
   description:
     "Transparent pricing for Tracer, a research security due diligence platform with efficient screening workflows and top-of-market deep web intelligence.",
-}
+  path: "/solutions",
+})
 
 const footerNavLinks = [
   { href: "/", label: "Platform", labelFr: "Plateforme" },

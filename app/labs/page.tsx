@@ -1,4 +1,3 @@
-import type { Metadata } from "next"
 import Image from "next/image"
 import type { ReactNode } from "react"
 import {
@@ -13,12 +12,14 @@ import { Footer } from "@/components/footer"
 import { Header } from "@/components/header"
 import { LabsHeroVisual } from "@/components/labs-hero-visual"
 import { LocalizedText } from "@/components/localized-text"
+import { createMetadata } from "@/lib/metadata"
 
-export const metadata: Metadata = {
+export const metadata = createMetadata({
   title: "Tracer Labs",
   description:
     "Tracer Labs is the operating layer where Tracer tunes search depth, reporting structure, and model routing for research security screening.",
-}
+  path: "/labs",
+})
 
 const contactHref = "mailto:hello@tracersecurity.ca?subject=Tracer%20Labs%20screening%20need"
 

@@ -1,4 +1,3 @@
-import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { Footer } from "@/components/footer"
@@ -6,19 +5,15 @@ import { Header } from "@/components/header"
 import { LocalizedDate } from "@/components/localized-date"
 import { LocalizedText } from "@/components/localized-text"
 import { getAllPosts } from "@/lib/blog"
+import { createMetadata } from "@/lib/metadata"
 import { blogThemes } from "@/lib/site-data"
 
-export const metadata: Metadata = {
-  title: "Blog - Research Security Insights | Tracer",
+export const metadata = createMetadata({
+  title: "Blog",
   description:
     "Research security insights, compliance guides, and screening best practices for universities and research institutions.",
-  openGraph: {
-    title: "Blog - Research Security Insights | Tracer",
-    description:
-      "Research security insights, compliance guides, and screening best practices for universities and research institutions.",
-    url: "https://tracersecurity.ca/blog",
-  },
-}
+  path: "/blog",
+})
 
 export default function BlogPage() {
   const posts = getAllPosts()

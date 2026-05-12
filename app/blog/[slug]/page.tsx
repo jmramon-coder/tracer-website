@@ -5,6 +5,7 @@ import { LocalizedHtml } from "@/components/localized-html"
 import { LocalizedText } from "@/components/localized-text"
 import { PillarPageLayout } from "@/components/pillar/pillar-page-layout"
 import { getPost, getAllPostSlugs } from "@/lib/blog"
+import { createArticleMetadata } from "@/lib/metadata"
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>
@@ -21,24 +22,14 @@ export async function generateMetadata({
   const post = await getPost(slug)
   if (!post) return {}
 
-  return {
+  return createArticleMetadata({
     title: post.title,
     description: post.description,
-    openGraph: {
-      title: `${post.title} | Tracer`,
-      description: post.description,
-      url: `https://tracersecurity.ca/blog/${slug}`,
-      type: "article",
-      publishedTime: post.date,
-      authors: [post.author],
-      ...(post.image && { images: [post.image] }),
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: post.title,
-      description: post.description,
-    },
-  }
+    path: `/blog/${slug}`,
+    image: post.image,
+    publishedTime: post.date,
+    authors: [post.author],
+  })
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
