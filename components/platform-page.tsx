@@ -18,6 +18,8 @@ import { ScreeningCtaCarousel } from "@/components/screening-cta-carousel"
 import { WaitlistButton } from "@/components/waitlist-button"
 import { platformModules } from "@/lib/site-data"
 
+const SHOW_PLATFORM_SHOWCASE = false
+
 const heroWords = [
   ["partnerships", "Partenariats"],
   ["collaborations", "Collaborations"],
@@ -176,7 +178,7 @@ export default function PlatformPage() {
         </div>
       </section>
 
-      <PlatformShowcaseCarousel />
+      {SHOW_PLATFORM_SHOWCASE ? <PlatformShowcaseCarousel /> : null}
 
       <section className="bg-background py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 xl:px-16">
