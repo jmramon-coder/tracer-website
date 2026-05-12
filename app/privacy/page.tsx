@@ -7,13 +7,13 @@ import { useLanguage } from "@/lib/language-context"
 
 const content = {
   en: {
-    lastUpdated: "Last updated: March 2026",
+    lastUpdated: "Last updated: May 2026",
     title: "Privacy Policy",
     sections: [
       {
         heading: "1. Who we are",
         body: [
-          `Tracer Research Security ("Tracer," "we," "us," or "our") is a Canadian company providing research security intelligence services to universities, research institutions, and other organizations. Our platform helps institutions screen research partnership candidates against sanctions lists, open-source intelligence, and network affiliation data.`,
+          `Tracer Research Security inc. ("Tracer," "we," "us," or "our") is a Canadian company providing research security intelligence services to universities, research institutions, and other organizations. Our platform helps institutions screen research partnership candidates against sanctions lists, open-source intelligence, and network affiliation data.`,
           `Our Privacy Officer can be reached at: privacy@tracersecurity.ca`,
         ],
       },
@@ -36,11 +36,11 @@ const content = {
         subsections: [
           {
             subheading: "Website visitors",
-            body: "We collect standard server logs including IP addresses, browser type, pages visited, and timestamps. We use Google Analytics 4 to collect anonymized usage data (pages visited, session duration, general location). This data is used solely to improve our website and is not shared with advertisers.",
+            body: "We collect standard server logs including IP addresses, browser type, pages visited, and timestamps. If you accept analytics cookies, we use analytics tools to understand site usage, such as pages visited, session duration, approximate general location, device and browser information, referrer, and session activity. This data is used solely to improve our website and is not shared with advertisers.",
           },
           {
             subheading: "Early access and contact form submissions",
-            body: "When you submit a form on our website, we collect: name, institutional email address, institution name, role or title, and any message you choose to include.",
+            body: "When you submit an early access or waitlist form on our website, we collect: first name, last name, email address, language preference, consent status, form source, and submission timestamp.",
           },
           {
             subheading: "Platform users (clients)",
@@ -78,7 +78,7 @@ const content = {
           { term: "Legal obligation", desc: "compliance with applicable law" },
         ],
         bodyAfter: [
-          "For early access inquiries, we process your information on the basis of your consent, which you provide by submitting the form.",
+          "For early access inquiries, we process your information on the basis of your consent, which you provide by checking the communication consent box and submitting the form. For analytics cookies, we only activate analytics tools after you accept analytics in the website privacy preferences.",
         ],
       },
       {
@@ -100,7 +100,14 @@ const content = {
         bodyAfter: ["We do not share personal information with advertisers or data brokers."],
       },
       {
-        heading: "8. Data retention",
+        heading: "8. Analytics cookies",
+        body: [
+          "We use analytics tools only after you accept analytics cookies in the website privacy preferences. These tools help us understand aggregate site usage, including pages visited, approximate region, device and browser information, referrer, and session activity.",
+          "We do not currently use analytics tools for advertising, remarketing, or user-level sales profiling. We do not send waitlist form values, including first name, last name, email address, institution, or message content, to analytics tools. If you reject analytics, analytics tools are not loaded and analytics cookies are removed when possible.",
+        ],
+      },
+      {
+        heading: "9. Data retention",
         body: ["We retain personal information only as long as necessary for the purposes for which it was collected:"],
         list: [
           "Early access and contact inquiries: 24 months from last contact, or until you request deletion",
@@ -110,7 +117,7 @@ const content = {
         ],
       },
       {
-        heading: "9. Your rights",
+        heading: "10. Your rights",
         body: ["If you are a Quebec resident, you have the following rights under Law 25:"],
         listBold: [
           { term: "Right of access", desc: "to request a copy of the personal information we hold about you" },
@@ -125,7 +132,7 @@ const content = {
         ],
       },
       {
-        heading: "10. Security",
+        heading: "11. Security",
         body: ["We implement security measures appropriate to the sensitivity of the information we hold, including:"],
         list: [
           "Encryption of personal information in transit (TLS) and at rest",
@@ -135,41 +142,41 @@ const content = {
         ],
       },
       {
-        heading: "11. Breach notification",
+        heading: "12. Breach notification",
         body: [
           "In the event of a confidentiality incident involving personal information that presents a risk of serious harm, we will notify affected individuals and the Commission d'accès à l'information du Québec (CAI) as soon as reasonably possible following discovery of the incident. We maintain a register of all security incidents as required by Law 25.",
         ],
       },
       {
-        heading: "12. Cookies and tracking",
+        heading: "13. Cookies and tracking controls",
         body: [
-          "Our website uses essential cookies necessary for the site to function, as well as Google Analytics 4 cookies for anonymized traffic analysis. We do not use advertising cookies or retargeting pixels. Google Analytics data is used solely to understand visitor behaviour and improve our website. You may opt out of Google Analytics by installing the Google Analytics opt-out browser add-on.",
+          "Our website uses essential cookies and local storage necessary for site preferences and functionality. Your analytics preference is saved in your browser so we can remember your choice. You can change your analytics preference at any time through the Privacy preferences link in the footer.",
         ],
       },
       {
-        heading: "13. Changes to this policy",
+        heading: "14. Changes to this policy",
         body: [
           "We may update this policy from time to time. We will post the updated policy on our website with a revised date. For material changes, we will notify active platform users by email.",
         ],
       },
       {
-        heading: "14. Contact",
+        heading: "15. Contact",
         body: [
           "For any privacy-related questions or to exercise your rights:",
-          "Privacy Officer, Tracer Research Security\nprivacy@tracersecurity.ca\ntracersecurity.ca",
+          "Privacy Officer, Tracer Research Security inc.\nprivacy@tracersecurity.ca\ntracersecurity.ca",
         ],
       },
     ],
   },
 
   fr: {
-    lastUpdated: "Dernière mise à jour : Mars 2026",
+    lastUpdated: "Dernière mise à jour : mai 2026",
     title: "Politique de confidentialité",
     sections: [
       {
         heading: "1. Qui nous sommes",
         body: [
-          `Tracer Research Security (« Tracer », « nous », « notre » ou « nos ») est une entreprise canadienne offrant des services de renseignement en sécurité de la recherche aux universités, aux établissements de recherche et à d'autres organisations. Notre plateforme aide les établissements à évaluer les candidats à des partenariats de recherche par rapport aux listes de sanctions, aux sources de renseignements de sources ouvertes et aux données d'affiliation de réseaux.`,
+          `Tracer Research Security inc. (« Tracer », « nous », « notre » ou « nos ») est une entreprise canadienne offrant des services de renseignement en sécurité de la recherche aux universités, aux établissements de recherche et à d'autres organisations. Notre plateforme aide les établissements à évaluer les candidats à des partenariats de recherche par rapport aux listes de sanctions, aux sources de renseignements de sources ouvertes et aux données d'affiliation de réseaux.`,
           `Notre responsable de la protection des renseignements personnels peut être joint à l'adresse suivante : privacy@tracersecurity.ca`,
         ],
       },
@@ -190,11 +197,11 @@ const content = {
         subsections: [
           {
             subheading: "Visiteurs du site Web",
-            body: "Nous collectons des journaux de serveur standard comprenant les adresses IP, le type de navigateur, les pages visitées et les horodatages. Nous utilisons Google Analytics 4 pour collecter des données d'utilisation anonymisées (pages visitées, durée de session, localisation générale). Ces données sont utilisées uniquement pour améliorer notre site Web et ne sont pas partagées avec des annonceurs.",
+            body: "Nous collectons des journaux de serveur standard comprenant les adresses IP, le type de navigateur, les pages visitées et les horodatages. Si vous acceptez les témoins analytiques, nous utilisons des outils analytiques pour comprendre l'utilisation du site, par exemple les pages visitées, la durée des sessions, la localisation générale approximative, les informations sur l'appareil et le navigateur, le référent et l'activité de session. Ces données servent uniquement à améliorer notre site Web et ne sont pas partagées avec des annonceurs.",
           },
           {
             subheading: "Soumissions de formulaires d'accès anticipé et de contact",
-            body: "Lorsque vous soumettez un formulaire sur notre site Web, nous collectons : nom, adresse courriel institutionnelle, nom de l'établissement, rôle ou titre, et tout message que vous choisissez d'inclure.",
+            body: "Lorsque vous soumettez un formulaire d'accès anticipé ou de liste d'attente sur notre site Web, nous collectons : prénom, nom, adresse courriel, préférence linguistique, statut de consentement, source du formulaire et horodatage.",
           },
           {
             subheading: "Utilisateurs de la plateforme (clients)",
@@ -232,7 +239,7 @@ const content = {
           { term: "Obligation légale", desc: "conformité avec la loi applicable" },
         ],
         bodyAfter: [
-          "Pour les demandes d'accès anticipé, nous traitons vos renseignements sur la base de votre consentement, que vous fournissez en soumettant le formulaire.",
+          "Pour les demandes d'accès anticipé, nous traitons vos renseignements sur la base de votre consentement, que vous fournissez en cochant la case de consentement aux communications et en soumettant le formulaire. Pour les témoins analytiques, nous activons les outils analytiques seulement après votre acceptation dans les préférences de confidentialité du site.",
         ],
       },
       {
@@ -254,7 +261,14 @@ const content = {
         bodyAfter: ["Nous ne partageons pas de renseignements personnels avec des annonceurs ou des courtiers en données."],
       },
       {
-        heading: "8. Conservation des données",
+        heading: "8. Témoins analytiques",
+        body: [
+          "Nous utilisons des outils analytiques seulement après votre acceptation des témoins analytiques dans les préférences de confidentialité du site. Ces outils nous aident à comprendre l'utilisation agrégée du site, notamment les pages visitées, la région approximative, les informations sur l'appareil et le navigateur, le référent et l'activité de session.",
+          "Nous n'utilisons pas actuellement les outils analytiques pour la publicité, le remarketing ou le profilage commercial individuel. Nous n'envoyons pas aux outils analytiques les valeurs saisies dans le formulaire de liste d'attente, y compris le prénom, le nom, l'adresse courriel, l'établissement ou le contenu d'un message. Si vous refusez les témoins analytiques, les outils analytiques ne sont pas chargés et les témoins analytiques sont supprimés lorsque possible.",
+        ],
+      },
+      {
+        heading: "9. Conservation des données",
         body: ["Nous conservons les renseignements personnels uniquement aussi longtemps que nécessaire aux fins pour lesquelles ils ont été collectés :"],
         list: [
           "Demandes d'accès anticipé et de contact : 24 mois à compter du dernier contact, ou jusqu'à ce que vous demandiez la suppression",
@@ -264,7 +278,7 @@ const content = {
         ],
       },
       {
-        heading: "9. Vos droits",
+        heading: "10. Vos droits",
         body: ["Si vous êtes résident du Québec, vous disposez des droits suivants en vertu de la Loi 25 :"],
         listBold: [
           { term: "Droit d'accès", desc: "demander une copie des renseignements personnels que nous détenons à votre sujet" },
@@ -279,7 +293,7 @@ const content = {
         ],
       },
       {
-        heading: "10. Sécurité",
+        heading: "11. Sécurité",
         body: ["Nous mettons en œuvre des mesures de sécurité appropriées à la sensibilité des renseignements que nous détenons, notamment :"],
         list: [
           "Chiffrement des renseignements personnels en transit (TLS) et au repos",
@@ -289,28 +303,28 @@ const content = {
         ],
       },
       {
-        heading: "11. Notification en cas d'incident",
+        heading: "12. Notification en cas d'incident",
         body: [
           "En cas d'incident de confidentialité impliquant des renseignements personnels qui présente un risque de préjudice grave, nous aviserons les personnes concernées et la Commission d'accès à l'information du Québec (CAI) dès que raisonnablement possible après la découverte de l'incident. Nous maintenons un registre de tous les incidents de sécurité tel que requis par la Loi 25.",
         ],
       },
       {
-        heading: "12. Témoins de connexion et suivi",
+        heading: "13. Témoins de connexion et contrôles",
         body: [
-          "Notre site Web utilise les témoins essentiels nécessaires au fonctionnement du site, ainsi que les témoins de Google Analytics 4 pour l'analyse anonymisée du trafic. Nous n'utilisons pas de témoins publicitaires ni de pixels de reciblage. Les données de Google Analytics sont utilisées uniquement pour comprendre le comportement des visiteurs et améliorer notre site Web. Vous pouvez refuser Google Analytics en installant le module complémentaire de navigateur pour la désactivation de Google Analytics.",
+          "Notre site Web utilise les témoins essentiels et le stockage local nécessaires aux préférences et au fonctionnement du site. Votre préférence analytique est enregistrée dans votre navigateur pour mémoriser votre choix. Vous pouvez modifier votre préférence analytique en tout temps au moyen du lien Préférences de confidentialité dans le pied de page.",
         ],
       },
       {
-        heading: "13. Modifications de cette politique",
+        heading: "14. Modifications de cette politique",
         body: [
           "Nous pouvons mettre à jour cette politique de temps à autre. Nous publierons la politique mise à jour sur notre site Web avec une date révisée. Pour les modifications importantes, nous aviserons les utilisateurs actifs de la plateforme par courriel.",
         ],
       },
       {
-        heading: "14. Contact",
+        heading: "15. Contact",
         body: [
           "Pour toute question relative à la confidentialité ou pour exercer vos droits :",
-          "Responsable de la protection des renseignements personnels, Tracer Research Security\nprivacy@tracersecurity.ca\ntracersecurity.ca",
+          "Responsable de la protection des renseignements personnels, Tracer Research Security inc.\nprivacy@tracersecurity.ca\ntracersecurity.ca",
         ],
       },
     ],

@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { openPrivacyPreferences } from "@/components/analytics-consent"
 import { BrandLogo } from "@/components/brand-logo"
 import { MapleLeaf } from "@/components/maple-leaf"
 import { trackEvent } from "@/lib/analytics"
@@ -78,6 +79,25 @@ export function Footer() {
                 >
                   {t.footer.privacy}
                 </Link>
+                <Link
+                  href="/cookies"
+                  onClick={() =>
+                    trackFooterNavigation(
+                      "/cookies",
+                      language === "fr" ? "Politique des témoins" : "Cookie Policy"
+                    )
+                  }
+                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  {language === "fr" ? "Politique des témoins" : "Cookie Policy"}
+                </Link>
+                <button
+                  type="button"
+                  onClick={openPrivacyPreferences}
+                  className="text-left text-sm text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  {language === "fr" ? "Préférences de confidentialité" : "Privacy preferences"}
+                </button>
               </nav>
             </div>
           </div>

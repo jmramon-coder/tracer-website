@@ -1,8 +1,7 @@
 import type { Metadata, Viewport } from 'next'
-import { Analytics } from '@vercel/analytics/next'
+import { AnalyticsConsent } from '@/components/analytics-consent'
 import { ThemeProvider } from '@/lib/theme-context'
 import { LanguageProvider } from '@/lib/language-context'
-import { GA_MEASUREMENT_ID } from '@/lib/analytics'
 import {
   DEFAULT_OG_IMAGE,
   SITE_DESCRIPTION,
@@ -135,13 +134,6 @@ export default function RootLayout({
   return (
     <html lang="en" className="light" suppressHydrationWarning>
       <head>
-        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} />
-        <script dangerouslySetInnerHTML={{ __html: `
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${GA_MEASUREMENT_ID}');
-        `}} />
         <script dangerouslySetInnerHTML={{ __html: `
           (function(){try{var t=localStorage.getItem('trace-theme');if(t==='light'||t==='dark'){document.documentElement.className=t;}else if(window.matchMedia('(prefers-color-scheme: dark)').matches){document.documentElement.className='dark';}else{document.documentElement.className='light';}}catch(e){}}());
         `}} />
@@ -150,9 +142,9 @@ export default function RootLayout({
         <ThemeProvider>
           <LanguageProvider>
             {children}
+            <AnalyticsConsent />
           </LanguageProvider>
         </ThemeProvider>
-        <Analytics />
       </body>
     </html>
   )
