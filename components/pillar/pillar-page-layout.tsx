@@ -35,7 +35,7 @@ export function PillarPageLayout({ children }: { children: React.ReactNode }) {
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <header className="border-b border-border">
         <div className="mx-auto max-w-4xl px-6 py-5">
-          <Link href="/platform" className="inline-flex text-foreground">
+          <Link href="/" className="inline-flex text-foreground">
             <BrandLogo markClassName="h-7 w-8" />
           </Link>
         </div>

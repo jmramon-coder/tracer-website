@@ -1,5 +1,3 @@
-import { redirect } from "next/navigation"
+import PlatformPage from "@/components/platform-page"
 
-export default function HomePage() {
-  redirect("/platform")
-}
+export default PlatformPage

@@ -386,7 +386,7 @@ export default function PrivacyPage() {
           <div className="mx-auto max-w-2xl px-6 pt-36 pb-24">
             {/* Back button */}
             <Link
-              href="/platform"
+              href="/"
               className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.15em] text-muted-foreground/50 hover:text-muted-foreground transition-colors duration-300 mb-16"
             >
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">

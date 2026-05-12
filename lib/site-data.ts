@@ -15,7 +15,7 @@ import {
 } from "lucide-react"
 
 export const mainNav = [
-  { href: "/platform", label: "Platform" },
+  { href: "/", label: "Platform" },
   { href: "/solutions", label: "Pricing" },
   { href: "/labs", label: "Labs" },
 ]

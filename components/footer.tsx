@@ -10,7 +10,7 @@ import { mainNav } from "@/lib/site-data"
 export function Footer() {
   const { t, language } = useLanguage()
   const navTranslationKeys = {
-    "/platform": "platform",
+    "/": "platform",
     "/labs": "labs",
     "/solutions": "solutions",
     "/pricing": "pricing",
@@ -32,8 +32,8 @@ export function Footer() {
         <div className="grid gap-12 lg:grid-cols-[1.1fr_1.3fr]">
           <div className="max-w-sm">
             <Link
-              href="/platform"
-              onClick={() => trackFooterNavigation("/platform", "Tracer")}
+              href="/"
+              onClick={() => trackFooterNavigation("/", "Tracer")}
               className="mb-6 flex text-foreground"
             >
               <BrandLogo />

@@ -15,7 +15,7 @@ import { WaitlistButton } from "@/components/waitlist-button"
 import { cn } from "@/lib/utils"
 
 const navTranslationKeys: Record<string, keyof typeof import("@/lib/translations").translations.en.header.nav> = {
-  "/platform": "platform",
+  "/": "platform",
   "/labs": "labs",
   "/solutions": "solutions",
   "/pricing": "pricing",
@@ -32,7 +32,7 @@ function NavItemMark({
   isOverMedia: boolean
   isSpinning?: boolean
 }) {
-  if (href === "/platform") {
+  if (href === "/") {
     return (
       <BrandLogo
         variant={isOverMedia ? "white" : "auto"}
@@ -78,7 +78,7 @@ export function Header() {
   const showTracerAppButton = false
   const isActiveNavItem = (href: string) =>
     pathname === href ||
-    (href === "/platform" && pathname === "/") ||
+    (href === "/" && pathname === "/platform") ||
     (href === "/solutions" && pathname === "/pricing") ||
     (href === "/resources" &&
       [
@@ -168,8 +168,8 @@ export function Header() {
             )}
           >
             <Link
-              href="/platform"
-              onClick={() => handleNavigationClick("/platform", "Tracer", "logo")}
+              href="/"
+              onClick={() => handleNavigationClick("/", "Tracer", "logo")}
               className={cn("group", isOverMedia ? "text-white" : "text-foreground")}
             >
               <BrandLogo

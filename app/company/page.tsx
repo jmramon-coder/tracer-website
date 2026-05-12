@@ -80,7 +80,7 @@ const operatingPrinciples = [
 ] as const
 
 const footerNavLinks = [
-  { href: "/platform", label: "Platform", labelFr: "Plateforme" },
+  { href: "/", label: "Platform", labelFr: "Plateforme" },
   { href: "/labs", label: "Labs", labelFr: "Labs" },
   { href: "/solutions", label: "Pricing", labelFr: "Tarifs" },
 ] as const
@@ -132,7 +132,7 @@ export default function CompanyPage() {
                 <LocalizedText en="Request access" fr="Demander l'accès" />
               </WaitlistButton>
               <TrackedLink
-                href="/platform"
+                href="/"
                 trackingParams={{
                   navigation_type: "company_hero_cta",
                   link_text: "See the platform",
@@ -371,7 +371,7 @@ export default function CompanyPage() {
             <div className="grid gap-12 lg:grid-cols-[1.1fr_2fr]">
               <div className="max-w-sm">
                 <TrackedLink
-                  href="/platform"
+                  href="/"
                   trackingParams={{
                     navigation_type: "company_footer",
                     link_text: "Tracer",
