@@ -204,8 +204,8 @@ export function AnalyticsConsent() {
                       </p>
                       <p className="mt-1 text-xs leading-5 text-muted-foreground">
                         {language === "fr"
-                          ? "Ils nous aident à comprendre l'utilisation du site et à améliorer nos plateformes numériques."
-                          : "They help us understand website usage and improve our digital platforms."}
+                          ? "Ils nous aident à comprendre l'utilisation du site et à améliorer notre site Web."
+                          : "They help us understand website usage and improve our website."}
                       </p>
                     </div>
                     <Switch
@@ -238,8 +238,8 @@ export function AnalyticsConsent() {
                 </p>
                 <p className="mt-2 text-sm leading-6 text-muted-foreground break-words">
                   {language === "fr"
-                    ? "Nous utilisons des témoins (cookies) et des technologies similaires pour assurer le fonctionnement du site, améliorer votre expérience de navigation et comprendre comment nos plateformes numériques sont utilisées. En cliquant sur « Tout autoriser », vous acceptez l'utilisation de témoins analytiques à ces fins. Vous pouvez revoir vos préférences avant de poursuivre votre visite."
-                    : "We use cookies and similar technologies to operate the website, improve your browsing experience, and understand how our digital platforms are used. By clicking \"Allow all\", you agree to the use of analytics cookies for these purposes. You can review your preferences before continuing your visit."}
+                    ? "Nous utilisons des témoins (cookies) et des technologies similaires pour assurer le fonctionnement du site, améliorer votre expérience de navigation et comprendre comment notre site Web est utilisé. En cliquant sur « Tout autoriser », vous acceptez l'utilisation de témoins analytiques à ces fins. Vous pouvez revoir vos préférences avant de poursuivre votre visite."
+                    : "We use cookies and similar technologies to operate the website, improve your browsing experience, and understand how our website is used. By clicking \"Allow all\", you agree to the use of analytics cookies for these purposes. You can review your preferences before continuing your visit."}
                 </p>
               </div>
               <div className="flex min-w-0 flex-col gap-2 sm:min-w-52">

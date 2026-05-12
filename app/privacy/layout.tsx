@@ -3,7 +3,7 @@ import { createMetadata } from "@/lib/metadata"
 export const metadata = createMetadata({
   title: "Privacy Policy",
   description:
-    "How Tracer handles website, early access, and platform privacy for research institutions, visitors, and users.",
+    "How Tracer handles website, early access, waitlist, cookie, and analytics privacy for visitors.",
   path: "/privacy",
 })
 

@@ -22,7 +22,7 @@ type Section = {
 
 const content = {
   en: {
-    lastUpdated: "Last updated: May 2026",
+    lastUpdated: "Last updated: May 12, 2026",
     title: "Cookie Policy",
     intro:
       "This policy explains how Tracer Research Security inc. (\"Tracer\") uses cookies, local storage, and similar technologies on tracersecurity.ca.",
@@ -38,7 +38,7 @@ const content = {
         heading: "2. Consent and default settings",
         body: [
           "Essential site preferences can be stored because they are needed to operate the website or remember choices you make, such as language, theme, and privacy preference.",
-          "Analytics tools are optional. We load optional analytics tools only after you accept analytics in the privacy banner or privacy preferences.",
+          "Analytics tools are optional. We load Google Analytics 4 and Vercel Web Analytics only after you accept analytics in the privacy banner or privacy preferences.",
         ],
       },
       {
@@ -101,14 +101,21 @@ const content = {
       },
       {
         name: "Analytics cookies",
-        provider: "Analytics tools",
+        provider: "Google Analytics 4",
         category: "Optional analytics",
-        purpose: "Helps distinguish visits and maintain session state for aggregate website measurement.",
+        purpose: "Helps distinguish visits and maintain session state for aggregate website measurement after analytics consent.",
         duration: "Up to 2 years by default, depending on browser and tool settings",
       },
       {
-        name: "Analytics scripts",
-        provider: "Analytics tools",
+        name: "Google Analytics script",
+        provider: "Google Analytics 4",
+        category: "Optional analytics",
+        purpose: "Loads Google Analytics 4 after analytics consent.",
+        duration: "Loaded only after analytics consent",
+      },
+      {
+        name: "Vercel Web Analytics script",
+        provider: "Vercel",
         category: "Optional analytics",
         purpose: "Measures aggregate page views and site usage after analytics consent.",
         duration: "Loaded only after analytics consent",
@@ -116,7 +123,7 @@ const content = {
     ] satisfies CookieItem[],
   },
   fr: {
-    lastUpdated: "Dernière mise à jour : mai 2026",
+    lastUpdated: "Dernière mise à jour : 12 mai 2026",
     title: "Politique des témoins",
     intro:
       "Cette politique explique comment Tracer Research Security inc. (« Tracer ») utilise les témoins, le stockage local et les technologies similaires sur tracersecurity.ca.",
@@ -132,7 +139,7 @@ const content = {
         heading: "2. Consentement et paramètres par défaut",
         body: [
           "Les préférences essentielles du site peuvent être enregistrées parce qu'elles sont nécessaires au fonctionnement du site ou à la mémorisation de vos choix, comme la langue, le thème et la préférence de confidentialité.",
-          "Les outils analytiques sont facultatifs. Nous chargeons les outils analytiques optionnels seulement après votre acceptation des témoins analytiques dans la bannière ou les préférences de confidentialité.",
+          "Les outils analytiques sont facultatifs. Nous chargeons Google Analytics 4 et Vercel Web Analytics seulement après votre acceptation des témoins analytiques dans la bannière ou les préférences de confidentialité.",
         ],
       },
       {
@@ -195,23 +202,30 @@ const content = {
       },
       {
         name: "Témoins analytiques",
-        provider: "Outils analytiques",
+        provider: "Google Analytics 4",
         category: "Analytique facultative",
-        purpose: "Aident à distinguer les visites et à conserver l'état de session pour la mesure agrégée du site.",
+        purpose: "Aident à distinguer les visites et à conserver l'état de session pour la mesure agrégée du site après consentement analytique.",
         duration: "Jusqu'à 2 ans par défaut, selon le navigateur et les paramètres des outils",
       },
       {
-        name: "Scripts analytiques",
-        provider: "Outils analytiques",
+        name: "Script Google Analytics",
+        provider: "Google Analytics 4",
         category: "Analytique facultative",
-        purpose: "Mesurent les pages vues et l'utilisation agrégée du site après consentement analytique.",
+        purpose: "Charge Google Analytics 4 après consentement analytique.",
+        duration: "Chargé seulement après consentement analytique",
+      },
+      {
+        name: "Script Vercel Web Analytics",
+        provider: "Vercel",
+        category: "Analytique facultative",
+        purpose: "Mesure les pages vues et l'utilisation agrégée du site après consentement analytique.",
         duration: "Chargé seulement après consentement analytique",
       },
     ] satisfies CookieItem[],
   },
 }
 
-function renderSection(section: Section) {
+function SectionBlock({ section }: { section: Section }) {
   return (
     <section className="mb-10">
       <h2 className="mb-4 text-base font-medium tracking-wide text-foreground">
@@ -267,7 +281,11 @@ export default function CookiesPage() {
             <div className="mt-6 h-px bg-border" />
           </div>
 
-          <div>{c.sections.slice(0, 3).map((section) => renderSection(section))}</div>
+          <div>
+            {c.sections.slice(0, 3).map((section, index) => (
+              <SectionBlock key={`${section.heading}-${index}`} section={section} />
+            ))}
+          </div>
 
           <section className="mb-10">
             <h2 className="mb-4 text-base font-medium tracking-wide text-foreground">
@@ -295,7 +313,11 @@ export default function CookiesPage() {
             </div>
           </section>
 
-          <div>{c.sections.slice(3).map((section) => renderSection(section))}</div>
+          <div>
+            {c.sections.slice(3).map((section, index) => (
+              <SectionBlock key={`${section.heading}-${index + 3}`} section={section} />
+            ))}
+          </div>
 
           <button
             type="button"

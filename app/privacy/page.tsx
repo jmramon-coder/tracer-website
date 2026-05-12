@@ -7,28 +7,21 @@ import { useLanguage } from "@/lib/language-context"
 
 const content = {
   en: {
-    lastUpdated: "Last updated: May 2026",
+    lastUpdated: "Last updated: May 12, 2026",
     title: "Privacy Policy",
     sections: [
       {
         heading: "1. Who we are",
         body: [
-          `Tracer Research Security inc. ("Tracer," "we," "us," or "our") is a Canadian company providing research security intelligence services to universities, research institutions, and other organizations. Our platform helps institutions screen research partnership candidates against sanctions lists, open-source intelligence, and network affiliation data.`,
+          `Tracer Research Security inc. ("Tracer," "we," "us," or "our") is a Canadian company operating the website tracersecurity.ca.`,
           `Our Privacy Officer can be reached at: privacy@tracersecurity.ca`,
         ],
       },
       {
         heading: "2. Scope of this policy",
         body: [
-          "This policy applies to:",
-        ],
-        list: [
-          "Visitors to our website (tracersecurity.ca)",
-          "Individuals who submit our early access or contact forms",
-          "Clients and users of the Tracer platform",
-        ],
-        bodyAfter: [
-          "This policy does not apply to personal information that Tracer processes on behalf of its institutional clients as a service provider. In that context, the client institution is the organization responsible for the personal information and Tracer acts as a mandatary processing that information according to the client's instructions and our data processing agreement.",
+          "This policy applies to visitors to tracersecurity.ca and to people who submit a waitlist, early access, or contact form through our website.",
+          "It does not apply to third-party websites or services that we do not operate.",
         ],
       },
       {
@@ -36,19 +29,15 @@ const content = {
         subsections: [
           {
             subheading: "Website visitors",
-            body: "We collect standard server logs including IP addresses, browser type, pages visited, and timestamps. If you accept analytics cookies, we use analytics tools to understand site usage, such as pages visited, session duration, approximate general location, device and browser information, referrer, and session activity. This data is used solely to improve our website and is not shared with advertisers.",
+            body: "When you visit our website, our hosting and security providers may process standard technical information such as IP address, browser and device information, pages requested, referring page, timestamps, and request metadata needed to deliver, secure, and monitor the website.",
           },
           {
             subheading: "Early access and contact form submissions",
-            body: "When you submit an early access or waitlist form on our website, we collect: first name, last name, email address, language preference, consent status, form source, and submission timestamp.",
+            body: "When you submit a waitlist, early access, or contact form, we collect the information you provide, such as first name, last name, email address, language preference, communication consent status, form source, and submission timestamp.",
           },
           {
-            subheading: "Platform users (clients)",
-            body: "For users of the Tracer platform, we collect: name, professional email address, institution, role, login credentials (stored in hashed form), and usage logs necessary for security, audit, and service improvement purposes.",
-          },
-          {
-            subheading: "Screening subjects",
-            body: "The individuals and organizations screened through the Tracer platform are not our clients or website visitors — they are third parties whose publicly available professional information is processed as part of a research security review. This processing is described in Section 6 below.",
+            subheading: "Optional analytics",
+            body: "If you accept analytics in our privacy preferences, we use Google Analytics 4 and Vercel Web Analytics to understand website usage. These tools may process information such as pages visited, approximate region, device and browser information, referrer, session activity, and website events that we configure. We do not send waitlist form values, including names, email addresses, institutions, or message content, to analytics tools.",
           },
         ],
       },
@@ -57,43 +46,41 @@ const content = {
         body: ["We use the personal information we collect to:"],
         list: [
           "Respond to inquiries and manage early access requests",
-          "Provide, maintain, and improve the Tracer platform",
-          "Authenticate users and maintain account security",
-          "Produce audit logs required for institutional compliance",
-          "Communicate with clients about their accounts and our services",
+          "Send waitlist, launch, and product update emails where you have consented to receive them",
+          "Operate, secure, debug, and monitor our website",
+          "Measure aggregate website usage after analytics consent",
           "Comply with our legal obligations",
         ],
         bodyAfter: [
-          "We do not sell personal information. We do not use personal information for advertising purposes.",
+          "We do not sell personal information. We do not use website analytics for advertising, remarketing, or user-level sales profiling.",
         ],
       },
       {
         heading: "5. Legal basis for processing",
         body: [
-          "For clients and users in Quebec, we process personal information on the following bases under the Act respecting the protection of personal information in the private sector (Law 25):",
+          "Depending on the context, we process personal information on the following bases:",
         ],
         listBold: [
-          { term: "Contractual necessity", desc: "processing required to perform our service agreement with client institutions" },
-          { term: "Legitimate interest", desc: "maintaining security logs, fraud prevention, and service improvement" },
+          { term: "Consent", desc: "waitlist and product update communications, and optional analytics cookies or similar technologies" },
+          { term: "Legitimate interest", desc: "operating, securing, debugging, and improving the website" },
           { term: "Legal obligation", desc: "compliance with applicable law" },
         ],
         bodyAfter: [
-          "For early access inquiries, we process your information on the basis of your consent, which you provide by checking the communication consent box and submitting the form. For analytics cookies, we only activate analytics tools after you accept analytics in the website privacy preferences.",
+          "You can withdraw analytics consent at any time using the Privacy preferences link in the footer. You can unsubscribe from waitlist and product update emails by following the unsubscribe instructions in our emails or by contacting privacy@tracersecurity.ca.",
         ],
       },
       {
-        heading: "6. Processing of publicly available professional information",
+        heading: "6. Service providers and transfers",
         body: [
-          "When Tracer screens a research partner candidate on behalf of a client institution, it queries publicly available sources including sanctions databases, open-source intelligence sources, academic publication records, and corporate registries. The names and institutional affiliations of researchers and organizations submitted to these queries are information that those individuals and organizations have made public in their professional capacity.",
-          "It is our considered legal position, documented in our privacy architecture, that querying publicly available information about professionals acting in their professional capacity does not constitute a communication of personal information to third-party API providers requiring a data processing agreement, as the alternative interpretation would make routine professional research legally untenable. This position is documented and available upon request.",
-          "All data processed through the Tracer platform is stored on Canadian servers located in Montreal, Quebec (AWS Canada Central region). No personal information is transferred outside Canada in the course of normal platform operation.",
+          "We use a limited number of service providers to operate the website and manage communications. These currently include Vercel for website hosting, security, logs, and Vercel Web Analytics; Google Analytics 4 for optional website analytics; and Resend for waitlist and email communications.",
+          "These providers may process information outside your province or outside Canada, including in the United States or other countries where they or their subprocessors operate. When we use service providers, we rely on contractual, technical, and organizational safeguards appropriate to the nature of the information and the service.",
         ],
       },
       {
-        heading: "7. Data sharing and third parties",
+        heading: "7. When we share information",
         body: ["We do not share personal information with third parties except in the following circumstances:"],
         listBold: [
-          { term: "Service providers", desc: "we use a limited number of service providers who process personal information on our behalf under contractual obligations consistent with this policy and applicable law" },
+          { term: "Service providers", desc: "to operate the website, process waitlist submissions, send emails, provide analytics after consent, and maintain security" },
           { term: "Legal requirements", desc: "we may disclose information when required by law, court order, or government authority" },
           { term: "Business transfers", desc: "in the event of a merger, acquisition, or sale of assets, personal information may be transferred as part of that transaction, subject to equivalent privacy protections" },
         ],
@@ -102,8 +89,8 @@ const content = {
       {
         heading: "8. Analytics cookies",
         body: [
-          "We use analytics tools only after you accept analytics cookies in the website privacy preferences. These tools help us understand aggregate site usage, including pages visited, approximate region, device and browser information, referrer, and session activity.",
-          "We do not currently use analytics tools for advertising, remarketing, or user-level sales profiling. We do not send waitlist form values, including first name, last name, email address, institution, or message content, to analytics tools. If you reject analytics, analytics tools are not loaded and analytics cookies are removed when possible.",
+          "We load optional analytics tools only after you accept analytics in the website privacy preferences. Our optional analytics tools are Google Analytics 4 and Vercel Web Analytics.",
+          "Analytics help us understand aggregate website usage, including pages visited, approximate region, device and browser information, referrer, and session activity. We do not currently use analytics tools for advertising, remarketing, or user-level sales profiling. If you reject analytics, these analytics tools are not loaded and analytics cookies are removed when possible.",
         ],
       },
       {
@@ -111,9 +98,9 @@ const content = {
         body: ["We retain personal information only as long as necessary for the purposes for which it was collected:"],
         list: [
           "Early access and contact inquiries: 24 months from last contact, or until you request deletion",
-          "Platform user accounts: for the duration of the client contract plus 12 months, or as required by law",
-          "Server logs: 90 days",
-          "Screening case records: as specified in the data processing agreement with each client institution",
+          "Email consent and unsubscribe records: as long as necessary to document consent and honour unsubscribe requests",
+          "Website and security logs: up to 90 days unless a longer period is needed for security, debugging, legal, or compliance reasons",
+          "Analytics records: according to our analytics provider settings; aggregate reports may be retained longer because they do not identify individual visitors",
         ],
       },
       {
@@ -128,7 +115,6 @@ const content = {
         ],
         bodyAfter: [
           "To exercise these rights, contact our Privacy Officer at privacy@tracersecurity.ca. We will respond within 30 days.",
-          "If you are a screening subject and believe you have been incorrectly identified in a research security review, please contact us with your name and institution. We will work with the client institution to correct any inaccurate information.",
         ],
       },
       {
@@ -137,8 +123,8 @@ const content = {
         list: [
           "Encryption of personal information in transit (TLS) and at rest",
           "Role-based access controls limiting access to authorized personnel",
-          "Audit logging of all access to personal information",
-          "Canadian data residency — all data stored in Quebec, Canada",
+          "Administrative access limited to personnel who need it",
+          "Security monitoring and provider safeguards for website infrastructure",
         ],
       },
       {
@@ -156,7 +142,7 @@ const content = {
       {
         heading: "14. Changes to this policy",
         body: [
-          "We may update this policy from time to time. We will post the updated policy on our website with a revised date. For material changes, we will notify active platform users by email.",
+          "We may update this policy from time to time. We will post the updated policy on our website with a revised date. Where required by law, we will provide additional notice of material changes.",
         ],
       },
       {
@@ -170,26 +156,21 @@ const content = {
   },
 
   fr: {
-    lastUpdated: "Dernière mise à jour : mai 2026",
+    lastUpdated: "Dernière mise à jour : 12 mai 2026",
     title: "Politique de confidentialité",
     sections: [
       {
         heading: "1. Qui nous sommes",
         body: [
-          `Tracer Research Security inc. (« Tracer », « nous », « notre » ou « nos ») est une entreprise canadienne offrant des services de renseignement en sécurité de la recherche aux universités, aux établissements de recherche et à d'autres organisations. Notre plateforme aide les établissements à évaluer les candidats à des partenariats de recherche par rapport aux listes de sanctions, aux sources de renseignements de sources ouvertes et aux données d'affiliation de réseaux.`,
+          `Tracer Research Security inc. (« Tracer », « nous », « notre » ou « nos ») est une entreprise canadienne qui exploite le site Web tracersecurity.ca.`,
           `Notre responsable de la protection des renseignements personnels peut être joint à l'adresse suivante : privacy@tracersecurity.ca`,
         ],
       },
       {
         heading: "2. Portée de cette politique",
-        body: ["Cette politique s'applique :"],
-        list: [
-          "Aux visiteurs de notre site Web (tracersecurity.ca)",
-          "Aux personnes qui soumettent nos formulaires d'accès anticipé ou de contact",
-          "Aux clients et aux utilisateurs de la plateforme Tracer",
-        ],
-        bodyAfter: [
-          "Cette politique ne s'applique pas aux renseignements personnels que Tracer traite au nom de ses clients institutionnels en tant que prestataire de services. Dans ce contexte, l'établissement client est l'entreprise responsable des renseignements personnels et Tracer agit comme mandataire traitant ces renseignements conformément aux instructions du client et à notre accord de traitement des données.",
+        body: [
+          "Cette politique s'applique aux visiteurs de tracersecurity.ca et aux personnes qui soumettent un formulaire de liste d'attente, d'accès anticipé ou de contact sur notre site Web.",
+          "Elle ne s'applique pas aux sites Web ou services de tiers que nous n'exploitons pas.",
         ],
       },
       {
@@ -197,19 +178,15 @@ const content = {
         subsections: [
           {
             subheading: "Visiteurs du site Web",
-            body: "Nous collectons des journaux de serveur standard comprenant les adresses IP, le type de navigateur, les pages visitées et les horodatages. Si vous acceptez les témoins analytiques, nous utilisons des outils analytiques pour comprendre l'utilisation du site, par exemple les pages visitées, la durée des sessions, la localisation générale approximative, les informations sur l'appareil et le navigateur, le référent et l'activité de session. Ces données servent uniquement à améliorer notre site Web et ne sont pas partagées avec des annonceurs.",
+            body: "Lorsque vous visitez notre site Web, nos fournisseurs d'hébergement et de sécurité peuvent traiter des renseignements techniques standards, comme l'adresse IP, les informations sur le navigateur et l'appareil, les pages demandées, la page de référence, les horodatages et les métadonnées de requête nécessaires à la livraison, la sécurité et la surveillance du site Web.",
           },
           {
             subheading: "Soumissions de formulaires d'accès anticipé et de contact",
-            body: "Lorsque vous soumettez un formulaire d'accès anticipé ou de liste d'attente sur notre site Web, nous collectons : prénom, nom, adresse courriel, préférence linguistique, statut de consentement, source du formulaire et horodatage.",
+            body: "Lorsque vous soumettez un formulaire de liste d'attente, d'accès anticipé ou de contact, nous collectons les renseignements que vous fournissez, comme le prénom, le nom, l'adresse courriel, la préférence linguistique, le statut de consentement aux communications, la source du formulaire et l'horodatage.",
           },
           {
-            subheading: "Utilisateurs de la plateforme (clients)",
-            body: "Pour les utilisateurs de la plateforme Tracer, nous collectons : nom, adresse courriel professionnelle, établissement, rôle, identifiants de connexion (stockés sous forme hachée) et journaux d'utilisation nécessaires à des fins de sécurité, d'audit et d'amélioration du service.",
-          },
-          {
-            subheading: "Sujets des évaluations",
-            body: "Les personnes et les organisations évaluées via la plateforme Tracer ne sont pas nos clients ou visiteurs du site Web — il s'agit de tiers dont les renseignements professionnels accessibles au public sont traités dans le cadre d'une évaluation de la sécurité de la recherche. Ce traitement est décrit à la section 6 ci-dessous.",
+            subheading: "Analytique facultative",
+            body: "Si vous acceptez l'analytique dans nos préférences de confidentialité, nous utilisons Google Analytics 4 et Vercel Web Analytics pour comprendre l'utilisation du site Web. Ces outils peuvent traiter des renseignements comme les pages visitées, la région approximative, les informations sur l'appareil et le navigateur, le référent, l'activité de session et les événements de site Web que nous configurons. Nous n'envoyons pas aux outils analytiques les valeurs saisies dans les formulaires, y compris les noms, les adresses courriel, les établissements ou le contenu d'un message.",
           },
         ],
       },
@@ -218,43 +195,41 @@ const content = {
         body: ["Nous utilisons les renseignements personnels que nous collectons pour :"],
         list: [
           "Répondre aux demandes et gérer les demandes d'accès anticipé",
-          "Fournir, maintenir et améliorer la plateforme Tracer",
-          "Authentifier les utilisateurs et maintenir la sécurité des comptes",
-          "Produire les journaux d'audit requis pour la conformité institutionnelle",
-          "Communiquer avec les clients au sujet de leurs comptes et de nos services",
+          "Envoyer des courriels concernant la liste d'attente, le lancement et les mises à jour produit lorsque vous avez consenti à les recevoir",
+          "Exploiter, sécuriser, déboguer et surveiller notre site Web",
+          "Mesurer l'utilisation agrégée du site Web après consentement analytique",
           "Respecter nos obligations légales",
         ],
         bodyAfter: [
-          "Nous ne vendons pas de renseignements personnels. Nous n'utilisons pas les renseignements personnels à des fins publicitaires.",
+          "Nous ne vendons pas de renseignements personnels. Nous n'utilisons pas l'analytique du site Web à des fins publicitaires, de remarketing ou de profilage commercial individuel.",
         ],
       },
       {
         heading: "5. Base juridique du traitement",
         body: [
-          "Pour les clients et les utilisateurs au Québec, nous traitons les renseignements personnels sur les bases suivantes en vertu de la Loi sur la protection des renseignements personnels dans le secteur privé (Loi 25) :",
+          "Selon le contexte, nous traitons les renseignements personnels sur les bases suivantes :",
         ],
         listBold: [
-          { term: "Nécessité contractuelle", desc: "traitement requis pour exécuter notre accord de service avec les établissements clients" },
-          { term: "Intérêt légitime", desc: "maintien des journaux de sécurité, prévention de la fraude et amélioration du service" },
+          { term: "Consentement", desc: "communications de liste d'attente et de mises à jour produit, et témoins analytiques facultatifs ou technologies similaires" },
+          { term: "Intérêt légitime", desc: "exploitation, sécurité, débogage et amélioration du site Web" },
           { term: "Obligation légale", desc: "conformité avec la loi applicable" },
         ],
         bodyAfter: [
-          "Pour les demandes d'accès anticipé, nous traitons vos renseignements sur la base de votre consentement, que vous fournissez en cochant la case de consentement aux communications et en soumettant le formulaire. Pour les témoins analytiques, nous activons les outils analytiques seulement après votre acceptation dans les préférences de confidentialité du site.",
+          "Vous pouvez retirer votre consentement à l'analytique en tout temps au moyen du lien Préférences de confidentialité dans le pied de page. Vous pouvez vous désabonner des courriels de liste d'attente et de mises à jour produit en suivant les instructions de désabonnement dans nos courriels ou en contactant privacy@tracersecurity.ca.",
         ],
       },
       {
-        heading: "6. Traitement des renseignements professionnels accessibles au public",
+        heading: "6. Fournisseurs de services et transferts",
         body: [
-          "Lorsque Tracer évalue un candidat à un partenariat de recherche au nom d'un établissement client, il interroge des sources accessibles au public, notamment des bases de données de sanctions, des sources de renseignements de sources ouvertes, des dossiers de publications académiques et des registres d'entreprises. Les noms et les affiliations institutionnelles des chercheurs et des organisations soumis à ces requêtes constituent des renseignements que ces personnes et organisations ont rendus publics dans le cadre de leur activité professionnelle.",
-          "Notre position juridique réfléchie, documentée dans notre architecture de confidentialité, est que l'interrogation de renseignements accessibles au public concernant des professionnels agissant dans leur capacité professionnelle ne constitue pas une communication de renseignements personnels à des fournisseurs d'API tiers nécessitant un accord de traitement des données, car l'interprétation contraire rendrait la recherche professionnelle de routine juridiquement intenable. Cette position est documentée et disponible sur demande.",
-          "Toutes les données traitées via la plateforme Tracer sont stockées sur des serveurs canadiens situés à Montréal, Québec (région AWS Canada Central). Aucun renseignement personnel n'est transféré hors du Canada dans le cadre du fonctionnement normal de la plateforme.",
+          "Nous utilisons un nombre limité de fournisseurs de services pour exploiter le site Web et gérer les communications. Ceux-ci incluent actuellement Vercel pour l'hébergement du site Web, la sécurité, les journaux et Vercel Web Analytics; Google Analytics 4 pour l'analytique facultative du site Web; et Resend pour les communications de liste d'attente et de courriel.",
+          "Ces fournisseurs peuvent traiter des renseignements à l'extérieur de votre province ou du Canada, y compris aux États-Unis ou dans d'autres pays où eux-mêmes ou leurs sous-traitants exercent leurs activités. Lorsque nous utilisons des fournisseurs de services, nous nous appuyons sur des mesures contractuelles, techniques et organisationnelles appropriées à la nature des renseignements et du service.",
         ],
       },
       {
-        heading: "7. Partage des données et tiers",
+        heading: "7. Quand nous partageons des renseignements",
         body: ["Nous ne partageons pas de renseignements personnels avec des tiers, sauf dans les circonstances suivantes :"],
         listBold: [
-          { term: "Fournisseurs de services", desc: "nous faisons appel à un nombre limité de fournisseurs de services qui traitent des renseignements personnels en notre nom dans le cadre d'obligations contractuelles conformes à cette politique et à la loi applicable" },
+          { term: "Fournisseurs de services", desc: "pour exploiter le site Web, traiter les inscriptions à la liste d'attente, envoyer des courriels, fournir l'analytique après consentement et maintenir la sécurité" },
           { term: "Exigences légales", desc: "nous pouvons divulguer des renseignements lorsque la loi, une ordonnance judiciaire ou une autorité gouvernementale l'exige" },
           { term: "Transferts d'entreprise", desc: "en cas de fusion, d'acquisition ou de vente d'actifs, des renseignements personnels peuvent être transférés dans le cadre de cette transaction, sous réserve de protections de la vie privée équivalentes" },
         ],
@@ -263,8 +238,8 @@ const content = {
       {
         heading: "8. Témoins analytiques",
         body: [
-          "Nous utilisons des outils analytiques seulement après votre acceptation des témoins analytiques dans les préférences de confidentialité du site. Ces outils nous aident à comprendre l'utilisation agrégée du site, notamment les pages visitées, la région approximative, les informations sur l'appareil et le navigateur, le référent et l'activité de session.",
-          "Nous n'utilisons pas actuellement les outils analytiques pour la publicité, le remarketing ou le profilage commercial individuel. Nous n'envoyons pas aux outils analytiques les valeurs saisies dans le formulaire de liste d'attente, y compris le prénom, le nom, l'adresse courriel, l'établissement ou le contenu d'un message. Si vous refusez les témoins analytiques, les outils analytiques ne sont pas chargés et les témoins analytiques sont supprimés lorsque possible.",
+          "Nous chargeons les outils analytiques facultatifs seulement après votre acceptation de l'analytique dans les préférences de confidentialité du site Web. Nos outils analytiques facultatifs sont Google Analytics 4 et Vercel Web Analytics.",
+          "L'analytique nous aide à comprendre l'utilisation agrégée du site Web, notamment les pages visitées, la région approximative, les informations sur l'appareil et le navigateur, le référent et l'activité de session. Nous n'utilisons pas actuellement les outils analytiques pour la publicité, le remarketing ou le profilage commercial individuel. Si vous refusez l'analytique, ces outils ne sont pas chargés et les témoins analytiques sont supprimés lorsque possible.",
         ],
       },
       {
@@ -272,9 +247,9 @@ const content = {
         body: ["Nous conservons les renseignements personnels uniquement aussi longtemps que nécessaire aux fins pour lesquelles ils ont été collectés :"],
         list: [
           "Demandes d'accès anticipé et de contact : 24 mois à compter du dernier contact, ou jusqu'à ce que vous demandiez la suppression",
-          "Comptes d'utilisateurs de la plateforme : pour la durée du contrat client plus 12 mois, ou tel que requis par la loi",
-          "Journaux de serveur : 90 jours",
-          "Dossiers de cas d'évaluation : tel que spécifié dans l'accord de traitement des données avec chaque établissement client",
+          "Registres de consentement et de désabonnement par courriel : aussi longtemps que nécessaire pour documenter le consentement et respecter les demandes de désabonnement",
+          "Journaux de site Web et de sécurité : jusqu'à 90 jours, sauf si une période plus longue est nécessaire pour la sécurité, le débogage, des raisons juridiques ou la conformité",
+          "Données analytiques : selon les paramètres de nos fournisseurs d'analytique; les rapports agrégés peuvent être conservés plus longtemps parce qu'ils n'identifient pas les visiteurs individuels",
         ],
       },
       {
@@ -289,7 +264,6 @@ const content = {
         ],
         bodyAfter: [
           "Pour exercer ces droits, contactez notre responsable de la protection des renseignements personnels à privacy@tracersecurity.ca. Nous répondrons dans les 30 jours.",
-          "Si vous êtes un sujet d'évaluation et pensez avoir été incorrectement identifié dans le cadre d'une évaluation de la sécurité de la recherche, veuillez nous contacter en indiquant votre nom et votre établissement. Nous travaillerons avec l'établissement client pour corriger tout renseignement inexact.",
         ],
       },
       {
@@ -298,8 +272,8 @@ const content = {
         list: [
           "Chiffrement des renseignements personnels en transit (TLS) et au repos",
           "Contrôles d'accès basés sur les rôles limitant l'accès au personnel autorisé",
-          "Journalisation de tous les accès aux renseignements personnels",
-          "Résidence des données au Canada — toutes les données stockées au Québec, Canada",
+          "Accès administratif limité au personnel qui en a besoin",
+          "Surveillance de sécurité et mesures de protection des fournisseurs pour l'infrastructure du site Web",
         ],
       },
       {
@@ -317,7 +291,7 @@ const content = {
       {
         heading: "14. Modifications de cette politique",
         body: [
-          "Nous pouvons mettre à jour cette politique de temps à autre. Nous publierons la politique mise à jour sur notre site Web avec une date révisée. Pour les modifications importantes, nous aviserons les utilisateurs actifs de la plateforme par courriel.",
+          "Nous pouvons mettre à jour cette politique de temps à autre. Nous publierons la politique mise à jour sur notre site Web avec une date révisée. Lorsque la loi l'exige, nous fournirons un avis supplémentaire en cas de modification importante.",
         ],
       },
       {
