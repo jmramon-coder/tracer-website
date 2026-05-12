@@ -413,7 +413,7 @@ function PipelineControlPanel() {
               <Icon className="h-5 w-5" />
             </div>
             <div>
-              <div className="flex flex-wrap items-center gap-2">
+              <div className="grid gap-1">
                 <span className="text-xs font-semibold text-muted-foreground">
                   {step}
                 </span>

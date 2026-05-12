@@ -100,7 +100,7 @@ const copy = {
     note: "Structured review from profile intake to cited screening card.",
   },
   fr: {
-    eyebrow: "Experience plateforme",
+    eyebrow: "Expérience plateforme",
     title: "La plateforme",
     description:
       "Un espace de travail pour les vérifications diligentes en sécurité de la recherche. Tracer aide les universités à vérifier leurs partenaires de recherche sur tout le spectre des risques de sécurité afin que la science puisse progresser avec confiance.",

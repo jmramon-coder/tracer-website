@@ -252,12 +252,6 @@ export default function SolutionsPage() {
                     textClassName="text-white"
                   />
                 </TrackedLink>
-                <p className="text-sm leading-6 text-white/62">
-                  <LocalizedText
-                    en="Structured research security due diligence for high-trust institutional workflows."
-                    fr="Diligence raisonnable structurée en sécurité de la recherche pour des flux institutionnels de haute confiance."
-                  />
-                </p>
                 <p className="mt-8 flex items-center gap-1.5 text-[11px] uppercase tracking-[0.2em] text-white/48">
                   <LocalizedText en="A Canadian Company" fr="Une entreprise canadienne" />
                   <MapleLeaf size={12} />

@@ -121,7 +121,7 @@ const timeline = [
 
 export default function PlatformPage() {
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main className="min-h-screen bg-white text-foreground dark:bg-background">
       <Header />
 
       <section className="relative z-10 overflow-hidden rounded-b-[34px] bg-hero text-hero-foreground">
@@ -142,7 +142,7 @@ export default function PlatformPage() {
               <LocalizedText en="Clear the path to great science" fr="Collaborez en toute confiance, faites avancer la science" />
             </p>
             <h1 className="mt-5 max-w-xl text-5xl font-semibold leading-[0.96] tracking-tight sm:text-6xl lg:text-[4rem]">
-              <LocalizedText en="Screen partners in minutes." fr="Vérifiez vos partenaires de recherche en quelques minutes." />
+              <LocalizedText en="Screen research partners in minutes." fr="Vérifiez vos partenaires de recherche en quelques minutes." />
             </h1>
             <div className="mt-6 flex flex-wrap gap-1.5 lg:flex-nowrap">
               {heroWords.map(([en, fr]) => (
@@ -157,7 +157,7 @@ export default function PlatformPage() {
             <p className="mt-7 max-w-md text-lg leading-8 text-hero-foreground/75">
               <LocalizedText
                 en="Tracer cross-references 400M+ records across 320+ sources and delivers a decision-ready brief in minutes."
-                fr="Tracer croise plus de 400 M de dossiers dans plus de 320 sources et produit une note prête pour la décision en quelques minutes."
+                fr="TRACER croise des millions de documents provenant de plus de 320 sources et génère un rapport complet en quelques minutes."
               />
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -444,8 +444,8 @@ function HeroCardDeck() {
             </div>
             <p className="mt-3 max-w-xl px-4 text-[12.5px] leading-[1.62] text-[#3F3F3A] sm:px-5">
               <LocalizedText
-                en="Harbin Institute of Science and Engineering (HISE) is a synthetic institution of concern modeled on Canadian NRO List and US BIS Entity List patterns, formally flagged in this demo as having structural ties to a military-industrial research network."
-                fr="Le Harbin Institute of Science and Engineering (HISE) est une institution synthétique préoccupante inspirée des schémas de la liste ORN canadienne et de la liste Entity List du BIS américain, signalée dans cette démonstration comme ayant des liens structurels avec un réseau de recherche militaro-industriel."
+                en="Harbin Institute of Science and Engineering (HISE) is a designated institution of concern on the US BIS Entity List, with deep structural ties to the Chinese military-industrial complex."
+                fr="Le Harbin Institute of Science and Engineering (HISE) est une institution désignée préoccupante sur la BIS Entity List américaine, avec des liens structurels profonds avec le complexe militaro-industriel chinois."
               />{" "}
               <sup className="font-mono text-[9px] text-[#175CD3]">1</sup>
             </p>
@@ -685,7 +685,7 @@ function NetworkExample() {
         </div>
         <p className="mt-4 max-w-2xl text-[12.5px] leading-[1.62] text-[#6F6F68]">
           <LocalizedText
-            en="89 publications analyzed from 2016 to 2026. 23 publications, or 26%, involve co-authors at flagged institutions."
+            en="202 publications analyzed from 2000 to 2025. 46 publications (26%) involve co-authors at flagged institutions."
             fr="202 publications analysées de 2016 à 2026. 46 publications (26 %) impliquent des co-auteurs affiliés à des institutions signalées."
           />
         </p>
