@@ -198,13 +198,13 @@ export default function PlatformPage() {
             }
           />
 
-          <div className="mt-12 grid gap-5 lg:grid-cols-2">
+          <div className="mt-12 grid gap-5 xl:grid-cols-2">
             {platformModules.map((module) => (
               <article
                 key={module.title}
-                className="group overflow-hidden rounded-[28px] border border-border bg-card shadow-[var(--panel-shadow)]"
+                className="group overflow-hidden rounded-[24px] border border-border bg-card shadow-[var(--panel-shadow)] md:rounded-[28px]"
               >
-                <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                <div className="relative h-52 overflow-hidden bg-muted sm:h-64 xl:aspect-[4/3] xl:h-auto">
                   <Image
                     src={module.image}
                     alt=""
@@ -212,8 +212,8 @@ export default function PlatformPage() {
                     sizes="(min-width: 1024px) 560px, calc(100vw - 48px)"
                     className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
                   />
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_42%,rgba(0,0,0,0.7))]" />
-                  <div className="absolute bottom-5 left-5 right-5 text-white">
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.04),rgba(0,0,0,0.24))] xl:bg-[linear-gradient(180deg,transparent_42%,rgba(0,0,0,0.74))]" />
+                  <div className="absolute bottom-5 left-5 right-5 hidden text-white xl:block">
                     <div className="flex flex-wrap items-center justify-between gap-3">
                       <h3 className="text-3xl font-semibold tracking-tight">
                         <LocalizedText en={module.title} fr={module.titleFr} />
@@ -223,6 +223,14 @@ export default function PlatformPage() {
                       <LocalizedText en={module.description} fr={module.descriptionFr} />
                     </p>
                   </div>
+                </div>
+                <div className="p-5 sm:p-6 xl:hidden">
+                  <h3 className="text-2xl font-semibold leading-tight tracking-tight">
+                    <LocalizedText en={module.title} fr={module.titleFr} />
+                  </h3>
+                  <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                    <LocalizedText en={module.description} fr={module.descriptionFr} />
+                  </p>
                 </div>
               </article>
             ))}

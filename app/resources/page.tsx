@@ -65,7 +65,7 @@ export default async function ResourcesPage() {
                 </p>
                 <Link
                   href={language === "fr" ? route.frPath : route.enPath}
-                  className="mt-5 inline-flex text-sm font-semibold underline underline-offset-4"
+                  className="mt-5 inline-flex min-h-10 items-center rounded-full border border-border px-4 text-sm font-semibold transition-colors hover:border-[#2459B8]/35 hover:bg-muted"
                 >
                   <LocalizedText en="Read guide" fr="Lire le guide" />
                 </Link>

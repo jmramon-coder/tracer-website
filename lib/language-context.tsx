@@ -1,6 +1,7 @@
 "use client"
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
+import { usePathname } from "next/navigation"
 import { translations, type Language, type Translations } from "./translations"
 
 type LanguageContextType = {
@@ -24,25 +25,23 @@ export function LanguageProvider({
 }) {
   const [language, setLanguage] = useState<Language>(initialLanguage)
   const [mounted, setMounted] = useState(false)
+  const pathname = usePathname()
 
-  // Persist language preference
+  // Keep rendered language aligned with the localized route.
   useEffect(() => {
     setMounted(true)
-    const pathLanguage: Language | null =
-      window.location.pathname === "/fr" || window.location.pathname.startsWith("/fr/")
+    const pathLanguage: Language =
+      pathname === "/fr" || pathname.startsWith("/fr/")
         ? "fr"
-        : null
-    const saved = localStorage.getItem("trace-lang") as Language
-    const nextLanguage =
-      pathLanguage ?? (saved && (saved === "en" || saved === "fr") ? saved : initialLanguage)
+        : "en"
 
-    if (nextLanguage === "en" || nextLanguage === "fr") {
-      setLanguage(nextLanguage)
-      document.documentElement.lang = nextLanguage
+    if (pathLanguage === "en" || pathLanguage === "fr") {
+      setLanguage(pathLanguage)
+      document.documentElement.lang = pathLanguage
     } else {
       document.documentElement.lang = "en"
     }
-  }, [initialLanguage])
+  }, [pathname])
 
   const handleSetLanguage = (lang: Language) => {
     setLanguage(lang)

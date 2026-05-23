@@ -73,14 +73,17 @@ export function BlogPostArticle({ post, language, path }: BlogPostArticleProps) 
         </header>
 
         <div
-          className="prose prose-neutral max-w-none dark:prose-invert
-            prose-headings:font-serif prose-headings:font-normal
-            prose-h2:mb-4 prose-h2:mt-10 prose-h2:text-2xl
-            prose-h3:mb-3 prose-h3:mt-8 prose-h3:text-lg
-            prose-p:text-muted-foreground prose-p:leading-relaxed
-            prose-a:text-foreground prose-a:underline prose-a:underline-offset-4
-            prose-li:text-muted-foreground
-            prose-strong:font-medium prose-strong:text-foreground"
+          className="max-w-none text-base leading-8 text-muted-foreground
+            [&_a]:font-medium [&_a]:text-foreground [&_a]:underline [&_a]:underline-offset-4
+            [&_h2]:mt-12 [&_h2]:font-serif [&_h2]:text-2xl [&_h2]:font-normal [&_h2]:leading-tight [&_h2]:tracking-tight [&_h2]:text-foreground
+            [&_h2:first-child]:mt-0
+            [&_h3]:mt-9 [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:leading-snug [&_h3]:tracking-tight [&_h3]:text-foreground
+            [&_li]:my-2 [&_li]:pl-1
+            [&_ol]:my-6 [&_ol]:list-decimal [&_ol]:space-y-2 [&_ol]:pl-5
+            [&_p]:mt-5 [&_p]:leading-8
+            [&_p:first-child]:mt-0
+            [&_strong]:font-medium [&_strong]:text-foreground
+            [&_ul]:my-6 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-5"
           dangerouslySetInnerHTML={{ __html: content }}
         />
       </article>
