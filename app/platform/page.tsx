@@ -1,9 +1,5 @@
-import PlatformPage from "@/components/platform-page"
-import { createMetadata } from "@/lib/metadata"
+import { permanentRedirect } from "next/navigation"
 
-export const metadata = createMetadata({
-  title: "Platform",
-  path: "/platform",
-})
-
-export default PlatformPage
+export default function PlatformRedirectPage() {
+  permanentRedirect("/")
+}

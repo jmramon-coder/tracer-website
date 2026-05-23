@@ -6,6 +6,7 @@ import { BrandLogo } from "@/components/brand-logo"
 import { MapleLeaf } from "@/components/maple-leaf"
 import { trackEvent } from "@/lib/analytics"
 import { useLanguage } from "@/lib/language-context"
+import { localizePath } from "@/lib/localized-paths"
 import { mainNav } from "@/lib/site-data"
 
 export function Footer() {
@@ -53,12 +54,13 @@ export function Footer() {
                 {mainNav.map((item) => {
                   const label =
                     t.header.nav[navTranslationKeys[item.href as keyof typeof navTranslationKeys]] ?? item.label
+                  const href = localizePath(item.href, language)
 
                   return (
                     <Link
                       key={item.href}
-                      href={item.href}
-                      onClick={() => trackFooterNavigation(item.href, label)}
+                      href={href}
+                      onClick={() => trackFooterNavigation(href, label)}
                       className="text-sm text-muted-foreground transition-colors hover:text-foreground"
                     >
                       {label}

@@ -4,14 +4,14 @@ import { getRequiredResourceArticle, getResourcePath } from "@/lib/resource-rout
 
 const resourceId = "research-security-tools"
 
-export const metadata = createResourcePageMetadata(resourceId, "en")
+export const metadata = createResourcePageMetadata(resourceId, "fr")
 
-export default function ResearchSecurityToolsPage() {
+export default function OutilsSecuriteRecherchePage() {
   return (
     <ResourceArticlePage
-      resource={getRequiredResourceArticle(resourceId, "en")}
-      language="en"
-      path={getResourcePath(resourceId, "en")}
+      resource={getRequiredResourceArticle(resourceId, "fr")}
+      language="fr"
+      path={getResourcePath(resourceId, "fr")}
     />
   )
 }

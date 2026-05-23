@@ -1,12 +1,20 @@
 import { NextResponse } from "next/server"
 import { z } from "zod"
 import type { CreateEmailOptions, ErrorResponse, Resend as ResendClient } from "resend"
+import { SITE_URL } from "@/lib/metadata"
 import { getResendClient } from "@/lib/resend"
 
 export const runtime = "nodejs"
 
 const DEFAULT_FROM_EMAIL = "Tracer <info@tracersecurity.ca>"
 const DEFAULT_WAITLIST_SEGMENT_ID = "125a14ca-6551-4704-bece-120311b11d0b"
+const MIN_FORM_AGE_MS = 1800
+const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000
+const IP_RATE_LIMIT = 20
+const EMAIL_RATE_LIMIT = 5
+
+const rateLimitBuckets = new Map<string, { count: number; resetAt: number }>()
+const completedSubmissions = new Map<string, number>()
 
 const waitlistRequestSchema = z.object({
   firstName: z.string().trim().min(1).max(80),
@@ -21,12 +29,110 @@ const waitlistRequestSchema = z.object({
     .max(80)
     .regex(/^[A-Za-z0-9_-]+$/)
     .default("waitlist_modal"),
+  submissionId: z.string().trim().min(12).max(120),
+  openedAt: z.string().datetime().optional(),
+  formAgeMs: z.number().int().min(0).max(1000 * 60 * 60).optional(),
+  website: z.string().trim().max(200).optional().default(""),
 })
 
 type WaitlistRequest = z.infer<typeof waitlistRequestSchema>
 
+function configuredAllowedOrigins() {
+  const configured = process.env.WAITLIST_ALLOWED_ORIGINS?.split(",")
+    .map((origin) => origin.trim().replace(/\/$/, ""))
+    .filter(Boolean)
+
+  const defaults = [SITE_URL, "https://www.tracersecurity.ca"]
+
+  if (process.env.NODE_ENV !== "production") {
+    defaults.push("http://localhost:3000", "http://127.0.0.1:3000")
+  }
+
+  return new Set(configured?.length ? configured : defaults)
+}
+
+function isAllowedOrigin(request: Request) {
+  const origin = request.headers.get("origin")?.replace(/\/$/, "")
+
+  if (!origin) {
+    return true
+  }
+
+  return configuredAllowedOrigins().has(origin)
+}
+
+function isTooFast(payload: WaitlistRequest) {
+  if (typeof payload.formAgeMs === "number") {
+    return payload.formAgeMs < MIN_FORM_AGE_MS
+  }
+
+  if (!payload.openedAt) {
+    return false
+  }
+
+  const openedAt = new Date(payload.openedAt).getTime()
+  return Number.isFinite(openedAt) && Date.now() - openedAt < MIN_FORM_AGE_MS
+}
+
+function clientIp(request: Request) {
+  return (
+    request.headers.get("cf-connecting-ip") ||
+    request.headers.get("x-real-ip") ||
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    "unknown"
+  )
+}
+
+function incrementRateLimitBucket(key: string, limit: number) {
+  const now = Date.now()
+  const bucket = rateLimitBuckets.get(key)
+
+  if (!bucket || bucket.resetAt <= now) {
+    rateLimitBuckets.set(key, {
+      count: 1,
+      resetAt: now + RATE_LIMIT_WINDOW_MS,
+    })
+    return { ok: true as const, retryAfterMs: 0 }
+  }
+
+  bucket.count += 1
+
+  if (bucket.count > limit) {
+    return { ok: false as const, retryAfterMs: bucket.resetAt - now }
+  }
+
+  return { ok: true as const, retryAfterMs: 0 }
+}
+
+function checkWaitlistRateLimit(request: Request, email: string) {
+  const ipResult = incrementRateLimitBucket(`ip:${clientIp(request)}`, IP_RATE_LIMIT)
+
+  if (!ipResult.ok) {
+    return ipResult
+  }
+
+  return incrementRateLimitBucket(`email:${email}`, EMAIL_RATE_LIMIT)
+}
+
+function pruneCompletedSubmissions() {
+  const cutoff = Date.now() - RATE_LIMIT_WINDOW_MS
+
+  for (const [submissionId, completedAt] of completedSubmissions) {
+    if (completedAt < cutoff) {
+      completedSubmissions.delete(submissionId)
+    }
+  }
+}
+
 export async function POST(request: Request) {
   let payload: WaitlistRequest
+
+  if (!isAllowedOrigin(request)) {
+    return NextResponse.json(
+      { error: "Waitlist origin is not allowed." },
+      { status: 403 }
+    )
+  }
 
   try {
     payload = waitlistRequestSchema.parse(await request.json())
@@ -39,6 +145,35 @@ export async function POST(request: Request) {
             : "Invalid JSON body.",
       },
       { status: 400 }
+    )
+  }
+
+  if (payload.website) {
+    return NextResponse.json({ ok: true })
+  }
+
+  if (isTooFast(payload)) {
+    return NextResponse.json(
+      { error: "Invalid waitlist submission." },
+      { status: 400 }
+    )
+  }
+
+  if (completedSubmissions.has(payload.submissionId)) {
+    return NextResponse.json({ ok: true })
+  }
+
+  const rateLimitResult = checkWaitlistRateLimit(request, payload.email)
+
+  if (!rateLimitResult.ok) {
+    return NextResponse.json(
+      { error: "Please wait before trying again." },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": String(Math.ceil(rateLimitResult.retryAfterMs / 1000)),
+        },
+      }
     )
   }
 
@@ -132,8 +267,13 @@ export async function POST(request: Request) {
     }
 
     if (!contactsEnabled && !internalNotificationResult.ok) {
-      throw new Error("Waitlist capture failed")
+      console.warn(
+        "Waitlist capture completed with confirmation email only because contact capture is disabled and internal notification failed."
+      )
     }
+
+    completedSubmissions.set(payload.submissionId, Date.now())
+    pruneCompletedSubmissions()
 
     return NextResponse.json({ ok: true })
   } catch (error) {
@@ -183,7 +323,6 @@ async function upsertWaitlistContact({
     email,
     firstName,
     lastName,
-    unsubscribed: false,
     properties,
   })
 

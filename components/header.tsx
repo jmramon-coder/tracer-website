@@ -10,6 +10,7 @@ import { LanguageToggle } from "@/components/language-toggle"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { trackEvent } from "@/lib/analytics"
 import { useLanguage } from "@/lib/language-context"
+import { localizePath } from "@/lib/localized-paths"
 import { mainNav } from "@/lib/site-data"
 import { WaitlistButton } from "@/components/waitlist-button"
 import { cn } from "@/lib/utils"
@@ -78,16 +79,23 @@ export function Header() {
   const showTracerAppButton = false
   const isActiveNavItem = (href: string) =>
     pathname === href ||
+    pathname === localizePath(href, language) ||
     (href === "/" && pathname === "/platform") ||
-    (href === "/solutions" && pathname === "/pricing") ||
+    (href === "/solutions" && (pathname === "/pricing" || pathname === "/fr/tarifs")) ||
     (href === "/resources" &&
       [
         "/blog",
+        "/fr/blog",
         "/research-security-screening",
+        "/fr/verification-securite-recherche",
         "/academic-partnership-due-diligence",
+        "/fr/diligence-raisonnable-partenariats-academiques",
         "/sanctions-screening-universities",
+        "/fr/verification-sanctions-universites",
         "/research-collaboration-risk",
+        "/fr/risque-collaborations-recherche",
         "/research-security-tools",
+        "/fr/outils-securite-recherche",
       ].some((path) => pathname === path || pathname.startsWith(`${path}/`)))
 
   useEffect(() => {
@@ -186,13 +194,14 @@ export function Header() {
               {mainNav.map((item) => {
                 const isActive = isActiveNavItem(item.href)
                 const label = t.header.nav[navTranslationKeys[item.href]] ?? item.label
+                const href = localizePath(item.href, language)
 
                 return (
                   <Link
                     key={item.href}
-                    href={item.href}
+                    href={href}
                     aria-current={isActive ? "page" : undefined}
-                    onClick={() => handleNavigationClick(item.href, label, "primary")}
+                    onClick={() => handleNavigationClick(href, label, "primary")}
                     className={cn(
                       "relative inline-flex h-10 items-center gap-1.5 px-1 text-sm font-medium transition-colors duration-200 after:absolute after:left-1/2 after:bottom-0 after:h-[3px] after:w-7 after:-translate-x-1/2 after:rounded-full after:bg-[#2459B8] after:shadow-[0_0_14px_rgba(36,89,184,0.48)] after:transition-all after:duration-300",
                       item.href === "/labs" && "group/labs",
@@ -235,6 +244,7 @@ export function Header() {
               {showTracerAppButton ? (
                 <a
                   href="https://www.app.tracersecurity.ca"
+                  rel="nofollow noopener noreferrer"
                   onClick={() => handleTracerAppClick("header")}
                   className={cn(
                     "hidden h-10 items-center gap-2 rounded-full border px-4 text-xs font-medium leading-none tracking-wide shadow-xl transition-all duration-200 hover:-translate-y-0.5 lg:inline-flex md:text-sm",
@@ -280,19 +290,20 @@ export function Header() {
           >
             <div className="px-4 py-4">
               <nav aria-label={labels.mobileNavigation} className="grid gap-1">
-                {mainNav.map((item) => {
-                  const isActive = isActiveNavItem(item.href)
-                  const label = t.header.nav[navTranslationKeys[item.href]] ?? item.label
+                      {mainNav.map((item) => {
+                        const isActive = isActiveNavItem(item.href)
+                        const label = t.header.nav[navTranslationKeys[item.href]] ?? item.label
+                        const href = localizePath(item.href, language)
 
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      aria-current={isActive ? "page" : undefined}
-                      onClick={() => {
-                        handleNavigationClick(item.href, label, "mobile")
-                        setIsMenuOpen(false)
-                      }}
+                        return (
+                          <Link
+                            key={item.href}
+                            href={href}
+                            aria-current={isActive ? "page" : undefined}
+                            onClick={() => {
+                              handleNavigationClick(href, label, "mobile")
+                              setIsMenuOpen(false)
+                            }}
                       className={cn(
                         "relative inline-flex items-center gap-2 px-3 py-3 text-sm font-medium transition-colors duration-200 after:absolute after:bottom-1.5 after:left-3 after:h-[3px] after:w-7 after:rounded-full after:bg-[#2459B8] after:shadow-[0_0_14px_rgba(36,89,184,0.44)] after:transition-all after:duration-300",
                         item.href === "/labs" && "group/labs",
@@ -336,6 +347,7 @@ export function Header() {
               {showTracerAppButton ? (
                 <a
                   href="https://www.app.tracersecurity.ca"
+                  rel="nofollow noopener noreferrer"
                   onClick={() => {
                     handleTracerAppClick("mobile_menu")
                     setIsMenuOpen(false)

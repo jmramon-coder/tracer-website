@@ -1,41 +1,56 @@
 import Link from "next/link"
+import { headers } from "next/headers"
 import { BrandLogo } from "@/components/brand-logo"
 import { LocalizedText } from "@/components/localized-text"
+import { resourceRoutes } from "@/lib/resource-routes"
+import type { Language } from "@/lib/translations"
 
 const pillarPages = [
   {
+    id: "research-security-screening",
     href: "/research-security-screening",
     label: "Research Security Screening",
     labelFr: "Vérification de sécurité de la recherche",
   },
   {
+    id: "academic-due-diligence",
     href: "/academic-partnership-due-diligence",
     label: "Academic Due Diligence",
     labelFr: "Diligence raisonnable académique",
   },
   {
+    id: "sanctions-screening",
     href: "/sanctions-screening-universities",
     label: "Sanctions Screening",
     labelFr: "Vérification des sanctions",
   },
   {
+    id: "collaboration-risk",
     href: "/research-collaboration-risk",
     label: "Collaboration Risk",
     labelFr: "Risque de collaboration",
   },
   {
+    id: "research-security-tools",
     href: "/research-security-tools",
     label: "Security Tools",
     labelFr: "Outils de sécurité",
   },
 ]
 
-export function PillarPageLayout({ children }: { children: React.ReactNode }) {
+export async function PillarPageLayout({ children }: { children: React.ReactNode }) {
+  const requestHeaders = await headers()
+  const language: Language = requestHeaders.get("x-tracer-locale") === "fr" ? "fr" : "en"
+  const pathForPage = (id: string, fallback: string) => {
+    const route = resourceRoutes.find((item) => item.id === id)
+    return language === "fr" ? route?.frPath ?? fallback : route?.enPath ?? fallback
+  }
+
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <header className="border-b border-border">
         <div className="mx-auto max-w-4xl px-6 py-5">
-          <Link href="/" className="inline-flex text-foreground">
+          <Link href={language === "fr" ? "/fr" : "/"} className="inline-flex text-foreground">
             <BrandLogo markClassName="h-7 w-8" />
           </Link>
         </div>
@@ -61,7 +76,7 @@ export function PillarPageLayout({ children }: { children: React.ReactNode }) {
               {pillarPages.map((page) => (
                 <li key={page.href}>
                   <Link
-                    href={page.href}
+                    href={pathForPage(page.id, page.href)}
                     className="text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
                   >
                     <LocalizedText en={page.label} fr={page.labelFr} />
@@ -70,7 +85,7 @@ export function PillarPageLayout({ children }: { children: React.ReactNode }) {
               ))}
               <li>
                 <Link
-                  href="/blog"
+                  href={language === "fr" ? "/fr/blog" : "/blog"}
                   className="text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
                 >
                   <LocalizedText en="Blog" fr="Blogue" />

@@ -13,6 +13,7 @@ import { LocalizedText } from "@/components/localized-text"
 import { MapleLeaf } from "@/components/maple-leaf"
 import { TrackedLink } from "@/components/tracked-link"
 import { WaitlistButton } from "@/components/waitlist-button"
+import { alternatesFor } from "@/lib/localized-paths"
 import { createMetadata } from "@/lib/metadata"
 
 export const metadata = createMetadata({
@@ -20,6 +21,7 @@ export const metadata = createMetadata({
   description:
     "Tracer is building quiet, professional research security due diligence software for Canadian research institutions.",
   path: "/company",
+  languages: alternatesFor("/company", "/fr/entreprise"),
 })
 
 const visionCards = [

@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from 'next'
+import { headers } from 'next/headers'
 import { AnalyticsConsent } from '@/components/analytics-consent'
 import { ThemeProvider } from '@/lib/theme-context'
 import { LanguageProvider } from '@/lib/language-context'
+import type { Language } from '@/lib/translations'
 import {
   DEFAULT_OG_IMAGE,
   SITE_DESCRIPTION,
@@ -126,21 +128,28 @@ export const viewport: Viewport = {
   ],
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const requestHeaders = await headers()
+  const initialLanguage: Language =
+    requestHeaders.get('x-tracer-locale') === 'fr' ? 'fr' : 'en'
+  const host = requestHeaders.get('host')?.toLowerCase().split(':')[0] ?? ''
+  const isAppHost = host === 'app.tracersecurity.ca' || host === 'www.app.tracersecurity.ca'
+
   return (
-    <html lang="en" className="light" suppressHydrationWarning>
+    <html lang={initialLanguage} className="light" suppressHydrationWarning>
       <head>
+        {isAppHost ? <meta name="robots" content="noindex,nofollow,noarchive" /> : null}
         <script dangerouslySetInnerHTML={{ __html: `
           (function(){try{var t=localStorage.getItem('trace-theme');if(t==='light'||t==='dark'){document.documentElement.className=t;}else if(window.matchMedia('(prefers-color-scheme: dark)').matches){document.documentElement.className='dark';}else{document.documentElement.className='light';}}catch(e){}}());
         `}} />
       </head>
       <body className="font-sans antialiased">
         <ThemeProvider>
-          <LanguageProvider>
+          <LanguageProvider initialLanguage={initialLanguage}>
             {children}
             <AnalyticsConsent />
           </LanguageProvider>

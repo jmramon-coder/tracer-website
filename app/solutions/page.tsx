@@ -7,6 +7,7 @@ import { LocalizedText } from "@/components/localized-text"
 import { MapleLeaf } from "@/components/maple-leaf"
 import { TrackedLink } from "@/components/tracked-link"
 import { WaitlistButton } from "@/components/waitlist-button"
+import { alternatesFor } from "@/lib/localized-paths"
 import { createMetadata } from "@/lib/metadata"
 import { pricingPlans } from "@/lib/site-data"
 
@@ -15,6 +16,7 @@ export const metadata = createMetadata({
   description:
     "Transparent pricing for Tracer, a research security due diligence platform with efficient screening workflows and top-of-market deep web intelligence.",
   path: "/solutions",
+  languages: alternatesFor("/solutions", "/fr/tarifs"),
 })
 
 const footerNavLinks = [

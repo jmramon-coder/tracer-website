@@ -4,14 +4,14 @@ import { getRequiredResourceArticle, getResourcePath } from "@/lib/resource-rout
 
 const resourceId = "sanctions-screening"
 
-export const metadata = createResourcePageMetadata(resourceId, "en")
+export const metadata = createResourcePageMetadata(resourceId, "fr")
 
-export default function SanctionsScreeningUniversitiesPage() {
+export default function VerificationSanctionsUniversitesPage() {
   return (
     <ResourceArticlePage
-      resource={getRequiredResourceArticle(resourceId, "en")}
-      language="en"
-      path={getResourcePath(resourceId, "en")}
+      resource={getRequiredResourceArticle(resourceId, "fr")}
+      language="fr"
+      path={getResourcePath(resourceId, "fr")}
     />
   )
 }

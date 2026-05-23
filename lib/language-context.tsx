@@ -15,21 +15,34 @@ const LanguageContext = createContext<LanguageContextType>({
   t: translations.en,
 })
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>("en")
+export function LanguageProvider({
+  children,
+  initialLanguage = "en",
+}: {
+  children: ReactNode
+  initialLanguage?: Language
+}) {
+  const [language, setLanguage] = useState<Language>(initialLanguage)
   const [mounted, setMounted] = useState(false)
 
   // Persist language preference
   useEffect(() => {
     setMounted(true)
+    const pathLanguage: Language | null =
+      window.location.pathname === "/fr" || window.location.pathname.startsWith("/fr/")
+        ? "fr"
+        : null
     const saved = localStorage.getItem("trace-lang") as Language
-    if (saved && (saved === "en" || saved === "fr")) {
-      setLanguage(saved)
-      document.documentElement.lang = saved
+    const nextLanguage =
+      pathLanguage ?? (saved && (saved === "en" || saved === "fr") ? saved : initialLanguage)
+
+    if (nextLanguage === "en" || nextLanguage === "fr") {
+      setLanguage(nextLanguage)
+      document.documentElement.lang = nextLanguage
     } else {
       document.documentElement.lang = "en"
     }
-  }, [])
+  }, [initialLanguage])
 
   const handleSetLanguage = (lang: Language) => {
     setLanguage(lang)
@@ -42,9 +55,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     return (
       <LanguageContext.Provider
         value={{
-          language: "en",
+          language: initialLanguage,
           setLanguage: handleSetLanguage,
-          t: translations.en,
+          t: translations[initialLanguage],
         }}
       >
         {children}

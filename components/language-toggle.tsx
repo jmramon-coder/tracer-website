@@ -1,7 +1,9 @@
 "use client"
 
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { trackEvent } from "@/lib/analytics"
 import { useLanguage } from "@/lib/language-context"
+import { pathForLanguage } from "@/lib/localized-paths"
 import { cn } from "@/lib/utils"
 
 type LanguageToggleProps = {
@@ -11,6 +13,9 @@ type LanguageToggleProps = {
 
 export function LanguageToggle({ className, tone = "default" }: LanguageToggleProps) {
   const { language, setLanguage } = useLanguage()
+  const pathname = usePathname()
+  const router = useRouter()
+  const searchParams = useSearchParams()
   const isMedia = tone === "media"
   const nextLanguage = language === "en" ? "fr" : "en"
 
@@ -20,6 +25,12 @@ export function LanguageToggle({ className, tone = "default" }: LanguageTogglePr
       to_language: nextLanguage,
     })
     setLanguage(nextLanguage)
+    const nextPath = pathForLanguage(pathname, nextLanguage)
+    const queryString = searchParams.toString()
+
+    if (nextPath !== pathname) {
+      router.push(queryString ? `${nextPath}?${queryString}` : nextPath)
+    }
   }
 
   return (

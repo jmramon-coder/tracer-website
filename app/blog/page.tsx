@@ -1,21 +1,27 @@
 import Link from "next/link"
+import { headers } from "next/headers"
 import { ArrowRight } from "lucide-react"
 import { Footer } from "@/components/footer"
 import { Header } from "@/components/header"
 import { LocalizedDate } from "@/components/localized-date"
 import { LocalizedText } from "@/components/localized-text"
 import { getAllPosts } from "@/lib/blog"
+import { alternatesFor, localizePath } from "@/lib/localized-paths"
 import { createMetadata } from "@/lib/metadata"
 import { blogThemes } from "@/lib/site-data"
+import type { Language } from "@/lib/translations"
 
 export const metadata = createMetadata({
   title: "Blog",
   description:
     "Research security insights, compliance guides, and screening best practices for universities and research institutions.",
   path: "/blog",
+  languages: alternatesFor("/blog", "/fr/blog"),
 })
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  const requestHeaders = await headers()
+  const language: Language = requestHeaders.get("x-tracer-locale") === "fr" ? "fr" : "en"
   const posts = getAllPosts()
 
   return (
@@ -79,7 +85,10 @@ export default function BlogPage() {
                   key={post.slug}
                   className="group rounded-[24px] border border-border bg-card p-6 shadow-sm transition-colors hover:bg-muted"
                 >
-                  <Link href={`/blog/${post.slug}`} className="block">
+                  <Link
+                    href={localizePath(`/blog/${post.slug}`, language)}
+                    className="block"
+                  >
                     <div className="mb-3 flex flex-wrap items-center gap-3">
                       <time
                         dateTime={post.date}

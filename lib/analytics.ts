@@ -1,4 +1,5 @@
-export const GA_MEASUREMENT_ID = "G-ED4P5LG31N"
+export const GA_MEASUREMENT_ID =
+  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim() || ""
 
 export type AnalyticsEventName =
   | "generate_lead"

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react"
 import { Analytics } from "@vercel/analytics/next"
 import type { BeforeSendEvent } from "@vercel/analytics/next"
+import { usePathname, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import { GA_MEASUREMENT_ID } from "@/lib/analytics"
@@ -75,7 +76,9 @@ function deleteCookie(name: string) {
 
 function deleteAnalyticsCookies() {
   deleteCookie("_ga")
-  deleteCookie(`_ga_${GA_MEASUREMENT_ID.replace(/^G-/, "")}`)
+  if (GA_MEASUREMENT_ID) {
+    deleteCookie(`_ga_${GA_MEASUREMENT_ID.replace(/^G-/, "")}`)
+  }
 }
 
 function hasAnalyticsConsent() {
@@ -83,6 +86,10 @@ function hasAnalyticsConsent() {
 }
 
 function setGoogleAnalyticsDisabled(disabled: boolean) {
+  if (!GA_MEASUREMENT_ID) {
+    return
+  }
+
   ;(window as unknown as Record<string, boolean>)[`ga-disable-${GA_MEASUREMENT_ID}`] = disabled
 }
 
@@ -92,6 +99,10 @@ function disableAnalytics() {
 }
 
 function enableAnalytics() {
+  if (!GA_MEASUREMENT_ID) {
+    return
+  }
+
   setGoogleAnalyticsDisabled(false)
 
   window.dataLayer = window.dataLayer || []
@@ -110,7 +121,9 @@ function enableAnalytics() {
   }
 
   window.gtag("js", new Date())
-  window.gtag("config", GA_MEASUREMENT_ID)
+  window.gtag("config", GA_MEASUREMENT_ID, {
+    page_path: window.location.pathname + window.location.search,
+  })
 }
 
 export function openPrivacyPreferences() {
@@ -126,6 +139,8 @@ export function AnalyticsConsent() {
   const [isManagingPreferences, setIsManagingPreferences] = useState(false)
   const [isAnalyticsSelected, setIsAnalyticsSelected] = useState(false)
   const { language } = useLanguage()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
 
   useEffect(() => {
     setMounted(true)
@@ -173,6 +188,22 @@ export function AnalyticsConsent() {
     return hasAnalyticsConsent() ? event : null
   }, [])
 
+  useEffect(() => {
+    if (
+      !isAnalyticsEnabled ||
+      !GA_MEASUREMENT_ID ||
+      typeof window === "undefined" ||
+      typeof window.gtag !== "function"
+    ) {
+      return
+    }
+
+    const queryString = searchParams.toString()
+    window.gtag("config", GA_MEASUREMENT_ID, {
+      page_path: queryString ? `${pathname}?${queryString}` : pathname,
+    })
+  }, [isAnalyticsEnabled, pathname, searchParams])
+
   if (!mounted || !isOpen) {
     return isAnalyticsEnabled ? <Analytics beforeSend={beforeSendAnalyticsEvent} /> : null
   }
@@ -183,7 +214,7 @@ export function AnalyticsConsent() {
   return (
     <>
       {isAnalyticsEnabled ? <Analytics beforeSend={beforeSendAnalyticsEvent} /> : null}
-      <div className="fixed inset-x-0 bottom-0 z-[120] px-3 pb-3 sm:px-6 sm:pb-6">
+      <div className="fixed inset-x-0 bottom-0 z-[90] px-3 pb-3 sm:px-6 sm:pb-6">
         <div className="mx-auto max-h-[calc(100dvh-1.5rem)] w-full max-w-3xl overflow-y-auto rounded-2xl border border-border bg-card p-4 text-card-foreground shadow-[var(--modal-shadow)] sm:p-5">
           {isManagingPreferences ? (
             <div className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end">

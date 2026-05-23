@@ -1,7 +1,17 @@
 import type { Metadata } from "next"
 
+const DEFAULT_SITE_URL = "https://tracersecurity.ca"
+
+function normalizeMarketingSiteUrl(value?: string) {
+  if (!value || value.includes("app.tracersecurity")) {
+    return DEFAULT_SITE_URL
+  }
+
+  return value.replace(/\/$/, "")
+}
+
 export const SITE_NAME = "Tracer"
-export const SITE_URL = "https://tracersecurity.ca"
+export const SITE_URL = normalizeMarketingSiteUrl(process.env.NEXT_PUBLIC_SITE_URL)
 export const SITE_TITLE = "Tracer | Research Security Intelligence"
 export const SITE_DESCRIPTION =
   "Research security due diligence for Canadian institutions. Screen research partners, affiliations, networks, sanctions exposure, and risk signals with cited, auditable reports."
@@ -29,6 +39,8 @@ type MetadataOptions = {
   path?: string
   image?: string
   noIndex?: boolean
+  languages?: NonNullable<Metadata["alternates"]>["languages"]
+  locale?: string
 }
 
 type ArticleMetadataOptions = MetadataOptions & {
@@ -51,12 +63,37 @@ function fullTitle(title?: string) {
   return title ? `${title} | ${SITE_NAME}` : SITE_TITLE
 }
 
+export function absoluteUrl(path = "/") {
+  if (/^https?:\/\//.test(path)) {
+    return normalizeMarketingSiteUrl(path)
+  }
+
+  return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`
+}
+
+function absoluteLanguages(
+  languages?: NonNullable<Metadata["alternates"]>["languages"]
+) {
+  if (!languages) {
+    return undefined
+  }
+
+  return Object.fromEntries(
+    Object.entries(languages).map(([locale, value]) => [
+      locale,
+      typeof value === "string" ? absoluteUrl(value) : value,
+    ])
+  )
+}
+
 export function createMetadata({
   title,
   description = SITE_DESCRIPTION,
   path = "/",
   image,
   noIndex = false,
+  languages,
+  locale = "en_CA",
 }: MetadataOptions = {}): Metadata {
   const metadataTitle: Metadata["title"] = title ?? { absolute: SITE_TITLE }
   const openGraphTitle = fullTitle(title)
@@ -66,7 +103,8 @@ export function createMetadata({
     title: metadataTitle,
     description,
     alternates: {
-      canonical: path,
+      canonical: absoluteUrl(path),
+      languages: absoluteLanguages(languages),
     },
     robots: noIndex
       ? {
@@ -83,8 +121,9 @@ export function createMetadata({
       siteName: SITE_NAME,
       title: openGraphTitle,
       description,
-      url: path,
+      url: absoluteUrl(path),
       images: [metadataImage],
+      locale,
     },
     twitter: {
       card: "summary_large_image",
@@ -103,6 +142,8 @@ export function createArticleMetadata({
   publishedTime,
   authors,
   noIndex = false,
+  languages,
+  locale = "en_CA",
 }: ArticleMetadataOptions): Metadata {
   const metadataImage = imageForMetadata(image)
   const openGraphTitle = fullTitle(title)
@@ -111,7 +152,8 @@ export function createArticleMetadata({
     title,
     description,
     alternates: {
-      canonical: path,
+      canonical: absoluteUrl(path),
+      languages: absoluteLanguages(languages),
     },
     robots: noIndex
       ? {
@@ -128,10 +170,11 @@ export function createArticleMetadata({
       siteName: SITE_NAME,
       title: openGraphTitle,
       description,
-      url: path,
+      url: absoluteUrl(path),
       images: [metadataImage],
       publishedTime,
       authors,
+      locale,
     },
     twitter: {
       card: "summary_large_image",

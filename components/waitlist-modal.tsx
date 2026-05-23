@@ -1,88 +1,108 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { createPortal } from "react-dom"
+import { useEffect, useMemo, useRef, useState } from "react"
 import NextImage from "next/image"
+import { ArrowRight, Check, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { X, ArrowRight, Check } from "lucide-react"
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import { Spinner } from "@/components/ui/spinner"
 import { trackEvent } from "@/lib/analytics"
 import { useLanguage } from "@/lib/language-context"
 
-const LAUNCH_DATE = new Date("2026-06-01T00:00:00")
+const DEFAULT_LAUNCH_DATE = "2026-06-01T00:00:00"
 
 interface WaitlistModalProps {
   isOpen: boolean
   onClose: () => void
 }
 
+function createSubmissionId() {
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
+    return crypto.randomUUID()
+  }
+
+  return `waitlist_${Date.now()}_${Math.random().toString(36).slice(2)}`
+}
+
 export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
-  const [mounted, setMounted] = useState(false)
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
   const [email, setEmail] = useState("")
+  const [companyWebsite, setCompanyWebsite] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [hasAnimated, setHasAnimated] = useState(false)
   const [hasError, setHasError] = useState(false)
   const [consent, setConsent] = useState(false)
+  const [submissionId, setSubmissionId] = useState(createSubmissionId)
+  const openedAtRef = useRef(Date.now())
+  const launchDate = useMemo(
+    () => new Date(process.env.NEXT_PUBLIC_TRACER_LAUNCH_DATE || DEFAULT_LAUNCH_DATE),
+    []
+  )
   const [countdown, setCountdown] = useState({
     days: 0,
     hours: 0,
     minutes: 0,
-    seconds: 0
+    seconds: 0,
+    isLaunched: false,
   })
   const { t, language } = useLanguage()
 
-  // Mount check for portal.
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    if (!isOpen) {
+      return
+    }
 
-  // Calculate countdown to launch day.
+    openedAtRef.current = Date.now()
+    setSubmissionId(createSubmissionId())
+    setHasError(false)
+  }, [isOpen])
+
   useEffect(() => {
     const updateCountdown = () => {
-      const now = new Date()
-      const diff = LAUNCH_DATE.getTime() - now.getTime()
-      
-      if (diff > 0) {
+      const diff = launchDate.getTime() - Date.now()
+
+      if (diff <= 0) {
         setCountdown({
-          days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-          minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
-          seconds: Math.floor((diff % (1000 * 60)) / 1000)
+          days: 0,
+          hours: 0,
+          minutes: 0,
+          seconds: 0,
+          isLaunched: true,
         })
+        return
       }
+
+      setCountdown({
+        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((diff % (1000 * 60)) / 1000),
+        isLaunched: false,
+      })
     }
 
     updateCountdown()
-    const interval = setInterval(updateCountdown, 1000)
-    return () => clearInterval(interval)
-  }, [])
+    const interval = window.setInterval(updateCountdown, 1000)
+    return () => window.clearInterval(interval)
+  }, [launchDate])
 
-  // Lock body scroll when modal is open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden"
-      document.documentElement.style.overflow = "hidden"
-      document.body.style.position = "fixed"
-      document.body.style.inset = "0"
-      document.body.style.width = "100%"
-    } else {
-      document.body.style.overflow = ""
-      document.documentElement.style.overflow = ""
-      document.body.style.position = ""
-      document.body.style.inset = ""
-      document.body.style.width = ""
+  const resetAndClose = () => {
+    onClose()
+  }
+
+  const handleOpenChange = (open: boolean) => {
+    if (!open) {
+      resetAndClose()
     }
-    return () => {
-      document.body.style.overflow = ""
-      document.documentElement.style.overflow = ""
-      document.body.style.position = ""
-      document.body.style.inset = ""
-      document.body.style.width = ""
-    }
-  }, [isOpen])
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -102,6 +122,10 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
           language,
           consent,
           source: "waitlist_modal",
+          submissionId,
+          openedAt: new Date(openedAtRef.current).toISOString(),
+          formAgeMs: Date.now() - openedAtRef.current,
+          website: companyWebsite,
         }),
       })
 
@@ -118,7 +142,7 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
       setIsSubmitted(true)
       setTimeout(() => setHasAnimated(true), 1200)
       setTimeout(() => {
-        onClose()
+        resetAndClose()
       }, 3500)
     } catch (err) {
       console.error("Waitlist submission error:", err)
@@ -132,30 +156,28 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
     }
   }
 
-  if (!isOpen || !mounted) return null
+  const canSubmit = consent && !isSubmitting
+  const consentHelp =
+    language === "fr"
+      ? "Vous devez accepter les communications pour rejoindre la liste."
+      : "You must accept communications to join."
 
-  return createPortal(
-    <div 
-      className="fixed inset-0 z-[100] flex items-center justify-center"
-    >
-      {/* Backdrop - no click to close */}
-      <div className="absolute inset-0 bg-black/35 backdrop-blur-sm" />
-
-      {/* Close button — fixed top-right of viewport */}
-      <button
-        onClick={onClose}
-        aria-label={language === "fr" ? "Fermer la fenêtre de liste d'attente" : "Close waitlist modal"}
-        className="absolute right-6 top-6 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-muted-foreground shadow-sm transition-colors hover:text-foreground md:right-10 md:top-10"
+  return (
+    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
+      <DialogContent
+        showCloseButton={false}
+        className="max-h-[calc(100dvh-2rem)] max-w-xl overflow-y-auto rounded-[28px] border-border bg-card p-6 text-card-foreground shadow-[var(--modal-shadow)] md:p-10"
       >
-        <X className="h-5 w-5" />
-      </button>
+        <DialogClose asChild>
+          <button
+            type="button"
+            aria-label={language === "fr" ? "Fermer la fenêtre de liste d'attente" : "Close waitlist modal"}
+            className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-muted-foreground shadow-sm transition-colors hover:text-foreground md:right-5 md:top-5"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </DialogClose>
 
-      {/* Modal content */}
-      <div
-        className="relative z-10 mx-6 max-h-[calc(100vh-2rem)] w-full max-w-xl animate-in overflow-y-auto rounded-[28px] border border-border bg-card p-6 text-card-foreground shadow-[var(--modal-shadow)] fade-in zoom-in-95 duration-300 md:p-10"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Header with logo centered */}
         <div className="mb-8 flex items-center justify-center text-foreground">
           <div className="flex items-center gap-2.5">
             <div className="relative h-10 w-10 shrink-0">
@@ -181,36 +203,52 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
         <div className="text-center">
           {isSubmitted ? (
             <div className="space-y-8">
-              {/* Success circle */}
               <div className={`mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-success-muted bg-success-muted${hasAnimated ? "" : " animate-in fade-in zoom-in-75 duration-700 ease-out"}`}>
                 <Check className={`h-9 w-9 text-success${hasAnimated ? "" : " animate-in fade-in zoom-in-50 duration-500 delay-300 ease-out"}`} strokeWidth={2.5} />
               </div>
               <div className={hasAnimated ? "" : "animate-in fade-in slide-in-from-bottom-3 duration-700 delay-500 ease-out"}>
-                <h2 className="mb-4 text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+                <DialogTitle className="mb-4 text-center text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
                   {t.waitlist.success}
-                </h2>
+                </DialogTitle>
               </div>
-              <div className={hasAnimated ? "" : "animate-in fade-in duration-700 delay-700 ease-out"}>
-                <p className="text-muted-foreground">
-                  {t.waitlist.successMessage}
-                </p>
-              </div>
+              <p className={hasAnimated ? "text-muted-foreground" : "animate-in fade-in text-muted-foreground duration-700 delay-700 ease-out"}>
+                {t.waitlist.successMessage}
+              </p>
             </div>
           ) : (
             <>
-              {/* Header */}
               <span className="mb-3 inline-block text-[11px] font-semibold uppercase tracking-[0.3em] text-muted-foreground md:mb-6">
-                {t.waitlist.comingSummer}
+                {countdown.isLaunched ? (
+                  language === "fr" ? "Accès anticipé" : "Early access"
+                ) : (
+                  t.waitlist.comingSummer
+                )}
               </span>
-              <h2 className="mb-4 text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+              <DialogTitle className="mb-4 text-center text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
                 {t.waitlist.joinWaitlist}
-              </h2>
-              <p className="mx-auto mb-6 max-w-md text-muted-foreground leading-relaxed md:mb-10">
-                {t.waitlist.subtitle}
-              </p>
+              </DialogTitle>
+              <DialogDescription className="mx-auto mb-6 max-w-md text-center leading-relaxed text-muted-foreground md:mb-10">
+                {countdown.isLaunched
+                  ? language === "fr"
+                    ? "Tracer ouvre progressivement l'accès anticipé. Rejoignez la liste pour prioriser votre institution."
+                    : "Tracer is opening early access in stages. Join the list to prioritize your institution."
+                  : t.waitlist.subtitle}
+              </DialogDescription>
 
-              {/* Email form */}
               <form onSubmit={handleSubmit} className="space-y-3 md:space-y-6">
+                <input type="hidden" name="submissionId" value={submissionId} />
+                <div className="hidden" aria-hidden="true">
+                  <label>
+                    Company website
+                    <input
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={companyWebsite}
+                      onChange={(e) => setCompanyWebsite(e.target.value)}
+                    />
+                  </label>
+                </div>
+
                 <div className="grid gap-3 md:grid-cols-2">
                   <input
                     type="text"
@@ -233,58 +271,24 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                     className="h-12 w-full rounded-2xl border border-input bg-background px-5 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-ring focus:outline-none"
                   />
                 </div>
-                <div className="relative">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder={t.waitlist.emailPlaceholder}
-                    aria-label={t.waitlist.emailPlaceholder}
-                    autoComplete="email"
-                    required
-                    className="h-12 w-full rounded-2xl border border-input bg-background px-5 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-ring focus:outline-none"
-                  />
-                </div>
-                <div className="relative group/btn">
-                  <Button
-                    type="submit"
-                    disabled={isSubmitting || !consent}
-                    className="group h-12 w-full cursor-pointer gap-3 rounded-full bg-primary text-sm tracking-wide text-primary-foreground shadow-xl shadow-black/15 hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-40"
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <Spinner className="h-4 w-4" />
-                        <span>{t.waitlist.joining}</span>
-                      </>
-                    ) : (
-                      <>
-                        <span>{t.header.joinWaitlist}</span>
-                        <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                      </>
-                    )}
-                  </Button>
-                  {!consent && !isSubmitting && (
-                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 pointer-events-none opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200 z-50">
-                      <div className="relative whitespace-nowrap rounded-md border border-border bg-popover px-4 py-2.5 text-xs text-popover-foreground shadow-[0_4px_16px_rgba(0,0,0,0.08),0_1px_3px_rgba(0,0,0,0.06)]">
-                        {language === "fr"
-                          ? "Vous devez accepter les communications pour continuer."
-                          : "You must accept communications to join."}
-                        {/* Tail */}
-                        <span className="absolute bottom-[-6px] left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 border-b border-r border-border bg-popover shadow-[2px_2px_4px_rgba(0,0,0,0.04)]" />
-                      </div>
-                    </div>
-                  )}
-                </div>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder={t.waitlist.emailPlaceholder}
+                  aria-label={t.waitlist.emailPlaceholder}
+                  autoComplete="email"
+                  required
+                  className="h-12 w-full rounded-2xl border border-input bg-background px-5 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-ring focus:outline-none"
+                />
 
-                {/* CASL consent checkbox */}
-                <label className="flex flex-col items-center gap-1.5 cursor-pointer text-center">
-                  <div className="flex items-start justify-center" style={{ gap: "6px" }}>
+                <label className="flex cursor-pointer flex-col items-center gap-1.5 text-center">
+                  <div className="flex items-start justify-center gap-1.5">
                     <input
                       type="checkbox"
                       checked={consent}
                       onChange={(e) => setConsent(e.target.checked)}
-                      className="h-4 w-4 shrink-0 cursor-pointer rounded border-input accent-primary"
-                      style={{ marginTop: "1px" }}
+                      className="mt-px h-4 w-4 shrink-0 cursor-pointer rounded border-input accent-primary"
                     />
                     <span className="text-center text-xs leading-relaxed text-muted-foreground">
                       {language === "fr"
@@ -299,50 +303,86 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                   </span>
                 </label>
 
-                {/* Privacy policy link */}
+                {!consent ? (
+                  <p className="text-center text-xs text-muted-foreground" id="waitlist-consent-help">
+                    {consentHelp}
+                  </p>
+                ) : null}
+
+                <Button
+                  type="submit"
+                  disabled={!canSubmit}
+                  aria-describedby={!consent ? "waitlist-consent-help" : undefined}
+                  className="group h-12 w-full cursor-pointer gap-3 rounded-full bg-primary text-sm tracking-wide text-primary-foreground shadow-xl shadow-black/15 hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Spinner className="h-4 w-4" />
+                      <span>{t.waitlist.joining}</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>{t.header.joinWaitlist}</span>
+                      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </>
+                  )}
+                </Button>
+
                 <p className="text-center text-[11px] text-subtle-foreground">
                   {language === "fr" ? (
-                    <>En rejoignant la liste d&apos;attente, vous acceptez notre{" "}
-                      <a href="/privacy" target="_blank" className="underline transition-colors hover:text-foreground">
+                    <>
+                      En rejoignant la liste d&apos;attente, vous acceptez notre{" "}
+                      <a href="/privacy" target="_blank" rel="noopener noreferrer" className="underline transition-colors hover:text-foreground">
                         Politique de confidentialité
                       </a>.
                     </>
                   ) : (
-                    <>By joining the waitlist, you agree to our{" "}
-                      <a href="/privacy" target="_blank" className="underline transition-colors hover:text-foreground">
+                    <>
+                      By joining the waitlist, you agree to our{" "}
+                      <a href="/privacy" target="_blank" rel="noopener noreferrer" className="underline transition-colors hover:text-foreground">
                         Privacy Policy
                       </a>.
                     </>
                   )}
                 </p>
 
-                {hasError && (
+                {hasError ? (
                   <p className="text-center text-sm text-destructive">
                     {language === "fr"
                       ? "Nous éprouvons un problème temporaire. Veuillez réessayer sous peu."
                       : "We're experiencing a temporary issue. Please try again shortly."}
                   </p>
-                )}
+                ) : null}
               </form>
             </>
           )}
 
-          {/* Countdown */}
           <div className="mt-8 border-t border-border pt-6 md:mt-12 md:pt-8">
             <p className="mb-6 text-[11px] font-semibold uppercase tracking-[0.3em] text-muted-foreground">
-              {t.waitlist.launchingIn}
+              {countdown.isLaunched
+                ? language === "fr"
+                  ? "Accès anticipé en cours"
+                  : "Early access is open"
+                : t.waitlist.launchingIn}
             </p>
-            <div className="flex justify-center gap-6 md:gap-10">
-              <CountdownUnit value={countdown.days} label={t.waitlist.days} />
-              <CountdownUnit value={countdown.hours} label={t.waitlist.hours} />
-              <CountdownUnit value={countdown.minutes} label={t.waitlist.min} />
-              <CountdownUnit value={countdown.seconds} label={t.waitlist.sec} />
-            </div>
+            {countdown.isLaunched ? (
+              <p className="mx-auto max-w-sm text-sm leading-6 text-muted-foreground">
+                {language === "fr"
+                  ? "Les institutions fondatrices sont intégrées progressivement."
+                  : "Founding institutions are being onboarded in stages."}
+              </p>
+            ) : (
+              <div className="flex justify-center gap-6 md:gap-10">
+                <CountdownUnit value={countdown.days} label={t.waitlist.days} />
+                <CountdownUnit value={countdown.hours} label={t.waitlist.hours} />
+                <CountdownUnit value={countdown.minutes} label={t.waitlist.min} />
+                <CountdownUnit value={countdown.seconds} label={t.waitlist.sec} />
+              </div>
+            )}
           </div>
         </div>
-      </div>
-    </div>,
-    document.body
+      </DialogContent>
+    </Dialog>
   )
 }
 

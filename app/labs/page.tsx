@@ -12,6 +12,7 @@ import { Footer } from "@/components/footer"
 import { Header } from "@/components/header"
 import { LabsHeroVisual } from "@/components/labs-hero-visual"
 import { LocalizedText } from "@/components/localized-text"
+import { alternatesFor } from "@/lib/localized-paths"
 import { createMetadata } from "@/lib/metadata"
 
 export const metadata = createMetadata({
@@ -19,6 +20,7 @@ export const metadata = createMetadata({
   description:
     "Tracer Labs is the operating layer where Tracer tunes search depth, reporting structure, and model routing for research security screening.",
   path: "/labs",
+  languages: alternatesFor("/labs", "/fr/labs"),
 })
 
 const contactHref = "mailto:hello@tracersecurity.ca?subject=Tracer%20Labs%20screening%20need"

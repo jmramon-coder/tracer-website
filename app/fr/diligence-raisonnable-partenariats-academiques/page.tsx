@@ -4,14 +4,14 @@ import { getRequiredResourceArticle, getResourcePath } from "@/lib/resource-rout
 
 const resourceId = "academic-due-diligence"
 
-export const metadata = createResourcePageMetadata(resourceId, "en")
+export const metadata = createResourcePageMetadata(resourceId, "fr")
 
-export default function AcademicPartnershipDueDiligencePage() {
+export default function DiligenceRaisonnablePartenariatsAcademiquesPage() {
   return (
     <ResourceArticlePage
-      resource={getRequiredResourceArticle(resourceId, "en")}
-      language="en"
-      path={getResourcePath(resourceId, "en")}
+      resource={getRequiredResourceArticle(resourceId, "fr")}
+      language="fr"
+      path={getResourcePath(resourceId, "fr")}
     />
   )
 }
