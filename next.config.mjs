@@ -42,7 +42,17 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: "/:path*",
+        source: "/",
+        headers: [
+          ...securityHeaders.filter((header) => header.key !== "X-Frame-Options"),
+          {
+            key: "Content-Security-Policy",
+            value: "frame-ancestors 'self' https://ramonjm.vercel.app",
+          },
+        ],
+      },
+      {
+        source: "/:path+",
         headers: securityHeaders,
       },
     ]
